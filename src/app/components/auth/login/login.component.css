@@ -1,0 +1,28 @@
+.inputs {
+    flex-direction: column;
+    display: flex;
+}
+
+#inputRegistro{
+    margin: 6px;
+    display: flex;
+    justify-content: center;
+}
+
+#componentesRegistro {
+    width: 20rem;
+    justify-items: center;
+    background-color: rgb(224, 224, 224);
+    border: none;
+    height: 2.7rem;
+}
+
+#Subtitulo {
+    display: flex;
+    justify-content: center;
+}
+
+header{
+    display: flex;
+    justify-content: space-between;
+}

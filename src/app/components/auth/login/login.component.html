@@ -1,5 +1,6 @@
 <main class="container-fluid">
-  <form class="row">
+
+  <form class="row" [formGroup]="loginForm" (ngSubmit)="login()">
     <fieldset class="col-lg-6">
       <h1>Inicio de sesion</h1>
       <h3>Completa los campos para ingresar</h3>
@@ -7,21 +8,35 @@
 
     <mat-form-field appearance="outline" class="col-lg-6">
       <mat-label>Correo electronico</mat-label>
-      <input matInput placeholder="Ingresa tu correo electronico">
-      <mat-hint>0/100</mat-hint>
+      <input matInput placeholder="Ingresa tu correo electronico" formControlName="email">
+      <mat-hint>0/100</mat-hint>      
     </mat-form-field>
+    <div class="col-lg-6">
+      @if (hasErrors('email','required')) {
+        <div>Email es requerido!</div>
+      }
+
+      @if (hasErrors('email','email')) {
+        <div>Formato invalido!</div>
+      }
+    </div>
 
     <mat-form-field class="col-lg-6" appearance="outline">
       <mat-label>Ingresa tu clave de acceso</mat-label>
-      <input matInput [type]="hide() ? 'password' : 'text'" />
+      <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" />
       <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hide()">
         <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
       <mat-hint>0/100</mat-hint>
     </mat-form-field>
+    <div class="col-lg-6">
+      @if (hasErrors('password','required')) {
+        <div>Clave es requerida!</div>
+      }
+    </div>
 
-    <button class="col-lg-6" mat-flat-button>Iniciar Sesion</button>
+    <button class="col-lg-6" mat-flat-button type="submit" >Iniciar Sesion</button>
 
     <fieldset class="col-6 login-options">
 

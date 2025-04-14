@@ -1,28 +1,15 @@
-.inputs {
+main{
+    padding: 2vh;
+}
+
+form{    
     flex-direction: column;
-    display: flex;
+    align-items: center;
+    gap: 2vh;
+    padding: 2vh;
 }
 
-#inputRegistro{
-    margin: 6px;
-    display: flex;
-    justify-content: center;
-}
-
-#componentesRegistro {
-    width: 20rem;
-    justify-items: center;
-    background-color: rgb(224, 224, 224);
-    border: none;
-    height: 2.7rem;
-}
-
-#Subtitulo {
-    display: flex;
-    justify-content: center;
-}
-
-header{
-    display: flex;
-    justify-content: space-between;
+form fieldset h1,
+form fieldset h3{
+    text-align: center;
 }

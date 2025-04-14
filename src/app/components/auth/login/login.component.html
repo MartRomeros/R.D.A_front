@@ -1,23 +1,31 @@
 <main class="container-fluid">
-    <form class="row">
-        <fieldset>
-            
-        </fieldset>
+  <form class="row">
+    <fieldset class="col-6">
+      <h1>Inicio de sesion</h1>
+      <h3>Completa los campos para ingresar</h3>
+    </fieldset>
 
-        <fieldset>
+    <mat-form-field appearance="outline" class="col-6">
+      <mat-label>Correo electronico</mat-label>
+      <input matInput placeholder="Ingresa tu correo electronico">
+      <mat-hint>0/100</mat-hint>
+    </mat-form-field>
 
-        </fieldset>
+    <mat-form-field class="col-6" appearance="outline">
+      <mat-label>Ingresa tu clave de acceso</mat-label>
+      <input matInput [type]="hide() ? 'password' : 'text'" />
+      <button mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+        [attr.aria-pressed]="hide()">
+        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-hint>0/100</mat-hint>
+    </mat-form-field>
 
-        <fieldset>
+    <button class="col-6" mat-flat-button>Iniciar Sesion</button>
 
-        </fieldset>
+    <fieldset class="col-6 login-options">
 
-        <fieldset>
+    </fieldset>
 
-        </fieldset>
-
-        <fieldset>
-
-        </fieldset>
-    </form>
+  </form>
 </main>

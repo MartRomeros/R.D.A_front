@@ -13,3 +13,9 @@ form fieldset h1,
 form fieldset h3{
     text-align: center;
 }
+
+.linkRegistro{
+    text-align: center;
+    margin-top: 2vh;
+    text-decoration: none;
+}

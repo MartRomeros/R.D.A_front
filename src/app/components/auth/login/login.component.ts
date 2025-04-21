@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -7,19 +7,25 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
 import Swal from 'sweetalert2';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { lastValueFrom } from 'rxjs';
+import { AuthServicesService } from '../../../services/auth-services.service';
+import { RouterModule } from '@angular/router';
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, ReactiveFormsModule, SweetAlert2Module],
+  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, ReactiveFormsModule, SweetAlert2Module, MatToolbarModule, RouterModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
 
 export class LoginComponent {
 
-  //creacion de la contrasenna
+  //Formulario de login
   loginForm!: FormGroup
+  //servicio de autenticacion
+  private authService = inject(AuthServicesService)
 
   constructor(private fb: FormBuilder) {
     this.loginForm = fb.group({
@@ -28,22 +34,72 @@ export class LoginComponent {
     })
   }
 
-  //visibilidad para la contrasenna
+  //visibilidad para el campo de contraseña
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
+  //contador de caracteres
+  showCounter(field: string): number {
+    return this.loginForm.get(field)?.value.length || 0
+  }
+
+
   //validar campos y mostrarlo en pantalla
   hasErrors(campo: string, typeError: string) {
     return this.loginForm.get(campo)?.touched && this.loginForm.get(campo)?.hasError(typeError)
   }
 
-  login() {
+  async login() {
     //validar campos
-    Swal.fire("SweetAlert2 is working!");
+    if (!this.validarCampos()) {
 
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No es posible iniciar sesión!",
+      });
+      return
+
+    }
+
+    const valores = {
+      email: this.loginForm.get('email')?.value,
+      password: this.loginForm.get('password')?.value
+    }
+
+    try {
+
+      const response = await lastValueFrom(this.authService.login(valores))
+      console.log(response)
+
+    } catch (error: any) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "No disponible!",
+      });
+
+    }
+
+
+  }
+
+
+  //metodo para validar campos
+  validarCampos(): boolean {
+
+    if (this.loginForm.get('email')?.hasError('email') || this.loginForm.get('email')?.hasError('required')) {
+      return false
+    }
+
+    if (this.loginForm.get('password')?.hasError('required')) {
+      return false
+    }
+
+    return true
   }
 
 

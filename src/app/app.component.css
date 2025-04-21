@@ -1,6 +1,21 @@
 /* header section */
 
 /* nav section */
+nav{
+    background-color: var(--nav-background);
+}
+
 .navbar-brand img{
     width: 25vh;
+}
+
+mat-slide-toggle{
+    color: var(--general-text-color);
+}
+
+/* side nav section */
+
+.offcanvas-sm{
+    width: 60%;
+
 }

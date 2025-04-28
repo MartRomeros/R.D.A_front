@@ -55,14 +55,12 @@ export class LoginComponent {
   async login() {
     //validar campos
     if (!this.validarCampos()) {
-
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "No es posible iniciar sesión!",
       });
       return
-
     }
 
     const valores = {

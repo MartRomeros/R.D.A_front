@@ -8,6 +8,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterModule } from '@angular/router';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
+import { AuthServicesService } from '../../../services/auth-services.service';
+import { last, lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -18,6 +20,7 @@ import Swal from 'sweetalert2';
 export class ForgotPasswordComponent {
 
   private fb = inject(FormBuilder)
+  private authService = inject(AuthServicesService)
 
   forgotForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]]
@@ -47,22 +50,30 @@ export class ForgotPasswordComponent {
       return
     }
 
-    const valores = {
-      email:this.forgotForm.get('email')?.value
-    }
+    const valores = this.forgotForm.get('email')?.value
 
     console.log(valores)
 
     try {
-      
-    } catch (error:any) {
+
+      const response = await lastValueFrom(this.authService.recuperarClave(valores))
+      Swal.fire({
+        icon: "success",
+        title: response.message,
+        showConfirmButton: false,
+        timer: 1500
+      });
+
+    } catch (error: any) {
 
       Swal.fire({
         icon: "error",
         title: "Oops...",
         text: "Error inesperado!", //cambiar a contrasenna (ESP)
-      });          
-      
+      });
+
+      console.log(error)
+
     }
 
   }

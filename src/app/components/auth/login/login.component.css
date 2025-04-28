@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
 main{
     padding: 2vh;
 }
@@ -12,6 +14,13 @@ form{
 form fieldset h1,
 form fieldset h3{
     text-align: center;
+}
+
+
+mat-form-field mat-label,
+mat-form-field input,
+mat-form-flied mat-hint{
+    font-family: "Roboto", sans-serif !important;
 }
 
 .linkRegistro{

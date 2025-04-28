@@ -14,4 +14,8 @@ export class AuthServicesService {
     return this.http.post(`${this.localUrl}/auth/login`, valores)
   }
 
+  recuperarClave(email: string): Observable<any> {
+    return this.http.put(`${this.localUrl}/auth/forgot-password`, { email: email })
+  }
+
 }

@@ -5,6 +5,7 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
 import { AlumnoComponent } from './components/alumno/alumno.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { ReportesComponent } from './components/admin/reportes/reportes.component';
+import { PerfilComponent } from './shared/components/perfil/perfil.component';
 
 export const routes: Routes = [
     {path:'',component:LoginComponent},
@@ -14,6 +15,7 @@ export const routes: Routes = [
     {path:'alumno',component:AlumnoComponent},
     {path:'admin',component:AdminComponent},
     {path:'reportes',component:ReportesComponent},
+    {path:'perfil',component:PerfilComponent},
 
     {path:'forgot-password',component:ForgotPasswordComponent},
 

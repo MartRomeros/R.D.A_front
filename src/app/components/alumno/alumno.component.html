@@ -1,1 +1,262 @@
-<p>alumno works!</p>
+<app-header></app-header>
+
+<main class="container-fluid">
+
+    @if (!isMobile()) {
+    <section class="row">
+        <div class="col">
+            <h3>{{nombreAlumno}}</h3>
+        </div>
+        <div class="col-2">
+            <button mat-flat-button>
+                <mat-icon>description</mat-icon>
+                Exportar a Ecxel
+            </button>
+        </div>
+    </section>
+
+    <section class="row">
+
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Horas trabajadas</h6>
+                    <mat-icon>schedule</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>46 Hrs</h3>
+                +2.5 la semana pasada
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Monto Acumulado</h6>
+                    <mat-icon>attach_money</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>147000 CLP</h3>
+                +7500 la semana pasada
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Proximo Pago</h6>
+                    <mat-icon>calendar_month</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>16 de Mayo</h3>
+                en 12 dias
+            </mat-card-content>
+
+        </mat-card>
+    </section>
+
+    <section class="row">
+        <!--<h4 class="col-4">Mostrar horas de trabajo de:</h4>
+
+        <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Mes</mat-label>
+            <mat-select>
+                @for (mes of meses; track mes) {
+                <mat-option [value]="mes.numero">{{mes.nombre}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>-->
+
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                <td mat-cell *matCellDef="let actividades">{{actividades.fecha}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="horaInicio">
+                <th mat-header-cell *matHeaderCellDef> Hora de inicio </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.horaInicio}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="horaTermino">
+                <th mat-header-cell *matHeaderCellDef> Hora de termino </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.horaTermino}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="area">
+                <th mat-header-cell *matHeaderCellDef> area </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.area}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </section>
+
+    <!--<section class="row">
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                    <h6>Distribucion de Horas por Seccion</h6>
+            </mat-card-header>
+
+            <mat-card-content>
+                grafico
+            </mat-card-content>
+
+        </mat-card>
+    </section> -->
+
+    <section class="row">
+        <mat-card appearance="outlined" class="col-6 hour-registry">
+
+            <mat-card-header>
+                <h4>Registro de horas</h4>
+                <h6 class="subtitle">Ingresa las horas trabajadas</h6>
+            </mat-card-header>
+
+            <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
+                <mat-form-field>
+                    <mat-label>Fecha de actividad</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="fecha">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Fecha de inicio</mat-label>
+                    <input matInput type="time" formControlName="horaInic">
+                    <mat-timepicker #picker />
+                    <mat-hint>00:00 AM/PM</mat-hint>
+                </mat-form-field>
+
+                <mat-form-field>
+                    <mat-label>Fecha de termino</mat-label>
+                    <input matInput type="time" formControlName="horaTerm">
+                    <mat-hint>00:00 AM/PM</mat-hint>
+                    <mat-timepicker #picker />
+                </mat-form-field>
+
+                <fieldset>
+                    <button type="submit" mat-flat-button>Registrar Hora</button>
+                </fieldset>
+
+            </form>
+
+        </mat-card>
+    </section>
+
+
+    }
+    @else {
+    <section class="row section-title">
+        <h1 class="col">R.D.A</h1>
+        <button class="col-4" mat-raised-button>
+            <mat-icon>description</mat-icon>
+            Exportar
+        </button>
+    </section>
+
+    <section class="row">
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Horas trabajadas</h6>
+                    <mat-icon>schedule</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>46 Hrs</h3>
+                +2.5 la semana pasada
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Monto Acumulado</h6>
+                    <mat-icon>attach_money</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>147000 CLP</h3>
+                +7500 la semana pasada
+            </mat-card-content>
+
+        </mat-card>
+
+        <mat-card appearance="outlined" class="col-lg">
+
+            <mat-card-header>
+                <div class="header">
+                    <h6>Proximo Pago</h6>
+                    <mat-icon>calendar_month</mat-icon>
+                </div>
+            </mat-card-header>
+
+            <mat-card-content>
+                <h3>16 de Mayo</h3>
+                en 12 dias
+            </mat-card-content>
+
+        </mat-card>
+    </section>
+
+    <section class="row">
+        <h3>Historial</h3>
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+            <ng-container matColumnDef="fecha">
+                <th mat-header-cell *matHeaderCellDef>Fecha</th>
+                <td mat-cell *matCellDef="let actividades">{{actividades.fecha}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="horaInicio">
+                <th mat-header-cell *matHeaderCellDef> Hora de inicio </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.horaInicio}} </td>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="horaTermino">
+                <th mat-header-cell *matHeaderCellDef> Hora de termino </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.horaTermino}} </td>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="area">
+                <th mat-header-cell *matHeaderCellDef> area </th>
+                <td mat-cell *matCellDef="let actividades"> {{actividades.area}} </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+    </section>
+
+    <section class="row">
+        <button mat-flat-button> Mas informacion</button>
+    </section>
+    }
+</main>

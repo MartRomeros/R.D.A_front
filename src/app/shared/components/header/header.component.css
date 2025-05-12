@@ -1,9 +1,20 @@
 /* header section */
+header{
+    background-color: #36243E;
+}
 
 
 /* nav section */
+mat-toolbar{
+    background-color: #36243E;
+}
+
 mat-toolbar img{
     width: 15%;
+}
+
+mat-toolbar button{
+    color: #fff;
 }
 
 

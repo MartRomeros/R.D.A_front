@@ -17,6 +17,10 @@ form fieldset h3{
 }
 
 
+form a{
+    color: #36243E;
+}
+
 mat-form-field mat-label,
 mat-form-field input,
 mat-form-flied mat-hint{
@@ -27,4 +31,13 @@ mat-form-flied mat-hint{
     text-align: center;
     margin-top: 2vh;
     text-decoration: none;
+}
+
+fieldset{
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset button{
+    background-color: #36243E;
 }

@@ -3,7 +3,7 @@
   <form class="row" [formGroup]="loginForm" (ngSubmit)="login()">
     <fieldset class="col-lg-6">
       <h1>Inicio de sesion</h1>
-      <h3>Completa los campos para ingresar</h3>
+      <h3 class="subtitle">Completa los campos para ingresar</h3>
     </fieldset>
 
     <mat-form-field appearance="outline" class="col-lg-6">
@@ -24,7 +24,7 @@
     <mat-form-field class="col-lg-6" appearance="outline">
       <mat-label class="text-general">Ingresa tu clave de acceso</mat-label>
       <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" name="password" autocomplete="current-password" class="text-general"/>
-      <button class="text-general" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+      <button type="button" class="text-general" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
         [attr.aria-pressed]="hide()">
         <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
       </button>
@@ -36,7 +36,9 @@
       }
     </div>
 
-    <button class="col-lg-6" mat-flat-button type="submit" >Iniciar Sesion</button>
+    <fieldset class="col-lg-6">
+      <button mat-flat-button type="submit" >Iniciar Sesion</button>
+    </fieldset>
 
     <a class="linkRegistro" [routerLink]="'/forgot-password'">¿Olvidaste tu clave de acceso?.</a> <!--Cambiar a contrasena--> 
 

@@ -1,0 +1,32 @@
+main{
+    padding: 2vh;
+}
+
+section{
+    padding: 2vh;
+    display: flex;
+    justify-content: center;
+    gap: 4vh;
+}
+
+mat-card-header{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.edit-info-title{
+    display: flex;
+    flex-direction: column;
+}
+
+.info-section mat-card-header{
+    align-items: start;
+}
+
+mat-card-content form{
+    padding: 2vh;
+    gap: 3vh;
+}

@@ -1,0 +1,47 @@
+section{
+    padding: 2vh;
+}
+
+section:nth-child(1) div{
+    display: flex;
+    align-items: center;
+}
+
+section:nth-child(1) div button{
+    background-color: #36243E;
+}
+
+mat-card-header .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    
+}
+
+section:nth-child(2){
+    gap: 2vh;
+}
+
+.hour-registry mat-card-header{
+    display: flex;
+    flex-direction: column;
+}
+
+.hour-registry form{
+    padding: 2vh;
+    gap: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hour-registry form fieldset button{
+    background-color: #36243E;
+}
+
+
+@media (min-width:1024px){
+    section:nth-child(2){
+        gap: 10vh;
+    }
+}

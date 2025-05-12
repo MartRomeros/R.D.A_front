@@ -10,7 +10,8 @@ import Swal from 'sweetalert2';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { lastValueFrom } from 'rxjs';
 import { AuthServicesService } from '../../../services/auth-services.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { LoginResponse } from '../../../models/loginResponse';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class LoginComponent {
   loginForm!: FormGroup
   //servicio de autenticacion
   private authService = inject(AuthServicesService)
+  private router = new Router()
 
   constructor(private fb: FormBuilder) {
     this.loginForm = fb.group({
@@ -58,7 +60,7 @@ export class LoginComponent {
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No es posible iniciar sesión!",
+        text: "No es posible iniciar sesión. Por favor verifica tus credenciales",
       });
       return
     }
@@ -70,15 +72,18 @@ export class LoginComponent {
 
     try {
 
-      const response = await lastValueFrom(this.authService.login(valores))
-      console.log(response)
+      const response: LoginResponse = await lastValueFrom(this.authService.login(valores))
+      if (response.tipoUsuario === 'ALUMNO') {
+        this.router.navigate(['alumno'])
+      }
 
     } catch (error: any) {
+
       Swal.fire({
         icon: "error",
         title: "Oops...",
-        text: "No disponible!",
-      });
+        text: error.error.message});
+      console.log(error)
 
     }
 

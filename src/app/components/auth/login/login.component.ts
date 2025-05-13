@@ -1,22 +1,17 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { signal } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
 import Swal from 'sweetalert2';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { lastValueFrom } from 'rxjs';
 import { AuthServicesService } from '../../../services/auth-services.service';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { LoginResponse } from '../../../models/loginResponse';
+import { GeneralModule } from '../../../shared/modules/general/general.module';
 
 
 @Component({
   selector: 'app-login',
-  imports: [FormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, ReactiveFormsModule, SweetAlert2Module, MatToolbarModule, RouterModule],
+  imports: [GeneralModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })

@@ -18,6 +18,7 @@ export class ActividadService {
   registrarActividad(actividad: Actividad): Observable<any> {
     return this.http.post(`${this.rendelUrl}/actividad/actividades`, actividad , { withCredentials: true })
   }
+  
 
 
 }

@@ -12,7 +12,8 @@ import { GeneralModule } from '../../../shared/modules/general/general.module';
   selector: 'app-login',
   imports: [GeneralModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrl: './login.component.css',
+  standalone: true
 })
 
 export class LoginComponent {
@@ -67,7 +68,7 @@ export class LoginComponent {
         this.router.navigate(['alumno'])
       }
 
-    } catch (error: any) {      
+    } catch (error: any) {
       console.log(error)
     }
 

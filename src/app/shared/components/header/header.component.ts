@@ -36,4 +36,8 @@ export class HeaderComponent {
     this.router.navigate(['perfil'])
   }
 
+  goHome(){
+    this.router.navigate(['alumno'])
+  }
+
 }

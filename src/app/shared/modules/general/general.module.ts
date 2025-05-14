@@ -6,7 +6,6 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -24,7 +23,6 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    SweetAlert2Module,
     MatToolbarModule,
     MatCardModule,
     MatDatepickerModule
@@ -38,7 +36,6 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    SweetAlert2Module,
     MatToolbarModule,
     MatCardModule,
     MatDatepickerModule,

@@ -55,34 +55,49 @@
 
             <mat-card-content class="container-fluid">
                 <mat-divider></mat-divider>
-                <form class="row">
+                <form class="row" [formGroup]="perfilForm" (ngSubmit)="actualizarDatos()">
 
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Numero de telefono</mat-label>
-                        <input matInput placeholder="Ej: 9 9999 9999">
+                        <input matInput placeholder="Ej: 9 9999 9999" formControlName="fono" type="number">
                         <mat-icon matSuffix>call</mat-icon>
                         <mat-hint>tu numero de telefono debe seguir el siguiente formato: 9 9999 9999</mat-hint>
-                    </mat-form-field>                    
+                    </mat-form-field>
 
                     <h6>Cambiar de contrasena</h6>
                     <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Nueva contrasena</mat-label>
-                        <input matInput placeholder="Tu nueva contrasena">
-                        <mat-icon matSuffix>key</mat-icon>
-                        <mat-hint>Asegurate que tu contrasena sea lo suficientemente segura!</mat-hint>
+                        <mat-label>Nueva Contrasenna</mat-label>
+                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna1"/>
+                        <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-hint>Tu contrasena debe cumplir con:</mat-hint>
                     </mat-form-field>
 
+                    <div class="col-12">
+                        <mat-hint>- Caracteres en mayuscula</mat-hint> <br>
+                        <mat-hint>- Caracteres en minuscula</mat-hint> <br>
+                        <mat-hint>- 4 numeros</mat-hint> <br>
+                        <mat-hint>- Un caracter extrano</mat-hint> <br>
+                        <mat-hint>- La contrasena debe tener una longitud maxima de 20 caracteres</mat-hint> <br>
+
+                    </div>
 
                     <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Repetir contrasena</mat-label>
-                        <input matInput placeholder="Repite la nueva contrasena">
-                        <mat-icon matSuffix>key</mat-icon>
-                        <mat-hint>Ambas contrasenas deben coincidir</mat-hint>
+                        <mat-label>Repite tu contrasenna</mat-label>
+                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna2"/>
+                        <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
+                            [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+                            <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                        <mat-hint>Tu contrasena debe cumplir con:</mat-hint>
                     </mat-form-field>
-                
+
+
 
                     <fieldset class="col-12">
-                        <button mat-flat-button type="submit">Actualizar</button>
+                        <button mat-flat-button type="submit">Actualizar Datos</button>
                     </fieldset>
 
                 </form>

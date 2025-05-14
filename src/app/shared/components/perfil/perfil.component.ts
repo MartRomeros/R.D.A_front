@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
@@ -12,10 +12,11 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { GeneralModule } from '../../modules/general/general.module';
 
 @Component({
   selector: 'app-perfil',
-  imports: [MatCardModule, HeaderComponent, MatDividerModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule],
+  imports: [MatCardModule, HeaderComponent, MatDividerModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, GeneralModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -29,7 +30,7 @@ export class PerfilComponent {
 
   //TO DO
   perfilForm: FormGroup = this.fb.group({
-    fono:[''],
+    fono: [''],
     contrasenna1: [''],
     contrasenna2: [''],
   })
@@ -39,6 +40,15 @@ export class PerfilComponent {
   fono!: number
   run!: string
 
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
+  }
+
+
+
+
   ngOnInit() {
     this.obtenerDatos()
   }
@@ -47,7 +57,6 @@ export class PerfilComponent {
   private async obtenerDatos() {
     try {
       const response = await lastValueFrom(this.authService.isAuthenticated())
-
       if (!response) {
         console.log('Error en la autenticacion')
         return
@@ -61,6 +70,28 @@ export class PerfilComponent {
     } catch (error: any) {
       console.log(error)
     }
+  }
+
+  async actualizarDatos() {
+    const valores = {
+      fono: parseInt(this.perfilForm.get('fono')?.value),
+      password: this.perfilForm.get('contrasenna1')?.value
+    }
+
+    alert(valores.fono)
+    alert(valores.password)
+
+    const response = await lastValueFrom(this.userService.actualizarDatos(valores))
+
+    alert(response.message)
+
+    try {
+
+    } catch (error: any) {
+      alert(error)
+    }
+
+
   }
 
 }

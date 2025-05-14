@@ -15,6 +15,8 @@ export class UserService {
     return this.http.get(`${this.rendelUrl}/user/user/email`,{withCredentials:true})
   }
 
-
+  actualizarDatos(valores:any):Observable<any>{
+    return this.http.put(`${this.rendelUrl}/user/update`,valores,{withCredentials:true})
+  }
 
 }

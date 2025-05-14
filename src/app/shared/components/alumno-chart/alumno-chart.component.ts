@@ -20,15 +20,14 @@ export class AlumnoChartComponent {
     },
     series: [
       {
-        name: 'Acceso',
+        name: 'Areas de trabajo',
         type: 'pie',
         radius: '50%',
         data: [
-          { value: 1048, name: 'Buscador' },
-          { value: 735, name: 'Directo' },
-          { value: 580, name: 'Email' },
-          { value: 484, name: 'Ads Sociales' },
-          { value: 300, name: 'Video Ads' }
+          { value: 1048, name: 'Difusion' },
+          { value: 735, name: 'Extension' },
+          { value: 580, name: 'Comunicacion' },
+          { value: 484, name: 'Desarrollo laboral' }
         ],
         emphasis: {
           itemStyle: {

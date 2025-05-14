@@ -1,19 +1,13 @@
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterModule } from '@angular/router';
-import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { last, lastValueFrom } from 'rxjs';
+import { GeneralModule } from '../../../shared/modules/general/general.module';
 
 @Component({
   selector: 'app-forgot-password',
-  imports: [ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatIconModule, MatButtonModule, MatToolbarModule, RouterModule, SweetAlert2Module],
+  imports: [GeneralModule],
   templateUrl: './forgot-password.component.html',
   styleUrl: './forgot-password.component.css'
 })

@@ -30,7 +30,8 @@ export class PerfilComponent {
   //TO DO
   perfilForm: FormGroup = this.fb.group({
     fono:[''],
-    contrasenna1: []
+    contrasenna1: [''],
+    contrasenna2: [''],
   })
 
   nombre!: string
@@ -60,7 +61,6 @@ export class PerfilComponent {
     } catch (error: any) {
       console.log(error)
     }
-
   }
 
 }

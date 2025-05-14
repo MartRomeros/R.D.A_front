@@ -8,6 +8,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2'
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatTimepickerModule } from '@angular/material/timepicker';
 
 
 
@@ -22,7 +25,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonModule,
     SweetAlert2Module,
-    MatToolbarModule],
+    MatToolbarModule,
+    MatCardModule,
+    MatDatepickerModule
+  ],
   providers: [],
   exports: [CommonModule,
     RouterModule,
@@ -33,7 +39,10 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     MatIconModule,
     MatButtonModule,
     SweetAlert2Module,
-    MatToolbarModule
+    MatToolbarModule,
+    MatCardModule,
+    MatDatepickerModule,
+    MatTimepickerModule
   ],
 })
 export class GeneralModule { }

@@ -1,32 +1,20 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon'
-import { MatTableModule } from '@angular/material/table';
-import { MatSelectModule } from "@angular/material/select"
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { AuthServicesService } from '../../services/auth-services.service';
 import { lastValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core'
-import { MatTimepickerModule } from '@angular/material/timepicker';
 import { Actividad, User } from '../../models/interfaces';
 import { ActividadService } from '../../services/actividad.service';
 import Swal from 'sweetalert2';
-
-type Mes = {
-  nombre: string;
-  numero: number;
-};
+import { GeneralModule } from '../../shared/modules/general/general.module';
+import { AlumnoChartComponent } from '../../shared/components/alumno-chart/alumno-chart.component';
 
 @Component({
   selector: 'app-alumno',
-  imports: [MatIconModule, MatButtonModule, MatCardModule, MatTableModule, MatSelectModule, FormsModule, HeaderComponent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatTimepickerModule, MatSelectModule],
+  imports: [FormsModule, HeaderComponent, ReactiveFormsModule, GeneralModule, AlumnoChartComponent],
   templateUrl: './alumno.component.html',
   providers: [provideNativeDateAdapter()],
   styleUrl: './alumno.component.css',
@@ -81,7 +69,6 @@ export class AlumnoComponent implements OnInit {
   }
 
   async registrarHora() {
-
     //formateo de fechas
     const date = new Date(this.actividadForm.get('fecha')?.value)
     const dia = date.getDate().toString().padStart(2, '0')
@@ -151,9 +138,6 @@ export class AlumnoComponent implements OnInit {
   }
 
   traerFechaAproxPago() {
-
-
-
     const añoActual = new Date().getFullYear();
     const mes = new Date().getMonth()
 

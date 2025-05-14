@@ -9,13 +9,14 @@ import { Actividad } from '../models/interfaces';
 export class ActividadService {
   private http = inject(HttpClient)
   private localUrl = 'http://localhost:3000'
+  private rendelUrl = 'https://r-d-a-server-1.onrender.com'
 
   traerActividadesByAlumno(run: string): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
+    return this.http.get(`${this.rendelUrl}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
   registrarActividad(actividad: Actividad): Observable<any> {
-    return this.http.post(`${this.localUrl}/actividad/actividades`, actividad , { withCredentials: true })
+    return this.http.post(`${this.rendelUrl}/actividad/actividades`, actividad , { withCredentials: true })
   }
 
 

@@ -1,3 +1,7 @@
+main{
+    padding: 40px;
+}
+
 section{
     padding: 2vh;
 }
@@ -39,6 +43,13 @@ section:nth-child(2){
     background-color: #36243E;
 }
 
+section{
+    gap: 4vh;
+}
+
+.table{
+    --bs-table-bg: #FAF9FD;
+}
 
 @media (min-width:1024px){
     section:nth-child(2){

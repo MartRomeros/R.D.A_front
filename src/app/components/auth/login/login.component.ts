@@ -11,7 +11,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { lastValueFrom } from 'rxjs';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router, RouterModule } from '@angular/router';
-import { LoginResponse } from '../../../models/loginResponse';
+import { LoginResponse } from '../../../models/interfaces';
 
 
 @Component({

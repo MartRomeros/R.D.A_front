@@ -5,7 +5,7 @@
     @if (!isMobile()) {
     <section class="row">
         <div class="col">
-            <h3>{{nombreAlumno}}</h3>
+            <h3>Dashboard</h3>
         </div>
         <div class="col-2">
             <button mat-flat-button>
@@ -27,8 +27,7 @@
             </mat-card-header>
 
             <mat-card-content>
-                <h3>46 Hrs</h3>
-                +2.5 la semana pasada
+                <h3>{{horasTrabajadas}} Hrs</h3>
             </mat-card-content>
 
         </mat-card>
@@ -43,8 +42,8 @@
             </mat-card-header>
 
             <mat-card-content>
-                <h3>147000 CLP</h3>
-                +7500 la semana pasada
+                <h3>{{montoAcumuladoFormateado}} CLP</h3>
+                tarifa: 2450 CLP
             </mat-card-content>
 
         </mat-card>
@@ -59,71 +58,44 @@
             </mat-card-header>
 
             <mat-card-content>
-                <h3>16 de Mayo</h3>
-                en 12 dias
+                <h3>{{fechaPago}}</h3>
+                en {{diasRestantes}} dias
             </mat-card-content>
 
         </mat-card>
     </section>
 
     <section class="row">
-        <!--<h4 class="col-4">Mostrar horas de trabajo de:</h4>
-
-        <mat-form-field class="col-3" appearance="outline">
-            <mat-label>Mes</mat-label>
-            <mat-select>
-                @for (mes of meses; track mes) {
-                <mat-option [value]="mes.numero">{{mes.nombre}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>-->
-
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef>Fecha</th>
-                <td mat-cell *matCellDef="let actividades">{{actividades.fecha}} </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="horaInicio">
-                <th mat-header-cell *matHeaderCellDef> Hora de inicio </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.horaInicio}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="horaTermino">
-                <th mat-header-cell *matHeaderCellDef> Hora de termino </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.horaTermino}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="area">
-                <th mat-header-cell *matHeaderCellDef> area </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.area}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
-    </section>
-
-    <!--<section class="row">
-        <mat-card appearance="outlined" class="col-lg">
-
-            <mat-card-header>
-                    <h6>Distribucion de Horas por Seccion</h6>
-            </mat-card-header>
-
+        <mat-card class="col" appearance="outlined">
             <mat-card-content>
-                grafico
+                <h3>Mis horas registradas</h3>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora inicio</th>
+                            <th scope="col">Hora termino</th>
+                            <th scope="col">Area de trabajo</th>
+                        </tr>
+                        @for (actividad of actividades; track $index) {
+                        <tr>
+                            <th scope="row">{{actividad.fecha_actividad}}</th>
+                            <td>{{actividad.hora_inic_activdad}}</td>
+                            <td>{{actividad.hora_term_actividad}}</td>
+                            <td>{{actividad.area_trabajo}}</td>
+                        </tr>
+                        }
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
             </mat-card-content>
-
         </mat-card>
-    </section> -->
 
+    </section>
     <section class="row">
-        <mat-card appearance="outlined" class="col-6 hour-registry">
+        <mat-card appearance="outlined" class="col hour-registry">
 
             <mat-card-header>
                 <h4>Registro de horas</h4>
@@ -140,24 +112,44 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <mat-label>Fecha de inicio</mat-label>
+                    <mat-label>Hora de inicio</mat-label>
                     <input matInput type="time" formControlName="horaInic">
                     <mat-timepicker #picker />
                     <mat-hint>00:00 AM/PM</mat-hint>
                 </mat-form-field>
 
                 <mat-form-field>
-                    <mat-label>Fecha de termino</mat-label>
+                    <mat-label>Hora de termino</mat-label>
                     <input matInput type="time" formControlName="horaTerm">
                     <mat-hint>00:00 AM/PM</mat-hint>
                     <mat-timepicker #picker />
                 </mat-form-field>
 
+                <mat-form-field>
+                    <mat-label>Area de trabajo</mat-label>
+                    <select matNativeControl formControlName="area">
+                        <option value="difusion">Difusion</option>
+                        <option value="extension">Extension</option>
+                        <option value="comunicacion">Comunicacion</option>
+                        <option value="desarrollo_laboral">Desarrollo laboral</option>
+                    </select>
+                </mat-form-field>
+
                 <fieldset>
                     <button type="submit" mat-flat-button>Registrar Hora</button>
                 </fieldset>
-
             </form>
+
+        </mat-card>
+
+        <mat-card appearance="outlined" class="col hours-per-section">
+
+            <mat-card-header>
+                <h4>Distribucion de horas por seccion</h4>
+            </mat-card-header>
+
+            <mat-card-content>
+            </mat-card-content>
 
         </mat-card>
     </section>
@@ -225,34 +217,6 @@
 
     <section class="row">
         <h3>Historial</h3>
-        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-
-            <ng-container matColumnDef="fecha">
-                <th mat-header-cell *matHeaderCellDef>Fecha</th>
-                <td mat-cell *matCellDef="let actividades">{{actividades.fecha}} </td>
-            </ng-container>
-
-            <!-- Name Column -->
-            <ng-container matColumnDef="horaInicio">
-                <th mat-header-cell *matHeaderCellDef> Hora de inicio </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.horaInicio}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="horaTermino">
-                <th mat-header-cell *matHeaderCellDef> Hora de termino </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.horaTermino}} </td>
-            </ng-container>
-
-            <!-- Symbol Column -->
-            <ng-container matColumnDef="area">
-                <th mat-header-cell *matHeaderCellDef> area </th>
-                <td mat-cell *matCellDef="let actividades"> {{actividades.area}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        </table>
     </section>
 
     <section class="row">

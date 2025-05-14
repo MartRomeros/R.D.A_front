@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon'
@@ -8,7 +8,6 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angul
 import { HeaderComponent } from '../../shared/components/header/header.component';
 import { AuthServicesService } from '../../services/auth-services.service';
 import { lastValueFrom } from 'rxjs';
-import { OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -16,6 +15,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import { Actividad, User } from '../../models/interfaces';
+import { ActividadService } from '../../services/actividad.service';
+import Swal from 'sweetalert2';
 
 type Mes = {
   nombre: string;
@@ -24,53 +26,38 @@ type Mes = {
 
 @Component({
   selector: 'app-alumno',
-  imports: [MatIconModule, MatButtonModule, MatCardModule, MatTableModule, MatSelectModule, FormsModule, HeaderComponent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatTimepickerModule],
+  imports: [MatIconModule, MatButtonModule, MatCardModule, MatTableModule, MatSelectModule, FormsModule, HeaderComponent, ReactiveFormsModule, MatFormFieldModule, MatInputModule, MatDatepickerModule, MatTimepickerModule, MatSelectModule],
   templateUrl: './alumno.component.html',
   providers: [provideNativeDateAdapter()],
   styleUrl: './alumno.component.css',
-  changeDetection: ChangeDetectionStrategy.OnPush
+  standalone: true
 })
-export class AlumnoComponent {
+export class AlumnoComponent implements OnInit {
 
   private router = new Router()
   private authService = inject(AuthServicesService)
   private userService = inject(UserService)
+  private actividadService = inject(ActividadService)
   private fb = inject(FormBuilder)
-
 
   actividadForm: FormGroup = this.fb.group({
     fecha: [''],
     horaInic: [''],
-    horaTerm: ['']
+    horaTerm: [''],
+    area: ['']
   })
-
-  nombreAlumno = ''
-
-  fechaActual = new Date();
-  mesActual = this.fechaActual.getMonth(); // 0 = enero
-
-  meses: { nombre: string; numero: number }[] = Array.from(
-    { length: this.mesActual + 1 },
-    (_, i) => {
-      const fecha = new Date(2000, i); // cualquier año sirve para obtener el nombre del mes
-      return {
-        nombre: fecha.toLocaleString('es-ES', { month: 'long' }),
-        numero: i + 1
-      };
-    }
-  );
+  actividades!: Actividad[]
+  montoAcumulado: number = 0
+  horasTrabajadas: number = 0
+  montoAcumuladoFormateado: string = ''
+  fechaPago: any
+  diasRestantes: any
 
 
-  horas = [
-    { fecha: '01/01/204', horaInicio: '18:00', horaTermino: '21:00', area: 'difusion' }
-  ]
-  displayedColumns: string[] = ['fecha', 'horaInicio', 'horaTermino', 'area']
-  dataSource = this.horas
-
-  ngOnInit() {
-    this.obtenerUsuario()
+  ngOnInit(): void {
+    this.traerHoras()
+    this.traerFechaAproxPago()
   }
-
 
 
 
@@ -78,57 +65,113 @@ export class AlumnoComponent {
     return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   }
 
-  obtenerMesesPorAño(año: number): Mes[] {
-    const fechaActual = new Date();
-    const añoActual = fechaActual.getFullYear();
-
-    if (año > añoActual) {
-      // Si el año es en el futuro, retorna arreglo vacío
-      return [];
-    }
-
-    // Determina cuántos meses incluir (hasta el mes actual si es el mismo año)
-    const limiteMeses = año === añoActual ? fechaActual.getMonth() + 1 : 12;
-
-    // Genera el arreglo de meses
-    const meses: Mes[] = Array.from({ length: limiteMeses }, (_, i) => {
-      const fecha = new Date(año, i);
-      const nombreMes = fecha.toLocaleString('es-ES', { month: 'long' });
-
-      return {
-        nombre: nombreMes.charAt(0).toUpperCase() + nombreMes.slice(1), // Capitaliza
-        numero: i + 1
-      };
-    });
-
-    return meses;
-  }
-
   async obtenerUsuario() {
     try {
-
       const response = await lastValueFrom(this.authService.isAuthenticated())
       const response2 = await lastValueFrom(this.userService.findUserbyEmail())
       console.log(response2)
-      this.nombreAlumno = `${response2.nombre} ${response2.apellido_paterno}`
-      console.log(this.nombreAlumno)
-
       if (!response.isAuthenticated) {
         console.log('error en la autenticacion!')
         this.router.navigate(['/login'])
         return
       }
-
-
     } catch (error: any) {
       console.log(error)
     }
   }
 
-  async registrarHora(){
-    console.log(this.actividadForm.value)
+  async registrarHora() {
 
+    //formateo de fechas
+    const date = new Date(this.actividadForm.get('fecha')?.value)
+    const dia = date.getDate().toString().padStart(2, '0')
+    const mes = (date.getMonth() + 1).toString().padStart(2, '0')
+    const anio = date.getFullYear().toString().slice(-2)
+    const fechaFormateada = `${dia}/${mes}/${anio}`
+
+    try {
+
+      //traer al usuario por el email que esta en la cookie
+      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
+      const run = usuario.run
+
+      const valores: Actividad = {
+        area_trabajo: this.actividadForm.get('area')?.value,
+        fecha_actividad: fechaFormateada,
+        hora_inic_activdad: this.actividadForm.get('horaInic')?.value,
+        hora_term_actividad: this.actividadForm.get('horaTerm')?.value,
+        run_alumno: run
+      }
+
+      const response = await lastValueFrom(this.actividadService.registrarActividad(valores))
+      Swal.fire({
+        text: response.messaage
+      })
+
+      const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
+      this.actividades = actividades.actividades
+
+    } catch (error: any) {
+      console.error(error)
+    }
   }
 
+  async traerHoras() {
+    try {
+      //traer al usuario por el email que esta en la cookie
+      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
+      const run = usuario.run
+      const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
+      this.actividades = actividades.actividades
 
+      this.actividades.forEach((actividad) => {
+        const [hInic, mInic] = actividad.hora_inic_activdad.split(':').map(Number)
+        const [hTerm, mTerm] = actividad.hora_term_actividad.split(':').map(Number)
+        const minutosInic = hInic * 60 + mInic
+        const minutosTerm = hTerm * 60 + mTerm
+
+        const diferenciaMinutos = Math.abs(minutosInic - minutosTerm)
+        const diferenciaHoras = diferenciaMinutos / 60
+        this.horasTrabajadas += diferenciaHoras
+
+        const valorActividad = diferenciaHoras * 2450
+        this.montoAcumulado += valorActividad
+      })
+
+      this.montoAcumuladoFormateado = new Intl.NumberFormat('es-CL', {
+        style: 'currency',
+        currency: 'CLP',
+        maximumFractionDigits: 0
+      }).format(this.montoAcumulado)
+
+
+    } catch (error: any) {
+      console.error(error)
+    }
+  }
+
+  traerFechaAproxPago() {
+
+
+
+    const añoActual = new Date().getFullYear();
+    const mes = new Date().getMonth()
+
+    // Buscar entre el 8 y el 14 (segunda semana del mes)
+    for (let dia = 15; dia <= 21; dia++) {
+      const fecha = new Date(añoActual, mes, dia);
+      if (fecha.getDay() === 5) { // 5 = viernes
+
+        const diferenciaMs = fecha.getTime() - new Date().getTime();
+        const diasRestantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+        this.diasRestantes = diasRestantes
+
+        const opciones = new Intl.DateTimeFormat('es-CL', {
+          day: 'numeric',
+          month: 'long'
+        }).format(fecha)
+        this.fechaPago = opciones
+      }
+    }
+  }
 }

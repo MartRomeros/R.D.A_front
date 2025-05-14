@@ -4,14 +4,9 @@ import { signal } from '@angular/core';
 import Swal from 'sweetalert2';
 import { lastValueFrom } from 'rxjs';
 import { AuthServicesService } from '../../../services/auth-services.service';
-<<<<<<< HEAD
-import { Router, RouterModule } from '@angular/router';
-import { LoginResponse } from '../../../models/interfaces';
-=======
 import { Router } from '@angular/router';
-import { LoginResponse } from '../../../models/loginResponse';
+import { LoginResponse } from '../../../models/interfaces';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
->>>>>>> a8c3a6a7b8b9fba1c5f649c53009abb635eebba3
 
 
 @Component({

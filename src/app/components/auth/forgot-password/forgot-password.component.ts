@@ -1,8 +1,7 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
 import { AuthServicesService } from '../../../services/auth-services.service';
-import { last, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
 
 @Component({
@@ -36,11 +35,7 @@ export class ForgotPasswordComponent {
   async recuperarClave() {
 
     if (this.forgotForm.get('email')?.hasError('email') || this.forgotForm.get('email')?.hasError('required')) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No es posible recuperar la contrasenna!", //cambiar a contrasenna (ESP)
-      });
+      alert('no es posible recuperar la contrasena')
       return
     }
 
@@ -51,21 +46,10 @@ export class ForgotPasswordComponent {
     try {
 
       const response = await lastValueFrom(this.authService.recuperarClave(valores))
-      Swal.fire({
-        icon: "success",
-        title: response.message,
-        showConfirmButton: false,
-        timer: 1500
-      });
+      alert('no es posible recuperar la contrasena')
 
     } catch (error: any) {
-
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Error inesperado!", //cambiar a contrasenna (ESP)
-      });
-
+      alert('no es posible recuperar la contrasena error server')
       console.log(error)
 
     }

@@ -1,7 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { signal } from '@angular/core';
-import Swal from 'sweetalert2';
 import { lastValueFrom } from 'rxjs';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
@@ -52,11 +51,7 @@ export class LoginComponent {
   async login() {
     //validar campos
     if (!this.validarCampos()) {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "No es posible iniciar sesión. Por favor verifica tus credenciales",
-      });
+      alert('reemplazado por sweet alert')
       return
     }
 
@@ -72,14 +67,8 @@ export class LoginComponent {
         this.router.navigate(['alumno'])
       }
 
-    } catch (error: any) {
-
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.error.message});
+    } catch (error: any) {      
       console.log(error)
-
     }
 
 

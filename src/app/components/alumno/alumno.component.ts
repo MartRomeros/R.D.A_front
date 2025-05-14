@@ -8,7 +8,6 @@ import { UserService } from '../../services/user.service';
 import { provideNativeDateAdapter } from '@angular/material/core'
 import { Actividad, User } from '../../models/interfaces';
 import { ActividadService } from '../../services/actividad.service';
-import Swal from 'sweetalert2';
 import { GeneralModule } from '../../shared/modules/general/general.module';
 import { AlumnoChartComponent } from '../../shared/components/alumno-chart/alumno-chart.component';
 
@@ -91,9 +90,7 @@ export class AlumnoComponent implements OnInit {
       }
 
       const response = await lastValueFrom(this.actividadService.registrarActividad(valores))
-      Swal.fire({
-        text: response.messaage
-      })
+      alert(response.message)
 
       const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
       this.actividades = actividades.actividades

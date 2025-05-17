@@ -1,5 +1,5 @@
 #botonEditar {
-    background-color: #007bff;
+    background-color: RGB(54, 36, 62);
     color: white;
     border: none;
     padding: 10px 10px;
@@ -10,4 +10,36 @@
     margin: 4px 2px;
     cursor: pointer;
     border-radius: 4px;
+}
+
+#opciones{
+    margin: none;
+}
+
+/*Esto sive para que cambie el color dependiendo dele estado.*/
+.badge-success {
+    background: #d4edda;
+    color: #155724;
+    border-radius: 12px;
+    padding: 2px 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-warning {
+    background: #fff3cd;
+    color: #856404;
+    border-radius: 12px;
+    padding: 2px 12px;
+    font-weight: 500;
+    display: inline-block;
+}
+
+.badge-danger {
+    background: #f8d7da;
+    color: #721c24;
+    border-radius: 12px;
+    padding: 2px 12px;
+    font-weight: 500;
+    display: inline-block;
 }

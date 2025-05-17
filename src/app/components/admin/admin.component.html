@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div id="tituloSeccion">
+  <h3>Dashboard Alumnos Ayudantes</h3>
+  <h5>Gestión de alumnos ayudantes y registro de horas realizadas.</h5>
+</div>
+<!--Aqui es donde se muestra el dashboard -->
+<div id="Dashboard">
+  <mat-card>
+    <div id="totalAlumnos">Total Alumnos Ayudantes</div> 
+    <div class="dato-destacado">{{ totalAlumnosAyudantes }}</div>
+  </mat-card>
+  <mat-card>
+    <div id="totalAlumnos">Horas Totales</div>
+    <div class="dato-destacado">{{ totalHoras }}</div>
+  </mat-card>
+  <mat-card>
+    <div id="totalAlumnos">Asignaturas Cubiertas</div>
+    <div class="dato-destacado">{{ totalAsignaturas }}</div>
+  </mat-card>
+</div>
+<!--Aqui solo se muestra la tabla con los datos de los alumnos-->
+<div id="tituloSeccion">
+  <h3>Alumnos ayudantes</h3>
+</div>
+<mat-card id="tabla" appearance="outlined">
+  <mat-card-content>
+    <app-reportes-tablas></app-reportes-tablas>
+  </mat-card-content>
+</mat-card>

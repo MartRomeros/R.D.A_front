@@ -1,4 +1,10 @@
-h1{
+h3{
     margin-left: 33px;
     margin-top: 20px;
+}
+
+mat-card{
+    padding: 40px;
+    margin: 0px 12px;
+    margin-bottom: 80px;
 }

@@ -8,6 +8,9 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatChipsModule } from "@angular/material/chips";
 import { CommonModule } from "@angular/common";
 import { MatTableModule } from '@angular/material/table';
+import { MatCardModule } from '@angular/material/card';
+import { MatMenuModule } from '@angular/material/menu';
+import { ReportesServicesService } from "../../../../services/reportes-services.service";
 
 @Component({
   selector: "app-reportes-tablas",
@@ -19,6 +22,8 @@ import { MatTableModule } from '@angular/material/table';
     MatChipsModule,
     CommonModule,
     MatTableModule,
+    MatCardModule,
+    MatMenuModule,
   ],
   templateUrl: "./reportes-tablas.component.html",
   styleUrl: "./reportes-tablas.component.css",
@@ -57,9 +62,12 @@ export class ReportesTablasComponent implements OnInit {
 
     this.dataSource.data.forEach(item => this.selection.add(item.id));
   }
+  constructor(private ReportesServicesService: ReportesServicesService) {}
 
+  // Se ejecuta al inicializar el componente, para cargar los datos en otras paginas
   ngOnInit() {
     this.dataSource.data = this.getData();
+    this.ReportesServicesService.setAlumnos(this.dataSource.data);
   }
 
   ngAfterViewInit() {
@@ -153,9 +161,9 @@ getData(): Reporte[] {
     return this.selection.has(id);
   }
 
-  copiarId(id: string) {
-    navigator.clipboard.writeText(id);
-    alert("ID copiado al portapapeles: " + id)
+  copiarId(codigo: string) {
+    navigator.clipboard.writeText(codigo);
+    alert("ID copiado al portapapeles: " + codigo)
   }
 
   

@@ -12,7 +12,7 @@
     border-radius: 4px;
 }
 
-#opciones{
+#opciones {
     margin: none;
 }
 
@@ -42,4 +42,39 @@
     padding: 2px 12px;
     font-weight: 500;
     display: inline-block;
+}
+
+.boton-acciones {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    color: inherit;
+    cursor: pointer;
+
+    &:focus {
+        outline: none;
+        box-shadow: none;
+    }
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    mat-icon {
+        font-size: 18px;
+        display: flex;
+        justify-content: center;
+        justify-items: center;
+        justify-self: center;
+    }
+}
+
+#botonExportar{
+    background-color: #36243E;
+    color: white;
+    font-size: 13px;
+    width: 110px;
+    height: 36px;
+    border-radius: 25px;
 }

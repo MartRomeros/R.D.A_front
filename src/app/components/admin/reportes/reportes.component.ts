@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ReportesFiltosComponent } from './reportes-filtos/reportes-filtos.component';
 import { ReportesTablasComponent } from './reportes-tablas/reportes-tablas.component';
 import { Title, Meta } from '@angular/platform-browser';
 import { MatCardModule } from '@angular/material/card';
@@ -7,7 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-reportes',
-  imports: [ReportesFiltosComponent, ReportesTablasComponent, MatCardModule],
+  imports: [ ReportesTablasComponent, MatCardModule ],
   templateUrl: './reportes.component.html',
   styleUrl: './reportes.component.css',
 })

@@ -5,10 +5,16 @@ import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
+import { ExcelExportService } from '../../../../../services/excel-export.service';
+import { PdfExportService } from '../../../../../services/pdf-export.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-resumen',
-  imports: [GeneralModule],
+  imports: [GeneralModule, MatMenuModule, MatIconModule, MatButtonModule],
   templateUrl: './resumen.component.html',
   styleUrl: './resumen.component.css'
 })
@@ -27,6 +33,7 @@ export class ResumenComponent implements OnInit {
   diasRestantes: any
   cargando: boolean = true
 
+  constructor(private excelExportService: ExcelExportService, private pdfExportService: PdfExportService) {}
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
@@ -121,10 +128,14 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  //metodo para exportar ecxel o pdf
-  exportar() {
-    
+  //metodo para exportar excel o pdf a eleccion
+  exportar(formato: 'excel' | 'pdf') {
+  if (formato === 'excel') {
+    this.excelExportService.exportHorasTrabajadas('horas_trabajadas.xlsx', this.horasTrabajadas);
+  } else if (formato === 'pdf') {
+    this.pdfExportService.exportHorasTrabajadas('horas_trabajadas.pdf', this.horasTrabajadas);
   }
+}
 
 
 

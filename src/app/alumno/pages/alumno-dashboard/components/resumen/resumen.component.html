@@ -2,8 +2,22 @@
 
     <section class="row">
         <h3 class="col">Resumen de este mes:</h3>
-        <button class="col-2" mat-flat-button>Exportar</button>
+<!--Boton con menu desplegable para exportar a excel o pdf-->       
+        <button class="col-2" mat-flat-button [matMenuTriggerFor]="menuExportar">
+            Exportar
+        </button>
+        <mat-menu #menuExportar="matMenu">
+            <button mat-menu-item (click)="exportar('excel')">
+                <mat-icon>table_view</mat-icon>
+                    <span>Descargar Excel</span>
+            </button>
+            <button mat-menu-item (click)="exportar('pdf')">
+                <mat-icon>picture_as_pdf</mat-icon>
+                    <span>Descargar PDF</span>
+            </button>
+        </mat-menu>
     </section>
+<!--aqui termina la seccion de exportar-->
 
     <section class="row summary">
 

@@ -1,3 +1,22 @@
 .table{
     --bs-table-bg: #FAF9FD;
 }
+
+@media (max-width:768px) {
+
+    main{
+        padding: 2vh;
+    }
+
+    section {
+        gap: 2vh;
+    }
+
+    mat-card-content{
+        padding: 0;
+    }
+
+    mat-card{
+        padding: 1vh;
+    }
+}

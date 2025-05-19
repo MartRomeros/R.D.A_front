@@ -28,3 +28,11 @@ mat-toolbar button{
 .example-spacer{
     flex: 1 1 auto;
 }
+
+@media (max-width:768px) {
+
+    mat-toolbar img{
+        width: 40%;
+    }
+
+}

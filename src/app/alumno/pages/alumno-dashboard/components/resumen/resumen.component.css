@@ -1,8 +1,8 @@
-section{
+section {
     gap: 10vh;
 }
 
-section button{
+section button {
     background-color: #36243E;
 }
 
@@ -11,5 +11,20 @@ mat-card-header .header {
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    
+
+}
+
+@media (max-width:768px) {
+
+    main{
+        padding: 2vh;
+    }
+
+    section {
+        gap: 2vh;
+    }
+
+    section > button{
+        width: 20vh;
+    }
 }

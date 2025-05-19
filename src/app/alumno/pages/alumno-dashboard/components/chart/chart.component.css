@@ -2,3 +2,22 @@ mat-card-header{
     display: flex;
     flex-direction: column;
 }
+
+@media (max-width:768px) {
+    main{
+        padding: 2vh;
+    }
+
+    section {
+        gap: 2vh;
+    }
+
+    mat-card-content{
+        padding: 0;
+    }
+
+    mat-card{
+        padding: 1vh;
+    }
+}
+

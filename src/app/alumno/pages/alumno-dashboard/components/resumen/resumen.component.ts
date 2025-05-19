@@ -121,6 +121,11 @@ export class ResumenComponent implements OnInit {
     }
   }
 
+  //metodo para exportar ecxel o pdf
+  exportar() {
+    
+  }
+
 
 
 

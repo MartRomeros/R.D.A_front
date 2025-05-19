@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GeneralModule } from '../../shared/modules/general/general.module';
-import { AuthServicesService } from '../../services/auth-services.service';
-import { UserService } from '../../services/user.service';
-import { ActividadService } from '../../services/actividad.service';
-import { Actividad, User } from '../../models/interfaces';
+import { GeneralModule } from '../../../../../shared/modules/general/general.module';
+import { AuthServicesService } from '../../../../../services/auth-services.service';
+import { UserService } from '../../../../../services/user.service';
+import { ActividadService } from '../../../../../services/actividad.service';
+import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -41,6 +41,7 @@ export class ResumenComponent implements OnInit {
 
 
   private traerFechaAproxPago() {
+    this.cargando = true
     const hoy = new Date();
     let añoActual = hoy.getFullYear();
     let mes = hoy.getMonth(); // 0 = enero
@@ -78,6 +79,7 @@ export class ResumenComponent implements OnInit {
 
   //procesa las actividades
   private procesarActividades(actividades: Actividad[]) {
+    this.cargando = true
     this.actividades = actividades;
     this.montoAcumulado = 0;
     this.horasTrabajadas = 0;
@@ -103,6 +105,7 @@ export class ResumenComponent implements OnInit {
   //trae las actividades del backend (BD)
   private async CargarActvidades() {
     try {
+      this.cargando = true
       //obtiene el usuario por mail
       const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
       //obtener el run del usuario
@@ -113,6 +116,8 @@ export class ResumenComponent implements OnInit {
       this.actividadService.setActvidades(actvidadesResponse.actividades);
     } catch (error: any) {
       alert('Error al cargar actividades');
+    } finally {
+      this.cargando = false
     }
   }
 

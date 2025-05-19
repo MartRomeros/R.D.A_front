@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GeneralModule } from '../../shared/modules/general/general.module';
-import { AuthServicesService } from '../../services/auth-services.service';
-import { UserService } from '../../services/user.service';
-import { ActividadService } from '../../services/actividad.service';
-import { Actividad, User } from '../../models/interfaces';
+import { GeneralModule } from '../../../../../shared/modules/general/general.module';
+import { AuthServicesService } from '../../../../../services/auth-services.service';
+import { UserService } from '../../../../../services/user.service';
+import { ActividadService } from '../../../../../services/actividad.service';
+import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 
 @Component({

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
-import { GeneralModule } from '../../shared/modules/general/general.module';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActividadService } from '../../services/actividad.service';
+import { GeneralModule } from '../../../../../shared/modules/general/general.module';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ActividadService } from '../../../../../services/actividad.service';
 import { lastValueFrom } from 'rxjs';
-import { Actividad, User } from '../../models/interfaces';
-import { UserService } from '../../services/user.service';
+import { Actividad, User } from '../../../../../models/interfaces';
+import { UserService } from '../../../../../services/user.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 
 @Component({
@@ -26,14 +26,21 @@ export class ActividadFormComponent {
   //variables publicas
   //formulario de actividades
   actividadForm: FormGroup = this.fb.group({
-    fecha: [''],
-    horaInic: [''],
-    horaTerm: [''],
-    area: ['']
+    fecha: ['',Validators.required],
+    horaInic: ['',Validators.required],
+    horaTerm: ['',Validators.required],
+    area: ['',Validators.required]
   })
 
   //metodo para registrar horas (Public)
   async registrarHora() {
+
+    //validar formulario
+    if(!this.actividadService.validarActividad(this.actividadForm)){
+      return
+    }
+
+
     //formateo de fechas
     const date: Date = new Date(this.actividadForm.get('fecha')?.value)
     const dia: string = date.getDate().toString().padStart(2, '0')

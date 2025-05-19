@@ -1,9 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { GeneralModule } from '../../shared/modules/general/general.module';
+import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ActividadService } from '../../services/actividad.service';
-import { UserService } from '../../services/user.service';
-import { Actividad, User } from '../../models/interfaces';
+import { ActividadService } from '../../../../../services/actividad.service';
+import { UserService } from '../../../../../services/user.service';
+import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 
 @Component({

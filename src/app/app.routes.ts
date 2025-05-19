@@ -5,13 +5,14 @@ import { ForgotPasswordComponent } from './components/auth/forgot-password/forgo
 import { AdminComponent } from './components/admin/admin.component';
 import { ReportesComponent } from './components/admin/reportes/reportes.component';
 import { PerfilComponent } from './shared/components/perfil/perfil.component';
-import { AlumnoComponent } from './alumno/alumno.component';
+import { AlumnoDashboardComponent } from './alumno/pages/alumno-dashboard/alumno-dashboard.component';
+
 
 
 export const routes: Routes = [
     {
         path: 'alumno',
-        component:AlumnoComponent
+        component: AlumnoDashboardComponent
     },
     { path: '', component: LoginComponent },
 

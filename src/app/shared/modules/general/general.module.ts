@@ -10,6 +10,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTimepickerModule } from '@angular/material/timepicker';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 
 
 
@@ -25,7 +26,8 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatButtonModule,
     MatToolbarModule,
     MatCardModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   exports: [CommonModule,
@@ -39,7 +41,8 @@ import { MatTimepickerModule } from '@angular/material/timepicker';
     MatToolbarModule,
     MatCardModule,
     MatDatepickerModule,
-    MatTimepickerModule
+    MatTimepickerModule,
+    MatProgressSpinnerModule
   ],
 })
 export class GeneralModule { }

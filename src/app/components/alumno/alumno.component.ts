@@ -134,7 +134,7 @@ export class AlumnoComponent implements OnInit {
     }
   }
 
-  traerFechaAproxPago() {
+  private traerFechaAproxPago() {
     const añoActual = new Date().getFullYear();
     const mes = new Date().getMonth()
 
@@ -155,4 +155,6 @@ export class AlumnoComponent implements OnInit {
       }
     }
   }
+
+  
 }

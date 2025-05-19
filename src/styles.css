@@ -5,6 +5,7 @@
     --general-text-color: #000;
     --general-background: #fff;
     --nav-background:#F8F9FA;
+    --primary-color:#36243E;
 }
 
 body {
@@ -15,6 +16,14 @@ body {
     line-height: 1.5;
     color: #333;
     background-color: #F3F3F3;
+}
+
+main{
+    padding: 40px;
+}
+
+section{
+    padding: 2vh;
 }
 
 h1,h2,h3,h4,h5,h6{

@@ -1,0 +1,15 @@
+.hour-registry mat-card-header{
+    display: flex;
+    flex-direction: column;
+}
+
+.hour-registry form{
+    padding: 2vh;
+    gap: 2vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.hour-registry form fieldset button{
+    background-color: #36243E;
+}

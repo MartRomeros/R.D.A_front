@@ -5,8 +5,6 @@ import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
-import { ExcelExportService } from '../../../../../services/excel-export.service';
-import { PdfExportService } from '../../../../../services/pdf-export.service';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,8 +31,6 @@ export class ResumenComponent implements OnInit {
   diasRestantes: any
   cargando: boolean = true
   usuario!: User;
-
-  constructor(private excelExportService: ExcelExportService, private pdfExportService: PdfExportService) {}
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
@@ -131,20 +127,8 @@ export class ResumenComponent implements OnInit {
   }
 
   //metodo para exportar excel o pdf a eleccion
-  exportar(formato: 'excel' | 'pdf') {
-  const datosAlumno = {
-    run: this.usuario?.run,
-    email: this.usuario?.email,
-    fono: String(this.usuario?.fono),
-    horasTrabajadas: this.horasTrabajadas
-  };
-
-  if (formato === 'excel') {
-    this.excelExportService.exportResumenAlumno('resumen_alumno.xlsx', datosAlumno);
-  } else if (formato === 'pdf') {
-    this.pdfExportService.exportResumenAlumno('resumen_alumno.pdf', datosAlumno);
-  }
-}
+  /*exportar(formato: 'excel' | 'pdf') {
+  }*/
 
 
 

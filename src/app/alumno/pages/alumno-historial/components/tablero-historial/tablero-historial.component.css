@@ -10,7 +10,54 @@ main section:first-child h6 mat-icon{
     margin-right: 1vh;
 }
 
+
+.area-sections{
+    display: flex;    
+}
+
 /* colores de areas */
-.difusion{
-    background-color: var(--#8FA8ED) !important;
+#difusion{
+    border-radius: 2vh;
+    background-color: #DBEAFE;
+    padding: 2vh;
+}
+
+#difusion h4{
+    color: #1D4ED8;
+}
+
+.hours{
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.hours h6{
+    color: #1D4ED8;
+}
+
+#extension{
+    border-radius: 2vh;
+    background-color: #D1FAE5;
+    padding: 2vh;
+}
+#extension h4{
+    color: #047857;
+}
+
+#extension .hours h6{
+    color: #047857;
+}
+
+#comunicacion{
+    border-radius: 2vh;
+    background-color: #FEF9C3;
+    padding: 2vh;
+}
+#comunicacion h4{
+    color: #A16207;
+}
+
+#comunicacion .hours h6{
+    color: #A16207;
 }

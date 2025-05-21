@@ -12,6 +12,8 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatTimepickerModule } from '@angular/material/timepicker';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MatChipsModule } from '@angular/material/chips';
+import {MatRadioModule} from '@angular/material/radio'
+import {MatListModule} from '@angular/material/list'
 
 
 
@@ -29,7 +31,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatCardModule,
     MatDatepickerModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule,
+    MatListModule
   ],
   providers: [],
   exports: [CommonModule,
@@ -45,7 +49,9 @@ import { MatChipsModule } from '@angular/material/chips';
     MatDatepickerModule,
     MatTimepickerModule,
     MatProgressSpinnerModule,
-    MatChipsModule
+    MatChipsModule,
+    MatRadioModule,
+    MatListModule
   ],
 })
 export class GeneralModule { }

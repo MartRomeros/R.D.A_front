@@ -14,33 +14,27 @@
     <section class="row">
         <mat-card class="col" appearance="outlined">
             <mat-card-header>
-                <mat-chip-set aria-label="Fish selection">
-                    <mat-chip>Todas las horas</mat-chip>
-                    <mat-chip class="difusion">Difusión</mat-chip>
-                    <mat-chip class="comunicacion">Comunicación</mat-chip>
-                    <mat-chip class="extension">Extensión</mat-chip>
-                    <mat-chip class="desarrollo_laboral">Desarrollo Laboral</mat-chip>                
-                </mat-chip-set>
+                <mat-radio-group aria-label="Select an option">
+                    <mat-radio-button value="1" checked="true">Todas</mat-radio-button>
+                    <mat-radio-button value="2">Difusion</mat-radio-button>
+                    <mat-radio-button value="2">Extension</mat-radio-button>
+                    <mat-radio-button value="2">Comunicacion</mat-radio-button>
+                    <mat-radio-button value="2">Desarrollo laboral</mat-radio-button>
+                </mat-radio-group>
             </mat-card-header>
             <mat-card-content>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">First</th>
-                            <th scope="col">Last</th>
-                            <th scope="col">Handle</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <mat-list role="list">
+                    <mat-list-item role="listitem">
+                        <span matListItemTitle>09:00 - 12:00</span>
+                        <span matListItemLine>01-01-2025</span>
+                        <mat-icon matListItemIcon>schedule</mat-icon>
+                    </mat-list-item>
+                    <mat-list-item role="listitem">
+                        <span matListItemTitle>09:00 - 12:00</span>
+                        <span matListItemLine>01-01-2025</span>
+                        <mat-icon matListItemIcon>schedule</mat-icon>
+                    </mat-list-item>
+                </mat-list>
             </mat-card-content>
         </mat-card>
     </section>

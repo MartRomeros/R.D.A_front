@@ -1,1 +1,35 @@
-<p>historial-resumen works!</p>
+<main class="container-fluid">
+    <section class="row">
+        <mat-card appearance="outlined" class="col">
+            <mat-card-content>
+                <div echarts [options]="barChartOptions" class="demo-chart" style="height: 400px;"></div>
+            </mat-card-content>
+        </mat-card>
+        <mat-card appearance="outlined" class="col">
+            <mat-card-content class="area-section">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col" id="difusion">
+                            <h4>Difusion</h4>
+                            <h6>11 horas</h6>
+                        </div>
+                        <div class="col" id="extension">
+                            <h4>Extension</h4>
+                            <h6>11 horas</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" id="comunicacion">
+                            <h4>Comunicacion</h4>
+                            <h6>11 horas</h6>
+                        </div>
+                        <div class="col" id="desarrollo-laboral">
+                            <h4>Desarrollo laboral</h4>
+                            <h6>11 horas</h6>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </section>
+</main>

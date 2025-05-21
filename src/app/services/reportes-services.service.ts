@@ -1,30 +1,17 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import { MatPaginatorIntl } from '@angular/material/paginator';
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class ReportesServicesService extends MatPaginatorIntl {
-  override itemsPerPageLabel = "Elementos por página:";
-  override nextPageLabel = "Página siguiente";
-  override previousPageLabel = "Página anterior";
-  override firstPageLabel = "Primera página";
-  override lastPageLabel = "Última página";
+export class ReportesServicesService {
 
-  override getRangeLabel = (page: number, pageSize: number, length: number) => {
-    if (length === 0 || pageSize === 0) {
-      return `0 de ${length}`;
-    }
-    const startIndex = page * pageSize;
-    const endIndex = Math.min(startIndex + pageSize, length);
-    return `${startIndex + 1} - ${endIndex} de ${length}`;
-  };
+  private http = inject(HttpClient)
+  private url = 'http://localhost:8000/api/exportar/'
 
-  private alumnosSubject = new BehaviorSubject<any[]>([]);
-  alumnos$ = this.alumnosSubject.asObservable();
-
-  setAlumnos(alumnos: any[]) {
-    this.alumnosSubject.next(alumnos);
+  descargarReporte(data: any, tipo: 'excel' | 'pdf'): Observable<Blob> {
+    return this.http.post(this.url, { tipo, data }, { responseType: 'blob' })
   }
+
 }

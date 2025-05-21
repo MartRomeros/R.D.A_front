@@ -8,6 +8,7 @@ import { lastValueFrom } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ReportesServicesService } from '../../../../../services/reportes-services.service';
 
 
 @Component({
@@ -21,6 +22,7 @@ export class ResumenComponent implements OnInit {
   private authService = inject(AuthServicesService)
   private userService = inject(UserService)
   private actividadService = inject(ActividadService)
+  private reportesService = inject(ReportesServicesService)
 
   //variables publicas
   actividades!: Actividad[]
@@ -126,11 +128,40 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  //metodo para exportar excel o pdf a eleccion
-  /*exportar(formato: 'excel' | 'pdf') {
-  }*/
+  exportar(tipo: 'excel' | 'pdf') {
 
+    const datosEjemplo = {
+      nombre: 'Juan',
+      apellido: 'Pérez',
+      run: '12.345.678-9',
+      montoacumulado: 50000,
+      horasrealizadas: [
+        { actividad: 'Capacitación', horas: 10 },
+        { actividad: 'Voluntariado', horas: 5 }
+      ]
+    };
 
+    this.reportesService.descargarReporte(datosEjemplo, tipo).subscribe((blob:any) => {
+      const extension = tipo === 'pdf' ? 'pdf' : 'xlsx';
+      const filename = `reporte.${extension}`;
+      const blobUrl = URL.createObjectURL(blob);
+
+      const a = document.createElement('a');
+      a.href = blobUrl;
+      a.download = filename;
+      a.click();
+
+      // Limpieza de memoria
+      URL.revokeObjectURL(blobUrl);
+    }, (error:any) => {
+      console.error('Error al descargar el archivo', error);
+    });
+  }
 
 
 }
+
+
+
+
+

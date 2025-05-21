@@ -5,7 +5,6 @@ import { ActividadService } from '../../../../../services/actividad.service';
 import { UserService } from '../../../../../services/user.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
-import { number } from 'echarts';
 
 @Component({
   selector: 'app-chart',

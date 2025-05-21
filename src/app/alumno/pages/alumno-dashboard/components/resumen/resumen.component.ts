@@ -32,6 +32,7 @@ export class ResumenComponent implements OnInit {
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
+  usuario!: User;
 
   constructor(private excelExportService: ExcelExportService, private pdfExportService: PdfExportService) {}
 
@@ -115,6 +116,7 @@ export class ResumenComponent implements OnInit {
       this.cargando = true
       //obtiene el usuario por mail
       const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
+      this.usuario = usuario; // <--- aquí se guarda el usuario en una variable publica
       //obtener el run del usuario
       const run: string = usuario.run;
       //trae las actividades actuales del usuario
@@ -130,10 +132,17 @@ export class ResumenComponent implements OnInit {
 
   //metodo para exportar excel o pdf a eleccion
   exportar(formato: 'excel' | 'pdf') {
+  const datosAlumno = {
+    run: this.usuario?.run,
+    email: this.usuario?.email,
+    fono: String(this.usuario?.fono),
+    horasTrabajadas: this.horasTrabajadas
+  };
+
   if (formato === 'excel') {
-    this.excelExportService.exportHorasTrabajadas('horas_trabajadas.xlsx', this.horasTrabajadas);
+    this.excelExportService.exportResumenAlumno('resumen_alumno.xlsx', datosAlumno);
   } else if (formato === 'pdf') {
-    this.pdfExportService.exportHorasTrabajadas('horas_trabajadas.pdf', this.horasTrabajadas);
+    this.pdfExportService.exportResumenAlumno('resumen_alumno.pdf', datosAlumno);
   }
 }
 

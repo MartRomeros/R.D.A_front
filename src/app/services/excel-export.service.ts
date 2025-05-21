@@ -6,8 +6,15 @@ import { saveAs } from 'file-saver';
   providedIn: 'root',
 })
 export class ExcelExportService {
-  exportHorasTrabajadas(nombreArchivo: string, horas: number) {
-    const data = [{ 'Horas trabajadas': horas }];
+  exportResumenAlumno(nombreArchivo: string, datos: { run: string, email: string, fono: string, horasTrabajadas: number }) {
+    const data = [
+    {
+      'RUN': datos.run,
+      'Email': datos.email,
+      'Fono': datos.fono,
+      'Horas trabajadas': datos.horasTrabajadas
+    }
+  ];
     const worksheet = XLSX.utils.json_to_sheet(data);
     const workbook = XLSX.utils.book_new();
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Resumen');

@@ -5,6 +5,7 @@ import { ActividadService } from '../../../../../services/actividad.service';
 import { UserService } from '../../../../../services/user.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
+import { number } from 'echarts';
 
 @Component({
   selector: 'app-chart',
@@ -100,10 +101,13 @@ export class ChartComponent implements OnInit {
     actividades.forEach((actividad) => {
       switch (actividad.area_trabajo.toLowerCase()) {
         case 'difusion':
-          this.difusion++;
+          const [horaInic, minInic] = actividad.hora_inic_activdad.split(':').map(Number)
+          const [horaTerm, minTerm] = actividad.hora_term_actividad.split(':').map(Number)
+          const diferenciaMinutos = Math.abs((horaTerm * 60 + minTerm) - (horaInic * 60 + minInic))
+          const diferenciaHoras = diferenciaMinutos / 60
+          this.difusion =+ diferenciaHoras
           break;
-        case 'extension':
-          this.extension++;
+        case 'extension':          
           break;
         case 'desarrollo_laboral':
           this.desarrolloLaboral++;

@@ -5,10 +5,16 @@ import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
+import { ExcelExportService } from '../../../../../services/excel-export.service';
+import { PdfExportService } from '../../../../../services/pdf-export.service';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+
 
 @Component({
   selector: 'app-resumen',
-  imports: [GeneralModule],
+  imports: [GeneralModule, MatMenuModule, MatIconModule, MatButtonModule],
   templateUrl: './resumen.component.html',
   styleUrl: './resumen.component.css'
 })
@@ -26,7 +32,9 @@ export class ResumenComponent implements OnInit {
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
+  usuario!: User;
 
+  constructor(private excelExportService: ExcelExportService, private pdfExportService: PdfExportService) {}
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
@@ -108,6 +116,7 @@ export class ResumenComponent implements OnInit {
       this.cargando = true
       //obtiene el usuario por mail
       const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
+      this.usuario = usuario; // <--- aquí se guarda el usuario en una variable publica
       //obtener el run del usuario
       const run: string = usuario.run;
       //trae las actividades actuales del usuario
@@ -121,10 +130,21 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  //metodo para exportar ecxel o pdf
-  exportar() {
-    
+  //metodo para exportar excel o pdf a eleccion
+  exportar(formato: 'excel' | 'pdf') {
+  const datosAlumno = {
+    run: this.usuario?.run,
+    email: this.usuario?.email,
+    fono: String(this.usuario?.fono),
+    horasTrabajadas: this.horasTrabajadas
+  };
+
+  if (formato === 'excel') {
+    this.excelExportService.exportResumenAlumno('resumen_alumno.xlsx', datosAlumno);
+  } else if (formato === 'pdf') {
+    this.pdfExportService.exportResumenAlumno('resumen_alumno.pdf', datosAlumno);
   }
+}
 
 
 

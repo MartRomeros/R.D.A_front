@@ -6,6 +6,7 @@ import { AdminComponent } from './components/admin/admin.component';
 import { ReportesComponent } from './components/admin/reportes/reportes.component';
 import { PerfilComponent } from './shared/components/perfil/perfil.component';
 import { AlumnoDashboardComponent } from './alumno/pages/alumno-dashboard/alumno-dashboard.component';
+import { AlumnoHistorialComponent } from './alumno/pages/alumno-historial/alumno-historial.component';
 
 
 
@@ -13,6 +14,10 @@ export const routes: Routes = [
     {
         path: 'alumno',
         component: AlumnoDashboardComponent
+    },
+    {
+        path: 'alumno-historial',
+        component: AlumnoHistorialComponent
     },
     { path: '', component: LoginComponent },
 

@@ -2,13 +2,17 @@
 
 <main class="container-fluid">
     <section class="row">
-        <mat-card appearance="outlined" class="col-5">
+        <mat-card appearance="outlined" class="col-lg-5">
             <mat-card-header>
                 <h4>{{nombre}}</h4>
                 <h6 class="subtitle">Alumno Ayudante</h6>
             </mat-card-header>
-            <mat-card-content>
-                <mat-divider></mat-divider>
+            <mat-divider></mat-divider>
+            <mat-card-content class="user-info">
+                
+                @if(cargando){
+                <mat-spinner style="margin-top: 2vh; margin-left: 30vh;"></mat-spinner>
+                }@else {
                 <mat-list>
 
                     <mat-list-item>
@@ -42,6 +46,7 @@
                         </p>
                     </mat-list-item>
                 </mat-list>
+                }
             </mat-card-content>
         </mat-card>
 
@@ -67,7 +72,7 @@
                     <h6>Cambiar de contrasena</h6>
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Nueva Contrasenna</mat-label>
-                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna1"/>
+                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna1" />
                         <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
                             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -86,7 +91,7 @@
 
                     <mat-form-field appearance="outline" class="col-12">
                         <mat-label>Repite tu contrasenna</mat-label>
-                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna2"/>
+                        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna2" />
                         <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
                             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>

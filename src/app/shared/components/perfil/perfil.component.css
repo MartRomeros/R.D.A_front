@@ -30,3 +30,8 @@ mat-card-content form{
     padding: 2vh;
     gap: 3vh;
 }
+
+
+form fieldset button{
+    background-color: #36243E;
+}

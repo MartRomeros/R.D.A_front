@@ -3,20 +3,15 @@ import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { UserService } from '../../../services/user.service';
-import { MatCardModule } from '@angular/material/card';
 import { HeaderComponent } from '../header/header.component';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
-import { MatIconModule } from '@angular/material/icon';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatButtonModule } from '@angular/material/button';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GeneralModule } from '../../modules/general/general.module';
 
 @Component({
   selector: 'app-perfil',
-  imports: [MatCardModule, HeaderComponent, MatDividerModule, MatListModule, MatIconModule, MatFormFieldModule, MatInputModule, MatButtonModule, GeneralModule],
+  imports: [HeaderComponent, MatDividerModule, MatListModule, GeneralModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -30,27 +25,26 @@ export class PerfilComponent {
 
   //TO DO
   perfilForm: FormGroup = this.fb.group({
-    fono: [''],
-    contrasenna1: [''],
-    contrasenna2: [''],
+    fono: ['', Validators.required],
+    contrasenna1: ['', Validators.required],
+    contrasenna2: ['', Validators.required],
   })
 
   nombre!: string
   email!: string
   fono!: number
   run!: string
-
+  cargando: boolean = true
   hide = signal(true);
   clickEvent(event: MouseEvent) {
     this.hide.set(!this.hide());
     event.stopPropagation();
   }
 
-
-
-
-  ngOnInit() {
-    this.obtenerDatos()
+  async ngOnInit() {
+    this.cargando = true
+    await this.obtenerDatos()
+    this.cargando = false
   }
 
 
@@ -73,25 +67,20 @@ export class PerfilComponent {
   }
 
   async actualizarDatos() {
+
+    if (!this.userService.validarPerfilForm(this.perfilForm)) {
+      return
+    }
     const valores = {
       fono: parseInt(this.perfilForm.get('fono')?.value),
       password: this.perfilForm.get('contrasenna1')?.value
     }
-
-    alert(valores.fono)
-    alert(valores.password)
-
     const response = await lastValueFrom(this.userService.actualizarDatos(valores))
-
     alert(response.message)
-
     try {
-
     } catch (error: any) {
       alert(error)
     }
-
-
   }
 
 }

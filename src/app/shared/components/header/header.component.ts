@@ -40,4 +40,8 @@ export class HeaderComponent {
     this.router.navigate(['alumno'])
   }
 
+  goHistorial(){
+    this.router.navigate(['alumno-historial'])
+  }
+
 }

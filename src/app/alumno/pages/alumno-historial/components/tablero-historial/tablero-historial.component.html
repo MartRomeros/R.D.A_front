@@ -1,0 +1,49 @@
+<main class="container-fluid">
+    <section class="row">
+        <h6 class="col-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
+        <mat-form-field class="col-3">
+            <mat-label>Ingresa el mes</mat-label>
+            <mat-select>
+                @for (meses of mesesHastaAhora; track $index) {
+                <mat-option value="{{meses}}">{{meses}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </section>
+
+    <section class="row">
+        <mat-card class="col" appearance="outlined">
+            <mat-card-header>
+                <mat-chip-set aria-label="Fish selection">
+                    <mat-chip>Todas las horas</mat-chip>
+                    <mat-chip class="difusion">Difusión</mat-chip>
+                    <mat-chip class="comunicacion">Comunicación</mat-chip>
+                    <mat-chip class="extension">Extensión</mat-chip>
+                    <mat-chip class="desarrollo_laboral">Desarrollo Laboral</mat-chip>                
+                </mat-chip-set>
+            </mat-card-header>
+            <mat-card-content>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>mdo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </mat-card-content>
+        </mat-card>
+    </section>
+
+
+</main>

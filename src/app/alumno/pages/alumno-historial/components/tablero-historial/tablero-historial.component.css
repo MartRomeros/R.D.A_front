@@ -1,0 +1,16 @@
+.table{
+    --bs-table-bg: #FAF9FD;
+}
+
+main section:first-child{
+    align-items: center;
+}
+
+main section:first-child h6 mat-icon{
+    margin-right: 1vh;
+}
+
+/* colores de areas */
+.difusion{
+    background-color: var(--#8FA8ED) !important;
+}

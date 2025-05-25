@@ -1,3 +1,16 @@
+main section:nth-child(2) {
+    align-items: center;
+}
+
+.mat-mdc-form-field{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+
+
+/* cuadros de areas que muestran la cantidad de horas */
 main{
     padding: 2vh;
 }
@@ -7,12 +20,12 @@ section.row{
 }
 
 
-mat-card-content div.container-fluid .row{
+article div.container-fluid .row{
     gap: 2vh;
 }
 
 
-mat-card-content div.container-fluid .row .col{
+article div.container-fluid .row .col{
     padding: 2vh;
     margin-top: 2vh;    
     border-radius: 2vh;

@@ -1,43 +1,58 @@
-<main class="container-fluid">
-    <section class="row">
-        <h6 class="col-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
-        <mat-form-field class="col-3" appearance="outline">
-            <mat-label>Ingresa el mes</mat-label>
-            <mat-select>
-                @for (meses of mesesHastaAhora; track $index) {
-                <mat-option value="{{meses}}">{{meses}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
-    </section>
-
-    <section class="row">
-        <mat-card class="col" appearance="outlined">
-            <mat-card-header>
-                <mat-radio-group aria-label="Select an option">
-                    <mat-radio-button value="1" checked="true">Todas</mat-radio-button>
-                    <mat-radio-button value="2">Difusion</mat-radio-button>
-                    <mat-radio-button value="2">Extension</mat-radio-button>
-                    <mat-radio-button value="2">Comunicacion</mat-radio-button>
-                    <mat-radio-button value="2">Desarrollo laboral</mat-radio-button>
-                </mat-radio-group>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-list role="list">
-                    <mat-list-item role="listitem">
-                        <span matListItemTitle>09:00 - 12:00</span>
-                        <span matListItemLine>01-01-2025</span>
-                        <mat-icon matListItemIcon>schedule</mat-icon>
-                    </mat-list-item>
-                    <mat-list-item role="listitem">
-                        <span matListItemTitle>09:00 - 12:00</span>
-                        <span matListItemLine>01-01-2025</span>
-                        <mat-icon matListItemIcon>schedule</mat-icon>
-                    </mat-list-item>
-                </mat-list>
-            </mat-card-content>
-        </mat-card>
-    </section>
-
-
-</main>
+<section class="row">
+    <article class="col">
+        <div class="list-group">
+            <li class="list-group-item active" aria-current="true">
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
+                    <label class="form-check-label" for="radioDefault2">
+                        Todas las horas
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+                    <label class="form-check-label" for="radioDefault2">
+                        Difusion
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+                    <label class="form-check-label" for="radioDefault2">
+                        Extension
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+                    <label class="form-check-label" for="radioDefault2">
+                        Comunicacion
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
+                    <label class="form-check-label" for="radioDefault2">
+                        Desarrollo laboral
+                    </label>
+                </div>
+            </li>
+            <li class="list-group-item">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora de inicio</th>
+                            <th scope="col">Hora de termino</th>
+                            <th scope="col">Area</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>mdo</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </li>
+        </div>
+    </article>
+</section>

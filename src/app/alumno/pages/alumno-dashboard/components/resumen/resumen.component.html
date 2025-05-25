@@ -1,69 +1,64 @@
-<main class="container-fluid">
+<section class="row">
+    <h3 class="col">Resumen de este mes:</h3>
+    <!--Boton con menu desplegable para exportar a excel o pdf-->
+    <button class="col-2" mat-flat-button (click)="exportar('excel')">
+        Exportar
+    </button>
+</section>
+<!--aqui termina la seccion de exportar-->
 
-    <section class="row">
-        <h3 class="col">Resumen de este mes:</h3>
-        <!--Boton con menu desplegable para exportar a excel o pdf-->
-        <button class="col-2" mat-flat-button (click)="exportar('excel')">
-            Exportar
-        </button>
-    </section>
-    <!--aqui termina la seccion de exportar-->
+<section class="row summary">
 
-    <section class="row summary">
+    <mat-card appearance="outlined" class="col-lg">
+        <mat-card-header>
+            <div class="header">
+                <h6>Horas trabajadas</h6>
+                <mat-icon>schedule</mat-icon>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            @if (cargando) {
+            <mat-spinner></mat-spinner>
+            }@else {
+            <h3>{{horasTrabajadas}} Hrs</h3>
+            }
+        </mat-card-content>
+    </mat-card>
 
-        <mat-card appearance="outlined" class="col-lg">
-            <mat-card-header>
-                <div class="header">
-                    <h6>Horas trabajadas</h6>
-                    <mat-icon>schedule</mat-icon>
-                </div>
-            </mat-card-header>
-            <mat-card-content>
-                @if (cargando) {
-                <mat-spinner></mat-spinner>
-                }@else {
-                <h3>{{horasTrabajadas}} Hrs</h3>
-                }
-            </mat-card-content>
-        </mat-card>
+    <mat-card appearance="outlined" class="col-lg">
+        <mat-card-header>
+            <div class="header">
+                <h6>Monto Acumulado</h6>
+                <mat-icon>attach_money</mat-icon>
+            </div>
+        </mat-card-header>
+        <mat-card-content>
+            @if (cargando) {
+            <mat-spinner></mat-spinner>
+            }@else {
+            <h3>{{montoAcumuladoFormateado}} CLP</h3>
+            tarifa: 2450 CLP
+            }
+        </mat-card-content>
+    </mat-card>
 
-        <mat-card appearance="outlined" class="col-lg">
-            <mat-card-header>
-                <div class="header">
-                    <h6>Monto Acumulado</h6>
-                    <mat-icon>attach_money</mat-icon>
-                </div>
-            </mat-card-header>
-            <mat-card-content>
-                @if (cargando) {
-                <mat-spinner></mat-spinner>
-                }@else {
-                <h3>{{montoAcumuladoFormateado}} CLP</h3>
-                tarifa: 2450 CLP
-                }
-            </mat-card-content>
-        </mat-card>
+    <mat-card appearance="outlined" class="col-lg">
 
-        <mat-card appearance="outlined" class="col-lg">
+        <mat-card-header>
+            <div class="header">
+                <h6>Proximo Pago</h6>
+                <mat-icon>calendar_month</mat-icon>
+            </div>
+        </mat-card-header>
 
-            <mat-card-header>
-                <div class="header">
-                    <h6>Proximo Pago</h6>
-                    <mat-icon>calendar_month</mat-icon>
-                </div>
-            </mat-card-header>
+        <mat-card-content>
+            @if (cargando) {
+            <mat-spinner></mat-spinner>
+            }@else {
+            <h3>{{fechaPago}}</h3>
+            en {{diasRestantes}} dias
+            }
+        </mat-card-content>
 
-            <mat-card-content>
-                @if (cargando) {
-                <mat-spinner></mat-spinner>
-                }@else {
-                <h3>{{fechaPago}}</h3>
-                en {{diasRestantes}} dias
-                }
-            </mat-card-content>
-
-        </mat-card>
-    </section>
-
-
-</main>
+    </mat-card>
+</section>

@@ -14,6 +14,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner'
 import { MatChipsModule } from '@angular/material/chips';
 import {MatRadioModule} from '@angular/material/radio'
 import {MatListModule} from '@angular/material/list'
+import { MatSelectModule } from '@angular/material/select';
 
 
 
@@ -33,7 +34,8 @@ import {MatListModule} from '@angular/material/list'
     MatProgressSpinnerModule,
     MatChipsModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
   providers: [],
   exports: [CommonModule,
@@ -51,7 +53,8 @@ import {MatListModule} from '@angular/material/list'
     MatProgressSpinnerModule,
     MatChipsModule,
     MatRadioModule,
-    MatListModule
+    MatListModule,
+    MatSelectModule
   ],
 })
 export class GeneralModule { }

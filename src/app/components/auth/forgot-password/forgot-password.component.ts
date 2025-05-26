@@ -35,7 +35,7 @@ export class ForgotPasswordComponent {
   async recuperarClave() {
 
     if (this.forgotForm.get('email')?.hasError('email') || this.forgotForm.get('email')?.hasError('required')) {
-      alert('no es posible recuperar la contrasena')
+      alert('no es posible recuperar la contraseña')
       return
     }
 

@@ -50,6 +50,10 @@ export class ActividadFormComponent {
     try {
       //traer al usuario por el email que esta en la cookie
       const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
+      if(!usuario){
+        alert('error al traer al usuario del email')
+        return
+      }
       //obtener el run del usuario
       const run: string = usuario.run
       const valores: Actividad = {

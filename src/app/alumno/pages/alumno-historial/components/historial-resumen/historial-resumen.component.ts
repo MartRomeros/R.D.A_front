@@ -6,6 +6,7 @@ import { last, lastValueFrom } from 'rxjs';
 import { UserService } from '../../../../../services/user.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { ActividadService } from '../../../../../services/actividad.service';
+import { color } from 'echarts';
 
 @Component({
   selector: 'app-historial-resumen',
@@ -23,11 +24,17 @@ export class HistorialResumenComponent implements OnInit {
   private meses: string[] = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
   private mesActual: number = new Date().getMonth()
+  private user!: User
 
   //variables publicas
   mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
+  actividades!: Actividad[]
+  horasDifusion: number = 0
+  horasExtension!: number
+  horasDesarrolloLaboral!: number
+  horasComunicacion!: number
 
-  // ejemplo.component.ts
+  // grafico de barras
   barChartOptions = {
     title: {
       text: 'Horas por actividad'
@@ -44,49 +51,123 @@ export class HistorialResumenComponent implements OnInit {
       {
         name: 'Horas',
         type: 'bar',
-        data: [10, 7, 5, 8], // estos son tus valores
+        data: [
+          this.horasDifusion,
+          this.horasExtension,
+          this.horasComunicacion,
+          this.horasDesarrolloLaboral
+        ],
         itemStyle: {
-          color: '#5C7BD9'
+          color: function (params: any) {
+            const colors = ['#5C7BD9', '#57D9A3', '#F5A623', '#D9555C'];
+            return colors[params.dataIndex];
+          }
         }
       }
     ]
   };
 
   async ngOnInit() {
+    await this.comprobarAutenticacion()
     await this.traerUsuario()
+    await this.traerActividades(this.user.run)
+    this.actividadService.actividades$.subscribe((actividades) => {
+      this.actividades = actividades
+      this.horasDifusion = this.filtrarHoras('difusion')
+      this.horasComunicacion = this.filtrarHoras('comunicacion')
+      this.horasExtension = this.filtrarHoras('extension')
+      this.horasDesarrolloLaboral = this.filtrarHoras('desarrollo_laboral')
+      this.barChartOptions = {
+        ...this.barChartOptions,
+        series: [
+          {
+            ...this.barChartOptions.series[0],
+            data: [
+              this.horasDifusion,
+              this.horasExtension,
+              this.horasComunicacion,
+              this.horasDesarrolloLaboral
+            ]
+          }
+        ]
+      }
+      console.log(this.actividades)
+    })
+  }
+
+  private async comprobarAutenticacion() {
+    try {
+      await lastValueFrom(this.authService.isAuthenticated())
+    } catch (error: any) {
+      console.error(error)
+      this.authService.goToLogin()
+      alert('error al comprobar la autenticacion')
+    }
   }
 
   private async traerUsuario() {
     try {
-      //comprobar autenticacion
-      const response = await lastValueFrom(this.authService.isAuthenticated())
-      if (!response.isAuthenticated) {
-        alert('error al comprobar autenticacion')
-        return
-      }
-      //traer al usuario
-      const user: User = await lastValueFrom(this.userService.findUserbyEmail())
-      if (!user) {
-        alert('error al traer al usuario')
-        return
-      }
+      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
+      this.user = usuario
+    } catch (error: any) {
+      console.error(error)
+      this.authService.goToLogin()
+    }
+  }
 
-      //traer actividades
-      const actividades:Actividad = await lastValueFrom(this.actividadService.traerActividadesByAlumno(user.run))
-      if(!actividades){
-        alert('error al traer actividades')
-        return
-      }
-
-
-
-
+  private async traerActividades(run: string) {
+    try {
+      const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
+      this.actividadService.setActvidades(actividades.actividades)
       //traer el correo del usuario
     } catch (error: any) {
       console.error(error)
+      this.authService.goToLogin()
       alert('error al traer al usuario')
     }
   }
+
+  private filtrarHoras(area: string): number {
+    let horasTrabajadas = 0
+    this.actividades.forEach((actividad) => {
+      if (actividad.area_trabajo == area) {
+        const [hInic, mInic] = actividad.hora_inic_activdad.split(':').map(Number);
+        const [hTerm, mTerm] = actividad.hora_term_actividad.split(':').map(Number);
+        const diferenciaMinutos = Math.abs((hTerm * 60 + mTerm) - (hInic * 60 + mInic));
+        const diferenciaHoras = diferenciaMinutos / 60;
+        horasTrabajadas += diferenciaHoras;
+      }
+    })
+    return horasTrabajadas
+  }
+
+  private formatearFechas(fecha: string): string {
+    const [dia, mes, anioCorto] = fecha.split('-')
+    const anio = parseInt(anioCorto, 10) < 50 ? '20' + anioCorto : '19' + anioCorto
+    return `${anio}-${mes}-${dia}`
+  }
+
+  private filtrarActividadesMes(mes: number) {
+    let actividadesFiltradas: Actividad[] = []
+    this.actividadService.actividades$.subscribe((actividad) => {
+      this.actividades = actividad
+      this.actividades.forEach((actividad) => {
+        const fechaFormateada = this.formatearFechas(actividad.fecha_actividad)
+        const fecha: Date = new Date(fechaFormateada)
+        const mesFechaActividad: number = fecha.getMonth()
+        if (mes === mesFechaActividad) {
+          actividadesFiltradas.push(actividad)
+        }
+      }) 
+      this.actividades = actividadesFiltradas     
+    })
+    this.actividadService.setActvidades(this.actividades)
+  }
+
+  mostrarActividadesFiltradas(mes: number) {
+    this.filtrarActividadesMes(mes)
+  }
+
 
 
 

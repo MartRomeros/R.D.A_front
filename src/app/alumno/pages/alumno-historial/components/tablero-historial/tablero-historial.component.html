@@ -3,32 +3,32 @@
         <div class="list-group">
             <li class="list-group-item active" aria-current="true">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2" checked>
-                    <label class="form-check-label" for="radioDefault2">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="todos" checked (click)="mostrarTodasActividades()">
+                    <label class="form-check-label" for="todos">
                         Todas las horas
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
-                    <label class="form-check-label" for="radioDefault2">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="difusion" (click)="mostrarActividadesPorArea('difusion')">
+                    <label class="form-check-label" for="difusion">
                         Difusion
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
-                    <label class="form-check-label" for="radioDefault2">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="extension" (click)="mostrarActividadesPorArea('extension')">
+                    <label class="form-check-label" for="extension">
                         Extension
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
-                    <label class="form-check-label" for="radioDefault2">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="comunicacion" (click)="mostrarActividadesPorArea('comunicacion')">
+                    <label class="form-check-label" for="comunicacion">
                         Comunicacion
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="radioDefault2">
-                    <label class="form-check-label" for="radioDefault2">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="desarrollo-laboral" (click)="mostrarActividadesPorArea('desarrollo_laboral')">
+                    <label class="form-check-label" for="desarrollo-laboral">
                         Desarrollo laboral
                     </label>
                 </div>
@@ -44,12 +44,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        @for (item of actividades; track $index) {
                         <tr>
-                            <th scope="row">1</th>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>mdo</td>
+                            <th scope="row">{{item.fecha_actividad}}</th>
+                            <td>{{item.hora_inic_activdad}}</td>
+                            <td>{{item.hora_term_actividad}}</td>
+                            <td>{{item.area_trabajo}}</td>
                         </tr>
+                        }
                     </tbody>
                 </table>
             </li>

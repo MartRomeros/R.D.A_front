@@ -104,7 +104,6 @@ export class ResumenComponent implements OnInit {
       currency: 'CLP',
       maximumFractionDigits: 0
     }).format(this.montoAcumulado);
-
     this.cargando = false;
   }
 
@@ -114,15 +113,23 @@ export class ResumenComponent implements OnInit {
       this.cargando = true
       //obtiene el usuario por mail
       const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
+      if(!usuario){
+        alert('error al traer el mail del usuario')
+        return
+      }      
       this.usuario = usuario; // <--- aquí se guarda el usuario en una variable publica
       //obtener el run del usuario
       const run: string = usuario.run;
       //trae las actividades actuales del usuario
       const actvidadesResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run));
+      if(!actvidadesResponse){
+        alert('error al traer actividades del usuario')
+        return
+      }      
       //actualiza las actividades
       this.actividadService.setActvidades(actvidadesResponse.actividades);
     } catch (error: any) {
-      alert('Error al cargar actividades');
+      alert('Error al cargar actividades')
     } finally {
       this.cargando = false
     }

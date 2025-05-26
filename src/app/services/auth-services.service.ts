@@ -1,11 +1,14 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Injectable, signal } from '@angular/core';
-import { lastValueFrom, Observable, tap } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthServicesService {
+  //servicios
+  private router:Router = new Router()
 
   private http = inject(HttpClient)
   private localUrl = 'http://localhost:3000'
@@ -26,5 +29,9 @@ export class AuthServicesService {
   isAuthenticated(): Observable<any> {
     return this.http.get(`${this.rendelUrl}/auth/is-authenticated`, { withCredentials: true })
   }
+
+  goToLogin(){
+    this.router.navigate(['login'])
+  }  
 
 }

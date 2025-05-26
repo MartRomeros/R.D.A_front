@@ -8,7 +8,7 @@
         <mat-label>Ingresa el mes</mat-label>
         <mat-select>
             @for (meses of mesesHastaAhora; track $index) {
-            <mat-option value="{{meses}}">{{meses}}</mat-option>
+            <mat-option value="{{$index}}" (click)="mostrarActividadesFiltradas($index)">{{meses}}</mat-option>
             }
         </mat-select>
     </mat-form-field>
@@ -26,21 +26,21 @@
                 <div class="row">
                     <div class="col" id="difusion">
                         <h4>Difusion</h4>
-                        <h6>11 horas</h6>
+                        <h6>{{horasDifusion}}</h6>
                     </div>
                     <div class="col" id="extension">
                         <h4>Extension</h4>
-                        <h6>11 horas</h6>
+                        <h6>{{horasExtension}}</h6>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col" id="comunicacion">
                         <h4>Comunicacion</h4>
-                        <h6>11 horas</h6>
+                        <h6>{{horasComunicacion}}</h6>
                     </div>
                     <div class="col" id="desarrollo-laboral">
                         <h4>Desarrollo laboral</h4>
-                        <h6>11 horas</h6>
+                        <h6>{{horasDesarrolloLaboral}}</h6>
                     </div>
                 </div>
             </div>

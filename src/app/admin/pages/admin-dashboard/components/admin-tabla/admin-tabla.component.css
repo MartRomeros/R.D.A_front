@@ -1,0 +1,37 @@
+.table{
+    --bs-table-bg: #FAF9FD;
+}
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.scroll-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+@media (max-width:768px) {
+
+    main{
+        padding: 2vh;
+    }
+
+    section {
+        gap: 2vh;
+    }
+
+    mat-card-content{
+        padding: 0;
+    }
+
+    mat-card{
+        padding: 1vh;
+    }
+}

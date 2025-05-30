@@ -1,12 +1,12 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { AuthServicesService } from '../../../../../services/auth-services.service';
-import { last, lastValueFrom } from 'rxjs';
+import { lastValueFrom } from 'rxjs';
 import { UserService } from '../../../../../services/user.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { ActividadService } from '../../../../../services/actividad.service';
-import { color } from 'echarts';
+
 
 @Component({
   selector: 'app-historial-resumen',
@@ -14,7 +14,7 @@ import { color } from 'echarts';
   templateUrl: './historial-resumen.component.html',
   styleUrl: './historial-resumen.component.css'
 })
-export class HistorialResumenComponent implements OnInit {
+export class HistorialResumenComponent implements OnInit, OnDestroy {
   //servicios
   private authService: AuthServicesService = inject(AuthServicesService)
   private userService: UserService = inject(UserService)
@@ -25,6 +25,7 @@ export class HistorialResumenComponent implements OnInit {
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
   private mesActual: number = new Date().getMonth()
   private user!: User
+
 
   //variables publicas
   mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
@@ -67,6 +68,12 @@ export class HistorialResumenComponent implements OnInit {
     ]
   };
 
+  ngOnDestroy() {
+    this.actividadService.setFiltroArea('todos')
+    this.actividadService.setFiltroMes(null)
+    this.actividadService.setActvidades(this.actividadService.getActividades())
+  }
+
   async ngOnInit() {
     await this.comprobarAutenticacion()
     await this.traerUsuario()
@@ -91,8 +98,9 @@ export class HistorialResumenComponent implements OnInit {
           }
         ]
       }
-      console.log(this.actividades)
+
     })
+
   }
 
   private async comprobarAutenticacion() {
@@ -118,7 +126,7 @@ export class HistorialResumenComponent implements OnInit {
   private async traerActividades(run: string) {
     try {
       const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
-      this.actividadService.setActvidades(actividades.actividades)
+      this.actividadService.setActvidades(actividades.actividades, true)
       //traer el correo del usuario
     } catch (error: any) {
       console.error(error)
@@ -141,35 +149,16 @@ export class HistorialResumenComponent implements OnInit {
     return horasTrabajadas
   }
 
-  private formatearFechas(fecha: string): string {
-    const [dia, mes, anioCorto] = fecha.split('-')
-    const anio = parseInt(anioCorto, 10) < 50 ? '20' + anioCorto : '19' + anioCorto
-    return `${anio}-${mes}-${dia}`
+  mostrarActividadesPorMes(mes: number) {
+    this.actividadService.setFiltroArea('todos')
+    this.actividadService.setFiltroMes(mes)
+    this.actividadService.aplicarFiltros()
   }
 
-  private filtrarActividadesMes(mes: number) {
-    let actividadesFiltradas: Actividad[] = []
-    this.actividadService.actividades$.subscribe((actividad) => {
-      this.actividades = actividad
-      this.actividades.forEach((actividad) => {
-        const fechaFormateada = this.formatearFechas(actividad.fecha_actividad)
-        const fecha: Date = new Date(fechaFormateada)
-        const mesFechaActividad: number = fecha.getMonth()
-        if (mes === mesFechaActividad) {
-          actividadesFiltradas.push(actividad)
-        }
-      }) 
-      this.actividades = actividadesFiltradas     
-    })
-    this.actividadService.setActvidades(this.actividades)
+  mostrarTodasActividades() {
+    this.actividadService.setFiltroArea('todos')
+    this.actividadService.setFiltroMes(null)
+    this.actividadService.aplicarFiltros()
   }
-
-  mostrarActividadesFiltradas(mes: number) {
-    this.filtrarActividadesMes(mes)
-  }
-
-
-
-
 
 }

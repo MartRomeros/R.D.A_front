@@ -5,3 +5,15 @@
     background-color: #36243E;
     border: #36243E 1px solid;
 }
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.scroll-container thead th {
+    position: sticky;
+    top: 0;
+    background: white;
+    z-index: 1;
+}

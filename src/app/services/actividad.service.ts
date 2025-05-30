@@ -13,10 +13,50 @@ export class ActividadService {
   private localUrl = 'http://localhost:3000'//pruebas locales
   private rendelUrl = 'https://r-d-a-server-1.onrender.com' //pruebas
 
+  private actividadesOriginales:Actividad[] = []
+
   private actividadesSubject = new BehaviorSubject<Actividad[]>([])
   actividades$ = this.actividadesSubject.asObservable()
 
-  setActvidades(nuevasActividades: Actividad[]) {
+  private filtroAreaSubject = new BehaviorSubject<string>('todos')
+  filtroArea$ = this.filtroAreaSubject.asObservable()
+
+  private filtroMesSubject = new BehaviorSubject<number | null>(null)
+  filtroMes$ = this.filtroMesSubject.asObservable()
+
+  setFiltroArea(area: string) {
+    this.filtroAreaSubject.next(area)
+  }
+
+  setFiltroMes(mes: number | null) {
+    this.filtroMesSubject.next(mes)
+  }
+
+  aplicarFiltros() {
+    const actividades = this.actividadesOriginales
+    const area = this.filtroAreaSubject.getValue()
+    const mes = this.filtroMesSubject.getValue()
+
+    const filtradas = actividades.filter((actividad) => {
+
+      const cumpleArea = area === 'todos' || actividad.area_trabajo === area
+
+      const cumpleMes = (() => {
+        if (mes === null) return true
+        const partesFecha = actividad.fecha_actividad.split('/')
+        const mesActividad = parseInt(partesFecha[1]) - 1
+        return mesActividad === mes
+      })()
+
+      return cumpleArea && cumpleMes
+    })
+    this.setActvidades(filtradas)
+  }
+
+  setActvidades(nuevasActividades: Actividad[],guardarOriginal:boolean = false) {
+    if(guardarOriginal)[
+      this.actividadesOriginales = [...nuevasActividades]
+    ]
     this.actividadesSubject.next(nuevasActividades)
   }
 
@@ -71,12 +111,12 @@ export class ActividadService {
     //validar que las horas ingresadas esten dentro de 6 am y 11:30 pm
     const inicioPermitido = 6 * 60
     const finPermitido = 23 * 60 + 30
-    if(minutosInic < inicioPermitido || minutosInic > finPermitido){
+    if (minutosInic < inicioPermitido || minutosInic > finPermitido) {
       alert('hora de inicio fuera de rango permitido')
       return false
     }
 
-    if(minutosTerm < inicioPermitido || minutosTerm > finPermitido){
+    if (minutosTerm < inicioPermitido || minutosTerm > finPermitido) {
       alert('hora de termino no permitido!')
       return false
     }
@@ -84,7 +124,7 @@ export class ActividadService {
     return true
   }
 
-  
+
 
 
 

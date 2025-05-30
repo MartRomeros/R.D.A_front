@@ -3,57 +3,65 @@
         <div class="list-group">
             <li class="list-group-item active" aria-current="true">
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="todos" checked (click)="mostrarTodasActividades()">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="todos" checked
+                        (click)="mostrarTodasActividades()">
                     <label class="form-check-label" for="todos">
                         Todas las horas
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="difusion" (click)="mostrarActividadesPorArea('difusion')">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="difusion"
+                        (click)="mostrarActividadesPorArea('difusion')">
                     <label class="form-check-label" for="difusion">
                         Difusion
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="extension" (click)="mostrarActividadesPorArea('extension')">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="extension"
+                        (click)="mostrarActividadesPorArea('extension')">
                     <label class="form-check-label" for="extension">
                         Extension
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="comunicacion" (click)="mostrarActividadesPorArea('comunicacion')">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="comunicacion"
+                        (click)="mostrarActividadesPorArea('comunicacion')">
                     <label class="form-check-label" for="comunicacion">
                         Comunicacion
                     </label>
                 </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="desarrollo-laboral" (click)="mostrarActividadesPorArea('desarrollo_laboral')">
+                    <input class="form-check-input" type="radio" name="radioDefault" id="desarrollo-laboral"
+                        (click)="mostrarActividadesPorArea('desarrollo_laboral')">
                     <label class="form-check-label" for="desarrollo-laboral">
                         Desarrollo laboral
                     </label>
                 </div>
             </li>
             <li class="list-group-item">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">Fecha</th>
-                            <th scope="col">Hora de inicio</th>
-                            <th scope="col">Hora de termino</th>
-                            <th scope="col">Area</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @for (item of actividades; track $index) {
-                        <tr>
-                            <th scope="row">{{item.fecha_actividad}}</th>
-                            <td>{{item.hora_inic_activdad}}</td>
-                            <td>{{item.hora_term_actividad}}</td>
-                            <td>{{item.area_trabajo}}</td>
-                        </tr>
-                        }
-                    </tbody>
-                </table>
+                <div class="scroll-container">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Fecha</th>
+                                <th scope="col">Hora de inicio</th>
+                                <th scope="col">Hora de termino</th>
+                                <th scope="col">Area</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of actividades; track $index) {
+                            <tr>
+                                <th scope="row">{{item.fecha_actividad}}</th>
+                                <td>{{item.hora_inic_activdad}}</td>
+                                <td>{{item.hora_term_actividad}}</td>
+                                <td>{{item.area_trabajo}}</td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
             </li>
         </div>
     </article>

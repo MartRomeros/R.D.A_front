@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { MatSelectModule } from '@angular/material/select'
 import { AuthServicesService } from '../../../../../services/auth-services.service';
@@ -11,9 +11,10 @@ import { Actividad, User } from '../../../../../models/interfaces';
   selector: 'app-tablero-historial',
   imports: [GeneralModule, MatSelectModule],
   templateUrl: './tablero-historial.component.html',
-  styleUrl: './tablero-historial.component.css'
+  styleUrl: './tablero-historial.component.css',
+  standalone: true
 })
-export class TableroHistorialComponent implements OnInit {
+export class TableroHistorialComponent implements OnInit, OnDestroy {
   //servicios
   private authService: AuthServicesService = inject(AuthServicesService)
   private userService: UserService = inject(UserService)
@@ -33,7 +34,12 @@ export class TableroHistorialComponent implements OnInit {
     this.actividadService.actividades$.subscribe((actividad) => {
       this.actividades = actividad
     })
+  }
 
+  ngOnDestroy() {
+    this.actividadService.setFiltroArea('todos')
+    this.actividadService.setFiltroMes(null)
+    this.actividadService.setActvidades(this.actividadService.getActividades())
   }
 
   //metodos asyncronos
@@ -60,7 +66,7 @@ export class TableroHistorialComponent implements OnInit {
   private async traerActividades(run: string) {
     try {
       const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
-      this.actividadService.setActvidades(actividades.actividades)
+      this.actividadService.setActvidades(actividades.actividades,true)
       //traer el correo del usuario
     } catch (error: any) {
       console.error(error)
@@ -69,26 +75,16 @@ export class TableroHistorialComponent implements OnInit {
     }
   }
 
-  private filtrarActividades(area: string) {
-    let actividadesFiltradas: Actividad[] = []
-    this.actividadService.actividades$.subscribe((actividad) => {
-      this.actividades = actividad
-      this.actividades.forEach((actividad) => {
-        if (actividad.area_trabajo === area) {
-          actividadesFiltradas.push(actividad)
-        }
-      })
-    })
-    return actividadesFiltradas
-  }
-
   mostrarActividadesPorArea(area: string) {
-    this.actividades = this.filtrarActividades(area)
+    this.actividadService.setFiltroArea(area)
+    this.actividadService.setFiltroMes(null)
+    this.actividadService.aplicarFiltros()
   }
 
   mostrarTodasActividades() {
-    this.actividadService.actividades$.subscribe((actividad) => {
-      this.actividades = actividad
-    })
-  }  
+    this.actividadService.setFiltroArea('todos')
+    this.actividadService.setFiltroMes(null)
+    this.actividadService.aplicarFiltros()
+  }
+
 }

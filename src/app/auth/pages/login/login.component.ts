@@ -1,35 +1,36 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
+import { GeneralModule } from '../../../shared/modules/general/general.module';
+import { LoginResponse } from '../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
-import { LoginResponse } from '../../../models/interfaces';
-import { GeneralModule } from '../../../shared/modules/general/general.module';
-
 
 @Component({
   selector: 'app-login',
   imports: [GeneralModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css',
-  standalone: true
+  styleUrl: './login.component.css'
 })
-
 export class LoginComponent {
 
-  //Formulario de login
-  loginForm!: FormGroup
-  //servicio de autenticacion
+  //servicios
   private authService = inject(AuthServicesService)
+  private fb = inject(FormBuilder)
+
+
+  //variables publicas
+  loginForm: FormGroup = this.fb.group({
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', Validators.required]
+  })
+
+
+
+  //variables privadas
   private router = new Router()
 
-  constructor(private fb: FormBuilder) {
-    this.loginForm = fb.group({
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required]
-    })
-  }
+
 
   //visibilidad para el campo de contraseña
   hide = signal(true);
@@ -89,6 +90,5 @@ export class LoginComponent {
 
     return true
   }
-
 
 }

@@ -15,19 +15,19 @@ export class AuthServicesService {
   private rendelUrl = 'https://r-d-a-server-1.onrender.com'
 
   login(valores: any): Observable<any> {
-    return this.http.post(`${this.rendelUrl}/auth/login`, valores, { withCredentials: true })
+    return this.http.post(`${this.localUrl}/auth/login`, valores, { withCredentials: true })
   }
 
   logout(): Observable<any> {
-    return this.http.post(`${this.rendelUrl}/auth/logout`, {}, { withCredentials: true })
+    return this.http.post(`${this.localUrl}/auth/logout`, {}, { withCredentials: true })
   }
 
   recuperarClave(email: string): Observable<any> {
-    return this.http.put(`${this.rendelUrl}/auth/forgot-password`, { email: email })
+    return this.http.put(`${this.localUrl}/auth/forgot-password`, { email: email })
   }
 
   isAuthenticated(): Observable<any> {
-    return this.http.get(`${this.rendelUrl}/auth/is-authenticated`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/auth/is-authenticated`, { withCredentials: true })
   }
 
   goToLogin(){

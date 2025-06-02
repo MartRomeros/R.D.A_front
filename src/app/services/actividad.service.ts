@@ -65,11 +65,11 @@ export class ActividadService {
   }
 
   traerActividadesByAlumno(run: string): Observable<any> {
-    return this.http.get(`${this.rendelUrl}/actividad/actividades/${run}`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
   registrarActividad(actividad: Actividad): Observable<any> {
-    return this.http.post(`${this.rendelUrl}/actividad/actividades`, actividad, { withCredentials: true })
+    return this.http.post(`${this.localUrl}/actividad/actividades`, actividad, { withCredentials: true })
   }
 
   validarActividad(actividadForm: FormGroup): boolean {

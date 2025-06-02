@@ -13,11 +13,11 @@ export class UserService {
   private rendelUrl = 'https://r-d-a-server-1.onrender.com'
 
   findUserbyEmail(): Observable<any> {
-    return this.http.get(`${this.rendelUrl}/user/user/email`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/user/user/email`, { withCredentials: true })
   }
 
   actualizarDatos(valores: any): Observable<any> {
-    return this.http.put(`${this.rendelUrl}/user/update`, valores, { withCredentials: true })
+    return this.http.put(`${this.localUrl}/user/update`, valores, { withCredentials: true })
   }
 
   validarPerfilForm(perfilForm: FormGroup): boolean {

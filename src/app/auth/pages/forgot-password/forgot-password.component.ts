@@ -1,8 +1,8 @@
 import { Component, inject } from '@angular/core';
+import { GeneralModule } from '../../../shared/modules/general/general.module';
+import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';
-import { lastValueFrom } from 'rxjs';
-import { GeneralModule } from '../../../shared/modules/general/general.module';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,7 +11,6 @@ import { GeneralModule } from '../../../shared/modules/general/general.module';
   styleUrl: './forgot-password.component.css'
 })
 export class ForgotPasswordComponent {
-
   private fb = inject(FormBuilder)
   private authService = inject(AuthServicesService)
 
@@ -44,14 +43,12 @@ export class ForgotPasswordComponent {
     console.log(valores)
 
     try {
-
       const response = await lastValueFrom(this.authService.recuperarClave(valores))
       alert('no es posible recuperar la contrasena')
 
     } catch (error: any) {
       alert('no es posible recuperar la contrasena error server')
       console.log(error)
-
     }
 
   }

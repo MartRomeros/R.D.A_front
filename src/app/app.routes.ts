@@ -6,18 +6,22 @@ import { AdminDashboardComponent } from './admin/pages/admin-dashboard/admin-das
 import { LoginComponent } from './auth/pages/login/login.component';
 import { ForgotPasswordComponent } from './auth/pages/forgot-password/forgot-password.component';
 import { authGuardGuard } from './guards/auth-guard.guard';
+import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
+import { alumnoGuard } from './guards/alumno.guard';
+import { adminGuard } from './guards/admin.guard';
 
 
 
 export const routes: Routes = [
     {
         path: '',
-        redirectTo: '/login',
+        component: LoginComponent,
         canActivate: [authGuardGuard]
     },
     {
         path: 'alumno',
         component: AlumnoDashboardComponent,
+        canActivate: [authGuardGuard, alumnoGuard]
     },
     {
         path: 'alumno-historial',
@@ -26,6 +30,7 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminDashboardComponent,
+        canActivate: [adminGuard]
     },
     //ruta login component
     {
@@ -36,13 +41,18 @@ export const routes: Routes = [
     {
         path: 'perfil',
         component: PerfilComponent,
+        canActivate: [authGuardGuard]
     },
     {
         path: 'forgot-password', component: ForgotPasswordComponent,
         canActivate: [authGuardGuard]
     },
     {
-        path: '**', redirectTo: '/login',
+        path: 'no_autorizado',
+        component: UnauthorizedComponent
+    },
+    {
+        path: '**', component: LoginComponent,
         canActivate: [authGuardGuard]
     },
 

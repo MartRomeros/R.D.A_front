@@ -66,11 +66,13 @@ export class LoginComponent {
 
       const response: LoginResponse = await lastValueFrom(this.authService.login(valores))
       if (response.tipoUsuario === 'ALUMNO') {
-        this.router.navigate(['alumno'])
+        this.router.navigate(['alumno']);
+      }else{
+        this.router.navigate(['admin']);
       }
 
     } catch (error: any) {
-      console.log(error)
+      console.log(error);
     }
 
 

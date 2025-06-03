@@ -6,6 +6,8 @@ import { lastValueFrom } from 'rxjs';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { UserService } from '../../../../../services/user.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
+import { MensajeriaService } from '../../../../../services/mensajeria.service';
+
 
 @Component({
   selector: 'app-actividad-form',
@@ -19,6 +21,7 @@ export class ActividadFormComponent {
   //servicios
   private actividadService = inject(ActividadService)
   private userService = inject(UserService)
+  private mensajeService = inject(MensajeriaService)
 
   //formbuilder
   private fb = inject(FormBuilder)
@@ -26,52 +29,49 @@ export class ActividadFormComponent {
   //variables publicas
   //formulario de actividades
   actividadForm: FormGroup = this.fb.group({
-    fecha: ['',Validators.required],
-    horaInic: ['',Validators.required],
-    horaTerm: ['',Validators.required],
-    area: ['',Validators.required]
+    fecha: ['', Validators.required],
+    horaInic: ['', Validators.required],
+    horaTerm: ['', Validators.required],
+    area: ['', Validators.required]
   })
 
   //metodo para registrar horas (Public)
   async registrarHora() {
 
     //validar formulario
-    if(!this.actividadService.validarActividad(this.actividadForm)){
-      return
+    if (!this.actividadService.validarActividad(this.actividadForm)) {
+      return;
     }
 
+    //formateo de valores
+    const fecha = new Date(this.actividadForm.get('fecha')?.value);
+    const strFecha = fecha.toISOString().slice(0, 10);
 
-    //formateo de fechas
-    const date: Date = new Date(this.actividadForm.get('fecha')?.value)
-    const dia: string = date.getDate().toString().padStart(2, '0')
-    const mes: string = (date.getMonth() + 1).toString().padStart(2, '0')
-    const anio: string = date.getFullYear().toString().slice(-2)
-    const fechaFormateada: string = `${dia}/${mes}/${anio}`
+    //formateo de horas
+    const horaInicIso = new Date(`${strFecha}T${this.actividadForm.get('horaInic')?.value}`)
+    const horaTermIso = new Date(`${strFecha}T${this.actividadForm.get('horaTerm')?.value}`)
+
     try {
-      //traer al usuario por el email que esta en la cookie
-      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
-      if(!usuario){
-        alert('error al traer al usuario del email')
-        return
-      }
-      //obtener el run del usuario
+      //obtener usuario
+      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
+      //obtener run del usuario
       const run: string = usuario.run
-      const valores: Actividad = {
-        area_trabajo: this.actividadForm.get('area')?.value,
-        fecha_actividad: fechaFormateada,
-        hora_inic_activdad: this.actividadForm.get('horaInic')?.value,
-        hora_term_actividad: this.actividadForm.get('horaTerm')?.value,
-        run_alumno: run
-      }      
-      //registrar actividad
-      const response = await lastValueFrom(this.actividadService.registrarActividad(valores))
-      //actualizar valores
-      const actividadesActuales = this.actividadService.getActividades()
-      this.actividadService.setActvidades([...actividadesActuales, valores])
-      alert(response.message)
+      //valores del formulario
+      console.log(this.actividadForm.value)
+      //valores a mandar en el backend
+      const body = {
+        fecha_actividad: strFecha,
+        hora_inic_activdad: horaInicIso,
+        hora_term_actividad: horaTermIso,
+        run_alumno: run,
+        area_trabajo: this.actividadForm.get('area')?.value
+      }
+      const response = await lastValueFrom(this.actividadService.registrarActividad(body))
+      this.mensajeService.mostrarMensajeExito(response.message)
+            
 
     } catch (error: any) {
-      alert('error en registrar horas')
+      this.mensajeService.mostrarMensajeError('error al registrar las horas');
     }
   }
 

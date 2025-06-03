@@ -11,9 +11,8 @@ export class ActividadService {
 
   private http = inject(HttpClient)
   private localUrl = 'http://localhost:3000'//pruebas locales
-  private rendelUrl = 'https://r-d-a-server-1.onrender.com' //pruebas
 
-  private actividadesOriginales:Actividad[] = []
+  private actividadesOriginales: Actividad[] = []
 
   private actividadesSubject = new BehaviorSubject<Actividad[]>([])
   actividades$ = this.actividadesSubject.asObservable()
@@ -53,10 +52,18 @@ export class ActividadService {
     this.setActvidades(filtradas)
   }
 
-  setActvidades(nuevasActividades: Actividad[],guardarOriginal:boolean = false) {
-    if(guardarOriginal)[
-      this.actividadesOriginales = [...nuevasActividades]
-    ]
+  setActvidades(nuevasActividades: Actividad[], guardarOriginal: boolean = false) {
+    nuevasActividades.forEach((actividad) => {
+      const fechaUTC = new Date(actividad.fecha_actividad)
+      const fechaCL = new Intl.DateTimeFormat('es-CL', {
+        timeZone: 'America/Santiago',
+        day: '2-digit',
+        month: '2-digit',
+        year: '2-digit'
+      })
+      const fechaFormateada = fechaCL.format(fechaUTC)
+      actividad.fecha_actividad = fechaFormateada
+    })
     this.actividadesSubject.next(nuevasActividades)
   }
 
@@ -68,7 +75,7 @@ export class ActividadService {
     return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
-  registrarActividad(actividad: Actividad): Observable<any> {
+  registrarActividad(actividad: any): Observable<any> {
     return this.http.post(`${this.localUrl}/actividad/actividades`, actividad, { withCredentials: true })
   }
 

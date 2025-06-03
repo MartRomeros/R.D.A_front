@@ -42,8 +42,8 @@ export const authGuardGuard: CanActivateFn = async (route, state) => {
 
   } catch (error) {
 
-    if (state.url !== '/login') {
-      router.navigate(['/alumno']);
+    if (url !== '/login') {
+      router.navigate(['/login']);
       return false;
     }
 

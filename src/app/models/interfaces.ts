@@ -22,3 +22,7 @@ export interface Actividad{
     area_trabajo:string,
     run_alumno:string
 }
+
+export interface ActividadResponse{
+    actividades:Actividad[]
+}

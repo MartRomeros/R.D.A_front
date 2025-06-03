@@ -9,8 +9,7 @@ import { Observable } from 'rxjs';
 export class UserService {
 
   private http = inject(HttpClient)
-  private localUrl = 'http://localhost:3000'
-  private rendelUrl = 'https://r-d-a-server-1.onrender.com'
+  private localUrl = 'http://localhost:3000' //https://r-d-a-server-1.onrender.com
 
   findUserbyEmail(): Observable<any> {
     return this.http.get(`${this.localUrl}/user/user/email`, { withCredentials: true })
@@ -18,6 +17,10 @@ export class UserService {
 
   actualizarDatos(valores: any): Observable<any> {
     return this.http.put(`${this.localUrl}/user/update`, valores, { withCredentials: true })
+  }
+
+  traerAlumnos():Observable<any>{
+    return this.http.get(`${this.localUrl}/user/alumnos`)
   }
 
   validarPerfilForm(perfilForm: FormGroup): boolean {

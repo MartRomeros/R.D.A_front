@@ -16,13 +16,15 @@
                             <th scope="col">Este mes</th>
                             <th scope="col">Acciones</th>
                         </tr>
+                        @for (alumno of alumnos; track $index) {
                         <tr>
-                            <td scope="row"></td>
-                            <td></td>
+                            <td scope="row"> {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}} </td>
+                            <td> {{alumno.run}} </td>
                             <td></td>
                             <td></td>
                             <td><button mat-flat-button>Ver detalle</button></td>
                         </tr>
+                        }
                     </thead>
                     <tbody>
                     </tbody>

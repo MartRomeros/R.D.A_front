@@ -32,15 +32,15 @@ export class ResumenComponent implements OnInit {
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
-  usuario!: User;
+  //variables privadas
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
+    await this.cargarActvidades()
     this.actividadService.actividades$.subscribe((actividades) => {
       this.procesarActividades(actividades)
-    })
-    await this.CargarActvidades()
+    })    
     this.traerFechaAproxPago()
     this.cargando = false
   }
@@ -90,44 +90,20 @@ export class ResumenComponent implements OnInit {
     this.montoAcumulado = 0;
     this.horasTrabajadas = 0;
 
-    actividades.forEach((actividad) => {
-      const [hInic, mInic] = actividad.hora_inic_activdad.split(':').map(Number);
-      const [hTerm, mTerm] = actividad.hora_term_actividad.split(':').map(Number);
-      const diferenciaMinutos = Math.abs((hTerm * 60 + mTerm) - (hInic * 60 + mInic));
-      const diferenciaHoras = diferenciaMinutos / 60;
-      this.horasTrabajadas += diferenciaHoras;
-      this.montoAcumulado += diferenciaHoras * 2450;
-    });
-
-    this.montoAcumuladoFormateado = new Intl.NumberFormat('es-CL', {
-      style: 'currency',
-      currency: 'CLP',
-      maximumFractionDigits: 0
-    }).format(this.montoAcumulado);
-    this.cargando = false;
+    console.log(actividades)
   }
 
   //trae las actividades del backend (BD)
-  private async CargarActvidades() {
+  private async cargarActvidades() {
     try {
       this.cargando = true
-      //obtiene el usuario por mail
-      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail());
-      if(!usuario){
-        alert('error al traer el mail del usuario')
-        return
-      }      
-      this.usuario = usuario; // <--- aquí se guarda el usuario en una variable publica
-      //obtener el run del usuario
-      const run: string = usuario.run;
-      //trae las actividades actuales del usuario
-      const actvidadesResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run));
-      if(!actvidadesResponse){
-        alert('error al traer actividades del usuario')
-        return
-      }      
-      //actualiza las actividades
-      this.actividadService.setActvidades(actvidadesResponse.actividades);
+      //obtener usuario
+      const usuario:User = await lastValueFrom(this.userService.findUserbyEmail())
+      //obtener run
+      const run:string = usuario.run
+      //traer actividades segun el alumno
+      const actividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
+      this.actividadService.setActvidades(actividadResponse.actividades)            
     } catch (error: any) {
       alert('Error al cargar actividades')
     } finally {

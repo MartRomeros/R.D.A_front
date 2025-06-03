@@ -3,7 +3,7 @@ import { GeneralModule } from '../../../../../shared/modules/general/general.mod
 import { AuthServicesService } from '../../../../../services/auth-services.service';
 import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
-import { Actividad, User } from '../../../../../models/interfaces';
+import { Actividad, ActividadResponse, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -26,10 +26,10 @@ export class TablaHorasComponent implements OnInit {
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
-    this.actividadService.actividades$.subscribe((actividades) => {
-      this.actividades = actividades      
-    })
     await this.CargarActvidades()
+    this.actividadService.actividades$.subscribe((actividades) => {
+      this.actividades = actividades
+    })
     this.cargando = false
   }
 
@@ -43,7 +43,7 @@ export class TablaHorasComponent implements OnInit {
       //obtener el run del usuario
       const run: string = usuario.run;
       //trae las actividades actuales del usuario
-      const actvidadesResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run));
+      const actvidadesResponse: ActividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run));
       //actualiza las actividades
       this.actividadService.setActvidades(actvidadesResponse.actividades);
     } catch (error: any) {
@@ -52,6 +52,8 @@ export class TablaHorasComponent implements OnInit {
       this.cargando = false
     }
   }
+
+
 
 
 

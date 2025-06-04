@@ -23,6 +23,12 @@ export class ActividadService {
   private filtroMesSubject = new BehaviorSubject<number | null>(null)
   filtroMes$ = this.filtroMesSubject.asObservable()
 
+  private horaCL = Intl.DateTimeFormat('es-CL', {
+    timeZone: 'America/Santiago',
+    hour: '2-digit',
+    minute: '2-digit'
+  })
+
   setFiltroArea(area: string) {
     this.filtroAreaSubject.next(area)
   }
@@ -54,6 +60,7 @@ export class ActividadService {
 
   setActvidades(nuevasActividades: Actividad[], guardarOriginal: boolean = false) {
     nuevasActividades.forEach((actividad) => {
+      //formateo de fecha y hora a cl
       const fechaUTC = new Date(actividad.fecha_actividad)
       const fechaCL = new Intl.DateTimeFormat('es-CL', {
         timeZone: 'America/Santiago',
@@ -63,6 +70,12 @@ export class ActividadService {
       })
       const fechaFormateada = fechaCL.format(fechaUTC)
       actividad.fecha_actividad = fechaFormateada
+      const horaInicUTC = new Date(actividad.hora_inic_activdad)
+      const horaInicFormateada = this.horaCL.format(horaInicUTC)
+      actividad.hora_inic_activdad = horaInicFormateada
+      const horaTermUTC = new Date(actividad.hora_term_actividad)
+      const horaTermCL = this.horaCL.format(horaTermUTC)
+      actividad.hora_term_actividad = horaTermCL
     })
     this.actividadesSubject.next(nuevasActividades)
   }

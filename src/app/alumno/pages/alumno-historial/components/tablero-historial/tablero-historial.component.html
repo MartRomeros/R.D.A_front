@@ -1,38 +1,50 @@
 <section class="row">
+    <h6 class="col-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
+    <mat-form-field class="col-2" appearance="outline">
+        <mat-label>Ingresa el mes</mat-label>
+        <mat-select>
+            <mat-option (click)="asignarMes(undefined);filtrarActividades()">Todas las actividades</mat-option>
+            @for (meses of mesesHastaAhora; track $index) {
+            <mat-option value="{{$index}}" (click)="asignarMes($index);filtrarActividades()">{{meses}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+</section>
+<section class="row">
     <article class="col">
         <div class="list-group">
             <li class="list-group-item active" aria-current="true">
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="todos" checked
-                        (click)="mostrarTodasActividades()">
+                       (click)="asignarArea('');filtrarActividades()" >
                     <label class="form-check-label" for="todos">
                         Todas las horas
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="difusion"
-                        (click)="mostrarActividadesPorArea('difusion')">
+                        (click)="asignarArea('difusion');filtrarActividades()">
                     <label class="form-check-label" for="difusion">
                         Difusion
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="extension"
-                        (click)="mostrarActividadesPorArea('extension')">
+                        (click)="asignarArea('extension');filtrarActividades()">
                     <label class="form-check-label" for="extension">
                         Extension
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="comunicacion"
-                        (click)="mostrarActividadesPorArea('comunicacion')">
+                        (click)="asignarArea('comunicacion');filtrarActividades()">
                     <label class="form-check-label" for="comunicacion">
                         Comunicacion
                     </label>
                 </div>
                 <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="desarrollo-laboral"
-                        (click)="mostrarActividadesPorArea('desarrollo_laboral')">
+                        (click)="asignarArea('desarrollo_laboral');filtrarActividades()">
                     <label class="form-check-label" for="desarrollo-laboral">
                         Desarrollo laboral
                     </label>

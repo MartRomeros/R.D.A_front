@@ -23,11 +23,11 @@ export class AuthServicesService {
   }
 
   recuperarClave(email: string): Observable<any> {
-    return this.http.put(`${this.localUrl}/auth/forgot-password`, { email: email })
+    return this.http.put(`${this.localUrl}/auth/forgot_password`, { email: email })
   }
 
   isAuthenticated(): Observable<any> {
-    return this.http.get(`${this.localUrl}/auth/is-authenticated`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/auth/is_authenticated`, { withCredentials: true })
   }
 
   goToLogin(){

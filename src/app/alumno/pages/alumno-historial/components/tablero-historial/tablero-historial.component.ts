@@ -1,11 +1,9 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { MatSelectModule } from '@angular/material/select'
-import { AuthServicesService } from '../../../../../services/auth-services.service';
-import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { lastValueFrom } from 'rxjs';
-import { Actividad, User } from '../../../../../models/interfaces';
+import { Actividad, ActividadResponse } from '../../../../../models/interfaces';
 
 @Component({
   selector: 'app-tablero-historial',
@@ -14,77 +12,59 @@ import { Actividad, User } from '../../../../../models/interfaces';
   styleUrl: './tablero-historial.component.css',
   standalone: true
 })
-export class TableroHistorialComponent implements OnInit, OnDestroy {
+export class TableroHistorialComponent implements OnInit {
   //servicios
-  private authService: AuthServicesService = inject(AuthServicesService)
-  private userService: UserService = inject(UserService)
   private actividadService: ActividadService = inject(ActividadService)
 
+
   //variables privadas
-  private user!: User
+  private meses: string[] = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
+    "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
+  private mesActual: number = new Date().getMonth()
+  private mesFiltro?: string
+  private areaFiltro?: string
 
   //variables publicas
+  mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
   actividades!: Actividad[]
 
   //ngoninit
   async ngOnInit() {
-    await this.comprobarAutenticacion()
-    await this.traerUsuario()
-    await this.traerActividades(this.user.run)
-    this.actividadService.actividades$.subscribe((actividad) => {
+    await this.filtrarActividades()
+    this.actividadService.actividadesParaFiltrar$.subscribe((actividad) => {
       this.actividades = actividad
     })
   }
 
-  ngOnDestroy() {
-    this.actividadService.setFiltroArea('todos')
-    this.actividadService.setFiltroMes(null)
-    this.actividadService.setActvidades(this.actividadService.getActividades())
-  }
 
-  //metodos asyncronos
-  private async comprobarAutenticacion() {
+  async filtrarActividades() {
     try {
-      await lastValueFrom(this.authService.isAuthenticated())
+      const response = await lastValueFrom(this.actividadService.traerActividadesFiltradas(this.mesFiltro,this.areaFiltro))
+      console.log(response)
+      this.actividadService.setActividadesParaFiltrar(response.actividadesFiltradas)
     } catch (error: any) {
       console.error(error)
-      this.authService.goToLogin()
-      alert('error al comprobar la autenticacion')
     }
   }
 
-  private async traerUsuario() {
-    try {
-      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
-      this.user = usuario
-    } catch (error: any) {
-      console.error(error)
-      this.authService.goToLogin()
+  asignarMes(mes: number | undefined) {
+    if (mes || mes === 0) {
+      const now = new Date()
+      const year = now.getFullYear();
+      const mesFiltro = mes + 1
+      const mesYanio = `0${mesFiltro}${year}`
+      this.mesFiltro = mesYanio
+    }else{
+      this.mesFiltro = undefined
     }
   }
 
-  private async traerActividades(run: string) {
-    try {
-      const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
-      this.actividadService.setActvidades(actividades.actividades,true)
-      //traer el correo del usuario
-    } catch (error: any) {
-      console.error(error)
-      this.authService.goToLogin()
-      alert('error al traer al usuario')
+  asignarArea(area: string) {
+    if (area !== '') {
+      this.areaFiltro = area
+    } else {
+      this.areaFiltro = undefined
     }
-  }
-
-  mostrarActividadesPorArea(area: string) {
-    this.actividadService.setFiltroArea(area)
-    this.actividadService.setFiltroMes(null)
-    this.actividadService.aplicarFiltros()
-  }
-
-  mostrarTodasActividades() {
-    this.actividadService.setFiltroArea('todos')
-    this.actividadService.setFiltroMes(null)
-    this.actividadService.aplicarFiltros()
   }
 
 }

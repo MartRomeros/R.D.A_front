@@ -12,7 +12,7 @@ export class UserService {
   private localUrl = 'http://localhost:3000' //https://r-d-a-server-1.onrender.com
 
   findUserbyEmail(): Observable<any> {
-    return this.http.get(`${this.localUrl}/user/user/email`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/user/email`, { withCredentials: true })
   }
 
   actualizarDatos(valores: any): Observable<any> {

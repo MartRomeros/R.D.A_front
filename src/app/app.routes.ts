@@ -21,7 +21,7 @@ export const routes: Routes = [
     {
         path: 'alumno',
         component: AlumnoDashboardComponent,
-        canActivate: [authGuardGuard, alumnoGuard]
+        //canActivate: [authGuardGuard, alumnoGuard]
     },
     {
         path: 'alumno-historial',
@@ -36,7 +36,7 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        canActivate: [authGuardGuard]
+        //canActivate: [authGuardGuard]
     },
     {
         path: 'perfil',

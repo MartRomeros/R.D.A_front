@@ -5,6 +5,7 @@ import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
+import { MensajeriaService } from '../../../services/mensajeria.service';
 
 @Component({
   selector: 'app-login',
@@ -17,6 +18,7 @@ export class LoginComponent {
   //servicios
   private authService = inject(AuthServicesService)
   private fb = inject(FormBuilder)
+  private mensajeriaService:MensajeriaService = inject(MensajeriaService)
 
 
   //variables publicas
@@ -53,7 +55,7 @@ export class LoginComponent {
   async login() {
     //validar campos
     if (!this.validarCampos()) {
-      alert('reemplazado por sweet alert')
+      this.mensajeriaService.mostrarMensajeError('Por favor verifica los campos o las credenciales!');
       return
     }
 
@@ -73,6 +75,8 @@ export class LoginComponent {
 
     } catch (error: any) {
       console.log(error);
+      this.mensajeriaService.mostrarMensajeError(error.error.message)
+
     }
 
 

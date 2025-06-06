@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Actividad } from '../models/interfaces';
+import { Actividad, DetallesAlumno } from '../models/interfaces';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({
@@ -11,64 +11,50 @@ export class ActividadService {
 
   private http = inject(HttpClient)
   private localUrl = 'http://localhost:3000'//pruebas locales
-
-  private actividadesOriginales: Actividad[] = []
-
-  private actividadesSubject = new BehaviorSubject<Actividad[]>([])
-  actividades$ = this.actividadesSubject.asObservable()
-
-  private filtroAreaSubject = new BehaviorSubject<string>('todos')
-  filtroArea$ = this.filtroAreaSubject.asObservable()
-
-  private filtroMesSubject = new BehaviorSubject<number | null>(null)
-  filtroMes$ = this.filtroMesSubject.asObservable()
-
   private horaCL = Intl.DateTimeFormat('es-CL', {
     timeZone: 'America/Santiago',
     hour: '2-digit',
     minute: '2-digit'
   })
 
-  setFiltroArea(area: string) {
-    this.filtroAreaSubject.next(area)
+  private fechaCL = new Intl.DateTimeFormat('es-CL', {
+    timeZone: 'America/Santiago',
+    day: '2-digit',
+    month: '2-digit',
+    year: '2-digit'
+  })
+
+  private now = new Date();
+  private month = String(this.now.getMonth() + 1).padStart(2, '0'); // getMonth() devuelve 0-11
+  private year = this.now.getFullYear();
+  private mesAnio = `${this.month}${this.year}`;
+
+  //variables como total del pago, total de horas trabajadas(año y mes) etc
+  private horasTotalesSubject = new BehaviorSubject<number | null>(null);
+  horasTotales$ = this.horasTotalesSubject.asObservable()
+  setHorasTotales(horasTotales: number) {
+    this.horasTotalesSubject.next(horasTotales)
   }
 
-  setFiltroMes(mes: number | null) {
-    this.filtroMesSubject.next(mes)
+  private horasTotalesMesSubject = new BehaviorSubject<number | null>(null);
+  horasTotalesMes$ = this.horasTotalesMesSubject.asObservable()
+  setHorasTotalesMes(horasTotalesMes: number) {
+    this.horasTotalesMesSubject.next(horasTotalesMes)
   }
 
-  aplicarFiltros() {
-    const actividades = this.actividadesOriginales
-    const area = this.filtroAreaSubject.getValue()
-    const mes = this.filtroMesSubject.getValue()
-
-    const filtradas = actividades.filter((actividad) => {
-
-      const cumpleArea = area === 'todos' || actividad.area_trabajo === area
-
-      const cumpleMes = (() => {
-        if (mes === null) return true
-        const partesFecha = actividad.fecha_actividad.split('/')
-        const mesActividad = parseInt(partesFecha[1]) - 1
-        return mesActividad === mes
-      })()
-
-      return cumpleArea && cumpleMes
-    })
-    this.setActvidades(filtradas)
+  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({})
+  horasPorArea$ = this.horasPorAreaSubject.asObservable()
+  setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
+    this.horasPorAreaSubject.next(horasPorArea)
   }
 
-  setActvidades(nuevasActividades: Actividad[], guardarOriginal: boolean = false) {
+  private actividadesSubject = new BehaviorSubject<Actividad[]>([])
+  actividades$ = this.actividadesSubject.asObservable()
+  setActvidades(nuevasActividades: Actividad[]) {
     nuevasActividades.forEach((actividad) => {
       //formateo de fecha y hora a cl
       const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaCL = new Intl.DateTimeFormat('es-CL', {
-        timeZone: 'America/Santiago',
-        day: '2-digit',
-        month: '2-digit',
-        year: '2-digit'
-      })
-      const fechaFormateada = fechaCL.format(fechaUTC)
+      const fechaFormateada = this.fechaCL.format(fechaUTC)
       actividad.fecha_actividad = fechaFormateada
       const horaInicUTC = new Date(actividad.hora_inic_activdad)
       const horaInicFormateada = this.horaCL.format(horaInicUTC)
@@ -80,17 +66,64 @@ export class ActividadService {
     this.actividadesSubject.next(nuevasActividades)
   }
 
-  getActividades(): Actividad[] {
-    return this.actividadesSubject.getValue()
+  private actividadesParaFiltrarSubject = new BehaviorSubject<Actividad[]>([])
+  actividadesParaFiltrar$ = this.actividadesParaFiltrarSubject.asObservable()
+  setActividadesParaFiltrar(actividades: Actividad[]) {
+    if(!actividades){
+      this.actividadesParaFiltrarSubject.next([])
+      return
+    }
+    actividades.forEach((actividad) => {
+      //formateo de fecha y hora a cl
+      const fechaUTC = new Date(actividad.fecha_actividad)
+      const fechaFormateada = this.fechaCL.format(fechaUTC)
+      actividad.fecha_actividad = fechaFormateada
+      const horaInicUTC = new Date(actividad.hora_inic_activdad)
+      const horaInicFormateada = this.horaCL.format(horaInicUTC)
+      actividad.hora_inic_activdad = horaInicFormateada
+      const horaTermUTC = new Date(actividad.hora_term_actividad)
+      const horaTermCL = this.horaCL.format(horaTermUTC)
+      actividad.hora_term_actividad = horaTermCL
+    })
+    this.actividadesParaFiltrarSubject.next(actividades)
   }
 
-  traerActividadesByAlumno(run: string): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
+
+  traerActividadesByAlumno(): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/actividades_alumno`, { withCredentials: true })
   }
 
   registrarActividad(actividad: any): Observable<any> {
     return this.http.post(`${this.localUrl}/actividad/actividades`, actividad, { withCredentials: true })
   }
+
+  traerDetallesDelAlumno(mesYanio: string = this.mesAnio): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/detalles_alumno/${mesYanio}`, { withCredentials: true })
+  }
+
+  traerTotalesAlumno(): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/totales_alumno`, { withCredentials: true })
+  }
+
+  traerHorasFiltradas(mesYanio: string): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
+  }
+
+  traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
+    let params: any = {}
+    if (mesYanio) {
+      params.mesYanio = mesYanio
+    }
+    if (area) {
+      params.area = area
+    }
+    return this.http.get(`${this.localUrl}/actividad/actividades_filtradas`, { params,withCredentials:true})
+  }
+
+
+
+
+
 
   validarActividad(actividadForm: FormGroup): boolean {
 

@@ -38,12 +38,7 @@ export class TablaHorasComponent implements OnInit {
   private async CargarActvidades() {
     try {
       this.cargando = true
-      //obtiene el usuario por mail
-      const usuario: User = await lastValueFrom(this.usuarioService.findUserbyEmail());
-      //obtener el run del usuario
-      const run: string = usuario.run;
-      //trae las actividades actuales del usuario
-      const actvidadesResponse: ActividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run));
+      const actvidadesResponse: ActividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno());
       //actualiza las actividades
       this.actividadService.setActvidades(actvidadesResponse.actividades);
     } catch (error: any) {

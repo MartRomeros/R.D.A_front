@@ -14,17 +14,14 @@ import { ActividadService } from '../../../../../services/actividad.service';
   templateUrl: './historial-resumen.component.html',
   styleUrl: './historial-resumen.component.css'
 })
-export class HistorialResumenComponent implements OnInit, OnDestroy {
+export class HistorialResumenComponent implements OnInit {
   //servicios
-  private authService: AuthServicesService = inject(AuthServicesService)
-  private userService: UserService = inject(UserService)
   private actividadService: ActividadService = inject(ActividadService)
 
   //variables privadas
   private meses: string[] = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
   private mesActual: number = new Date().getMonth()
-  private user!: User
 
 
   //variables publicas
@@ -68,22 +65,10 @@ export class HistorialResumenComponent implements OnInit, OnDestroy {
     ]
   };
 
-  ngOnDestroy() {
-    this.actividadService.setFiltroArea('todos')
-    this.actividadService.setFiltroMes(null)
-    this.actividadService.setActvidades(this.actividadService.getActividades())
-  }
-
   async ngOnInit() {
-    await this.comprobarAutenticacion()
-    await this.traerUsuario()
-    await this.traerActividades(this.user.run)
+    await this.detallesInicialesAlumno()
     this.actividadService.actividades$.subscribe((actividades) => {
       this.actividades = actividades
-      this.horasDifusion = this.filtrarHoras('difusion')
-      this.horasComunicacion = this.filtrarHoras('comunicacion')
-      this.horasExtension = this.filtrarHoras('extension')
-      this.horasDesarrolloLaboral = this.filtrarHoras('desarrollo_laboral')
       this.barChartOptions = {
         ...this.barChartOptions,
         series: [
@@ -103,62 +88,66 @@ export class HistorialResumenComponent implements OnInit, OnDestroy {
 
   }
 
-  private async comprobarAutenticacion() {
+  async detallesInicialesAlumno() {
     try {
-      await lastValueFrom(this.authService.isAuthenticated())
-    } catch (error: any) {
-      console.error(error)
-      this.authService.goToLogin()
-      alert('error al comprobar la autenticacion')
-    }
-  }
+      const responseHoras = await lastValueFrom(this.actividadService.traerTotalesAlumno())
+      this.horasDesarrolloLaboral = responseHoras.horasArea.desarrolloLaboral
+      this.horasComunicacion = responseHoras.horasArea.comunicacion
+      this.horasDifusion = responseHoras.horasArea.difusion
+      this.horasExtension = responseHoras.horasArea.extension
 
-  private async traerUsuario() {
-    try {
-      const usuario: User = await lastValueFrom(this.userService.findUserbyEmail())
-      this.user = usuario
-    } catch (error: any) {
-      console.error(error)
-      this.authService.goToLogin()
-    }
-  }
-
-  private async traerActividades(run: string) {
-    try {
-      const actividades = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
-      this.actividadService.setActvidades(actividades.actividades, true)
-      //traer el correo del usuario
-    } catch (error: any) {
-      console.error(error)
-      this.authService.goToLogin()
-      alert('error al traer al usuario')
-    }
-  }
-
-  private filtrarHoras(area: string): number {
-    let horasTrabajadas = 0
-    this.actividades.forEach((actividad) => {
-      if (actividad.area_trabajo == area) {
-        const [hInic, mInic] = actividad.hora_inic_activdad.split(':').map(Number);
-        const [hTerm, mTerm] = actividad.hora_term_actividad.split(':').map(Number);
-        const diferenciaMinutos = Math.abs((hTerm * 60 + mTerm) - (hInic * 60 + mInic));
-        const diferenciaHoras = diferenciaMinutos / 60;
-        horasTrabajadas += diferenciaHoras;
+      this.barChartOptions = {
+        ...this.barChartOptions,
+        series: [
+          {
+            ...this.barChartOptions.series[0],
+            data: [
+              this.horasDifusion,
+              this.horasExtension,
+              this.horasComunicacion,
+              this.horasDesarrolloLaboral
+            ]
+          }
+        ]
       }
-    })
-    return horasTrabajadas
+
+    } catch (error: any) {
+      console.error(error)
+    }
   }
 
-  mostrarActividadesPorMes(mes: number) {
-    this.actividadService.setFiltroArea('todos')
-    this.actividadService.setFiltroMes(mes)
-    this.actividadService.aplicarFiltros()
-  }
+  async filtrarHorasMes(mes:number){
+    const now = new Date()
+    const year = now.getFullYear();
+    const mesFiltro = mes + 1
+    try {
+      const responseHoras = await lastValueFrom(this.actividadService.traerHorasFiltradas(`0${mesFiltro}${year}`))
+      console.log(responseHoras)
+      this.horasDesarrolloLaboral = responseHoras.horasArea.desarrolloLaboral
+      this.horasComunicacion = responseHoras.horasArea.comunicacion
+      this.horasDifusion = responseHoras.horasArea.difusion
+      this.horasExtension = responseHoras.horasArea.extension
 
-  mostrarTodasActividades() {
-    this.actividadService.setFiltroArea('todos')
-    this.actividadService.setFiltroMes(null)
-    this.actividadService.aplicarFiltros()
+      this.barChartOptions = {
+        ...this.barChartOptions,
+        series: [
+          {
+            ...this.barChartOptions.series[0],
+            data: [
+              this.horasDifusion,
+              this.horasExtension,
+              this.horasComunicacion,
+              this.horasDesarrolloLaboral
+            ]
+          }
+        ]
+      }
+
+    } catch (error:any) {
+      console.error(error)
+      
+    }
+
   }
 
 }

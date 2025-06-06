@@ -3,8 +3,8 @@ import { GeneralModule } from '../../../../../shared/modules/general/general.mod
 import { AuthServicesService } from '../../../../../services/auth-services.service';
 import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
-import { Actividad, User } from '../../../../../models/interfaces';
-import { lastValueFrom } from 'rxjs';
+import { Actividad, DetallesAlumno, User } from '../../../../../models/interfaces';
+import { last, lastValueFrom } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,22 +25,23 @@ export class ResumenComponent implements OnInit {
   private reportesService = inject(ReportesServicesService)
 
   //variables publicas
-  actividades!: Actividad[]
-  montoAcumulado: number = 0
-  montoAcumuladoFormateado!: string
-  horasTrabajadas: number = 0
+  montoAcumulado?: any
+  horasTrabajadas?: any
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
   //variables privadas
 
+
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
-    await this.cargarActvidades()
-    this.actividadService.actividades$.subscribe((actividades) => {
-      this.procesarActividades(actividades)
-    })    
+    await this.traerDetallesAlumno()
+    this.actividadService.horasTotalesMes$.subscribe((horasTotalesMes) => {
+      console.log(horasTotalesMes)
+      this.horasTrabajadas = horasTotalesMes
+      this.montoAcumulado = horasTotalesMes!  * 2450
+    })
     this.traerFechaAproxPago()
     this.cargando = false
   }
@@ -83,33 +84,17 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  //procesa las actividades
-  private procesarActividades(actividades: Actividad[]) {
-    this.cargando = true
-    this.actividades = actividades;
-    this.montoAcumulado = 0;
-    this.horasTrabajadas = 0;
-
-    console.log(actividades)
-  }
-
-  //trae las actividades del backend (BD)
-  private async cargarActvidades() {
+  private async traerDetallesAlumno() {
     try {
-      this.cargando = true
-      //obtener usuario
-      const usuario:User = await lastValueFrom(this.userService.findUserbyEmail())
-      //obtener run
-      const run:string = usuario.run
-      //traer actividades segun el alumno
-      const actividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno(run))
-      this.actividadService.setActvidades(actividadResponse.actividades)            
+      const response = await lastValueFrom(this.actividadService.traerDetallesDelAlumno());
+      console.log(response)
+      this.actividadService.setHorasTotalesMes(response.horasTotalesMes)
     } catch (error: any) {
-      alert('Error al cargar actividades')
-    } finally {
-      this.cargando = false
+      console.log(error);
     }
   }
+
+
 
   exportar(tipo: 'excel' | 'pdf') {
 
@@ -124,7 +109,7 @@ export class ResumenComponent implements OnInit {
       ]
     };
 
-    this.reportesService.descargarReporte(datosEjemplo, tipo).subscribe((blob:any) => {
+    this.reportesService.descargarReporte(datosEjemplo, tipo).subscribe((blob: any) => {
       const extension = tipo === 'pdf' ? 'pdf' : 'xlsx';
       const filename = `reporte.${extension}`;
       const blobUrl = URL.createObjectURL(blob);
@@ -136,9 +121,19 @@ export class ResumenComponent implements OnInit {
 
       // Limpieza de memoria
       URL.revokeObjectURL(blobUrl);
-    }, (error:any) => {
+    }, (error: any) => {
       console.error('Error al descargar el archivo', error);
     });
+  }
+
+  formatearCLP(valor: number): string {
+    return new Intl.NumberFormat('es-CL', {
+      style: 'currency',
+      currency: 'CLP',
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0
+    }).format(valor)
+
   }
 
 

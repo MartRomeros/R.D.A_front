@@ -2,17 +2,21 @@
     <mat-toolbar>
         <img src="assets/logo-fondoazul-removebg-preview.png" alt="">
         <span class="example-spacer"></span>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goHistorial()">
+        <button mat-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goHistorial()">
+            Historial
             <mat-icon>history</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goHome()">
+        <button mat-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goHome()">
+            Inicio
             <mat-icon>home</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goToPerfil()">
+        <button mat-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" (click)="goToPerfil()">
+            Perfil
             <mat-icon>person</mat-icon>
         </button>
-        <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon"
+        <button mat-button class="example-icon" aria-label="Example icon-button with share icon"
             (click)="logout()">
+            Cerrar Sesión
             <mat-icon>logout</mat-icon>
         </button>        
     </mat-toolbar>

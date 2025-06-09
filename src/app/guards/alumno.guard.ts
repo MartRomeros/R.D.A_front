@@ -12,7 +12,7 @@ export const alumnoGuard: CanActivateFn = async (route, state) => {
 
   try {
     const usuario:User = await lastValueFrom(userService.findUserbyEmail());
-    if(usuario.tipo_usuario === 'ALUMNO'&& url === '/admin'){
+    if(usuario.tipo_usuario === 3&& url === '/admin'){
       router.navigate(['/no_autorizado']);
       return false
     }

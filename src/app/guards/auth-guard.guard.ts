@@ -26,11 +26,11 @@ export const authGuardGuard: CanActivateFn = async (route, state) => {
     const usuario: User = await lastValueFrom(userService.findUserbyEmail());
     //verificar si es alumno y si esta autenticado llevarlo al home de alumno
     if (url === '/login' || url === '/forgot-password') {
-      if(usuario.tipo_usuario === 'ALUMNO'){
+      if(usuario.tipo_usuario === 3){
         router.navigate(['/alumno']);
         return false;
       }
-      if(usuario.tipo_usuario === 'ADMIN'){
+      if(usuario.tipo_usuario === 4){
         router.navigate(['/admin']);
         return false;
       }      

@@ -1,5 +1,5 @@
 export interface LoginResponse {
-    tipoUsuario: string
+    tipoUsuario: number
 }
 
 export interface User {
@@ -9,7 +9,7 @@ export interface User {
     apellido_materno: string,
     email: string,
     fono: number,
-    tipo_usuario: string,
+    tipo_usuario: number,
     run: string,
     password: string
 }
@@ -35,5 +35,12 @@ export interface DetallesAlumno {
         extension: number,
         comunicacion: number,
         desarrolloLaboral: number
+    }
+}
+
+export interface AreaTrabajo{
+    areas:{
+        id:number,
+        nombre:string
     }
 }

@@ -13,7 +13,7 @@ export const adminGuard: CanActivateFn = async (route, state) => {
 
   try {
     const usuario: User = await lastValueFrom(userService.findUserbyEmail());
-    if (usuario.tipo_usuario === 'ALUMNO') {
+    if (usuario.tipo_usuario === 3) {
       router.navigate(['/no_autorizado']);
       return false
     }

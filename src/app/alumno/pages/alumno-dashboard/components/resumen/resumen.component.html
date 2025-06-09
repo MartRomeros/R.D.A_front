@@ -1,5 +1,7 @@
 <section class="row">
-    <h3 class="col">Resumen de este mes:</h3>
+    <div class="col">
+        <h3>Resumen del mes de {{mesActual}}</h3>
+    </div>
     <!--Boton con menu desplegable para exportar a excel o pdf-->
     <button class="col-2" mat-flat-button (click)="exportar('excel')">
         Exportar

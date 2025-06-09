@@ -30,6 +30,7 @@ export class ResumenComponent implements OnInit {
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
+  mesActual = new Intl.DateTimeFormat('es-CL',{month:'long'}).format(new Date())
   //variables privadas
 
 

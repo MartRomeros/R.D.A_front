@@ -4,6 +4,7 @@ import { UserService } from '../../../../../services/user.service';
 import { lastValueFrom } from 'rxjs';
 import Swal from 'sweetalert2';
 import { ActividadService } from '../../../../../services/actividad.service';
+import { Actividad } from '../../../../../models/interfaces';
 
 @Component({
   selector: 'app-admin-tabla',
@@ -24,6 +25,7 @@ export class AdminTablaComponent implements OnInit {
   nombre?:string
   email?:string
   fono?:number
+  actividades!:Actividad[]
 
   async ngOnInit() {
     await this.traerAlumnosAyudantes()
@@ -33,7 +35,6 @@ export class AdminTablaComponent implements OnInit {
   private async traerAlumnosAyudantes() {
     try {
       const response = await lastValueFrom(this.userService.traerAlumnos())
-      console.log(response)
       this.alumnos = response.resultados
     } catch (error: any) {
       console.log(error)
@@ -44,12 +45,15 @@ export class AdminTablaComponent implements OnInit {
   async mostrarDetalles(run:string) {
     try {
       const detalles = await lastValueFrom(this.actividadService.traerDetallesRun(run))
+      console.log(detalles)
       this.run = detalles.alumno.run
       this.email = detalles.alumno.email
       this.fono = detalles.alumno.fono
       this.nombre = `${detalles.alumno.nombre} ${detalles.alumno.apellido_paterno} ${detalles.alumno.apellido_materno}`
       this.horasTotales = detalles.horasTotales
       this.horasMes = detalles.horasTotalesMes
+      this.actividades = this.actividadService.formatearActividades(detalles.actividadesMes)
+
 
       console.log(detalles)
     } catch (error:any) {

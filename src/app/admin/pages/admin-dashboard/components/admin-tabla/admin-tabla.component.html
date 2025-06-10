@@ -79,14 +79,18 @@
                                             <th scope="col">Estado</th>
                                         </tr>
 
+                                        @for (item of actividades; track $index) {
+                                        @if (item.estado == true) {
                                         <tr>
-                                            <td scope="row">2</td>
-                                            <td>2</td>
-                                            <td>2</td>
-                                            <td>2</td>
-                                            <td><span class="badge text-bg-danger">No aprobado</span></td>
+                                            <td scope="row">{{item.fecha_actividad}}</td>
+                                            <td>{{item.hora_inic_activdad}}</td>
+                                            <td>{{item.hora_term_actividad}}</td>
+                                            <td>{{item.area_trabajo?.nombre}}</td>
+                                            <td><span class="badge text-bg-sucessfull">Aprobado</span></td>
 
                                         </tr>
+                                        }
+                                        }
                                     </thead>
                                     <tbody>
                                     </tbody>
@@ -108,14 +112,18 @@
                                             <th scope="col">Estado</th>
                                         </tr>
 
+                                        @for (item of actividades; track $index) {
+                                        @if (item.estado == false) {
                                         <tr>
-                                            <td scope="row">2</td>
-                                            <td>2</td>
-                                            <td>2</td>
-                                            <td>2</td>
-                                            <td><span class="badge text-bg-danger">No aprobado</span></td>
+                                            <td scope="row">{{item.fecha_actividad}}</td>
+                                            <td>{{item.hora_inic_activdad}}</td>
+                                            <td>{{item.hora_term_actividad}}</td>
+                                            <td>{{item.area_trabajo?.nombre}}</td>
+                                            <td><span class="badge text-bg-danger">No aprobadas</span></td>
 
                                         </tr>
+                                        }
+                                        }
                                     </thead>
                                     <tbody>
                                     </tbody>

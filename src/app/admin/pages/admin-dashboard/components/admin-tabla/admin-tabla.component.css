@@ -26,6 +26,10 @@ th{
     text-align: center;
 }
 
+.modal-body main {
+    padding: 0;
+}
+
 .modal-body main section{
     padding: 2vh;
     gap: 2vh;

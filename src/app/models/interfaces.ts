@@ -22,7 +22,7 @@ export interface Actividad {
     area_trabajo_id: number,
     run_alumno: string,
     estado: boolean,
-    area_trabajo: { id: number, nombre: string }
+    area_trabajo?: { id: number, nombre: string }
 }
 
 export interface ActividadResponse {
@@ -43,4 +43,14 @@ export interface DetallesAlumno {
 export interface AreaTrabajo {
     id: number,
     nombre: string
+}
+
+export interface Solicitud {
+    actividad:Actividad,
+    alumno:User,
+    descripcion:string,
+    estado:boolean,
+    id:number,
+    id_actividad:number,
+    id_alumno:number
 }

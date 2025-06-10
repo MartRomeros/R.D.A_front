@@ -42,10 +42,10 @@ export class ActividadService {
     this.horasTotalesMesSubject.next(horasTotalesMes)
   }
 
-  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({actividadesPorMes:[]})
+  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
   horasPorArea$ = this.horasPorAreaSubject.asObservable()
   setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
-    horasPorArea.actividadesPorMes.forEach((actividad)=>{
+    horasPorArea.actividadesPorMes.forEach((actividad) => {
       //formateo de fecha y hora a cl
       const fechaUTC = new Date(actividad.fecha_actividad)
       const fechaFormateada = this.fechaCL.format(fechaUTC)
@@ -81,7 +81,7 @@ export class ActividadService {
   private actividadesParaFiltrarSubject = new BehaviorSubject<Actividad[]>([])
   actividadesParaFiltrar$ = this.actividadesParaFiltrarSubject.asObservable()
   setActividadesParaFiltrar(actividades: Actividad[]) {
-    if(!actividades){
+    if (!actividades) {
       this.actividadesParaFiltrarSubject.next([])
       return
     }
@@ -100,10 +100,10 @@ export class ActividadService {
     this.actividadesParaFiltrarSubject.next(actividades)
   }
 
-  private detallesAlumnoSubject = new BehaviorSubject<DetallesAlumno>({actividadesPorMes:[]})
+  private detallesAlumnoSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
   detallesAlumno$ = this.detallesAlumnoSubject.asObservable()
-  setDetallesAlumnoSubject(detallesAlumno:DetallesAlumno){
-    detallesAlumno.actividadesPorMes.forEach((actividad)=>{
+  setDetallesAlumnoSubject(detallesAlumno: DetallesAlumno) {
+    detallesAlumno.actividadesPorMes.forEach((actividad) => {
       //formateo de fecha y hora a cl
       const fechaUTC = new Date(actividad.fecha_actividad)
       const fechaFormateada = this.fechaCL.format(fechaUTC)
@@ -134,8 +134,8 @@ export class ActividadService {
     return this.http.get(`${this.localUrl}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
   }
 
-  traerDetallesRun(run:string):Observable<any>{
-    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`,{withCredentials:true})
+  traerDetallesRun(run: string): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
   traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
@@ -146,7 +146,41 @@ export class ActividadService {
     if (area) {
       params.area = area
     }
-    return this.http.get(`${this.localUrl}/actividad/actividades_filtradas`, { params,withCredentials:true})
+    return this.http.get(`${this.localUrl}/actividad/actividades_filtradas`, { params, withCredentials: true })
+  }
+
+  traerTotales(): Observable<any> {
+    return this.http.get(`${this.localUrl}/actividad/totales`, { withCredentials: true })
+  }
+
+  formatearActividades(actividades: Actividad[]): Actividad[] {
+    actividades.forEach((actividad) => {
+      //formateo de fecha y hora a cl
+      const fechaUTC = new Date(actividad.fecha_actividad)
+      const fechaFormateada = this.fechaCL.format(fechaUTC)
+      actividad.fecha_actividad = fechaFormateada
+      const horaInicUTC = new Date(actividad.hora_inic_activdad)
+      const horaInicFormateada = this.horaCL.format(horaInicUTC)
+      actividad.hora_inic_activdad = horaInicFormateada
+      const horaTermUTC = new Date(actividad.hora_term_actividad)
+      const horaTermCL = this.horaCL.format(horaTermUTC)
+      actividad.hora_term_actividad = horaTermCL
+    })
+    return actividades
+  }
+
+  formatearActividad(actividad: Actividad): Actividad {
+    //formateo de fecha y hora a cl
+    const fechaUTC = new Date(actividad.fecha_actividad)
+    const fechaFormateada = this.fechaCL.format(fechaUTC)
+    actividad.fecha_actividad = fechaFormateada
+    const horaInicUTC = new Date(actividad.hora_inic_activdad)
+    const horaInicFormateada = this.horaCL.format(horaInicUTC)
+    actividad.hora_inic_activdad = horaInicFormateada
+    const horaTermUTC = new Date(actividad.hora_term_actividad)
+    const horaTermCL = this.horaCL.format(horaTermUTC)
+    actividad.hora_term_actividad = horaTermCL
+    return actividad
   }
 
 

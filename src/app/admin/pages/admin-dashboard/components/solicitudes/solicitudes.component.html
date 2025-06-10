@@ -1,1 +1,37 @@
-<p>solicitudes works!</p>
+<section class="row">
+    <mat-card class="col" appearance="outlined">
+        <mat-card-content>
+            <h3>Solicitudes Pendientes</h3>
+            <mat-form-field appearance="outline">
+                <input matInput placeholder="Buscar por nombre o rut">
+                <mat-icon matSuffix>search</mat-icon>
+            </mat-form-field>
+            <div class="scroll-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">N° Solicitud</th>
+                            <th scope="col">Fecha Actividad</th>
+                            <th scope="col">Alumno</th>
+                            <th scope="col">Estado</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                        <tr>
+                            @for (item of solicitudes; track $index) {
+                            @if (item.estado == false) {
+                            <td scope="row"> {{item.id}} </td>
+                            <td> {{item.actividad.fecha_actividad}} </td>
+                            <td>{{item.alumno.run}}</td>
+                            <td><span class="badge text-bg-danger">Pendientes</span></td>
+                            <td><button mat-flat-button type="button">Aprobar</button></td>
+                            }
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</section>

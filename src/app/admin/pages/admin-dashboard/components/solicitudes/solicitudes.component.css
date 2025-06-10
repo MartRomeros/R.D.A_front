@@ -1,0 +1,62 @@
+.table{
+    --bs-table-bg: #FAF9FD;
+}
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.scroll-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+mat-form-field{
+    width: 100%;
+}
+
+
+td{
+    text-align: center;
+}
+
+th{
+    text-align: center;
+}
+
+.modal-body main {
+    padding: 0;
+}
+
+.modal-body main section{
+    padding: 2vh;
+    gap: 2vh;
+}
+
+.modal-body main section mat-card,
+.modal-body main section mat-card h4
+{
+    text-align: center;
+}
+
+
+@media (max-width:768px) {
+
+    main{
+        padding: 2vh;
+    }
+
+    section {
+        gap: 2vh;
+    }
+
+    mat-card-content{
+        padding: 0;
+    }
+
+    mat-card{
+        padding: 1vh;
+    }
+}

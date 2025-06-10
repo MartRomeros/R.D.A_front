@@ -134,6 +134,10 @@ export class ActividadService {
     return this.http.get(`${this.localUrl}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
   }
 
+  traerDetallesRun(run:string):Observable<any>{
+    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`,{withCredentials:true})
+  }
+
   traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
     let params: any = {}
     if (mesYanio) {

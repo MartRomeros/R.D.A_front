@@ -17,6 +17,27 @@ mat-form-field{
     width: 100%;
 }
 
+
+td{
+    text-align: center;
+}
+
+th{
+    text-align: center;
+}
+
+.modal-body main section{
+    padding: 2vh;
+    gap: 2vh;
+}
+
+.modal-body main section mat-card,
+.modal-body main section mat-card h4
+{
+    text-align: center;
+}
+
+
 @media (max-width:768px) {
 
     main{

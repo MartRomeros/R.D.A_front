@@ -13,16 +13,17 @@
                             <th scope="col">Alumno</th>
                             <th scope="col">Rut</th>
                             <th scope="col">Horas totales</th>
-                            <th scope="col">Este mes</th>
                             <th scope="col">Acciones</th>
                         </tr>
                         @for (alumno of alumnos; track $index) {
                         <tr>
-                            <td scope="row"> {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}} </td>
+                            <td scope="row"> {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}
+                            </td>
                             <td> {{alumno.run}} </td>
-                            <td></td>
-                            <td></td>
-                            <td><button mat-flat-button>Ver detalle</button></td>
+                            <td>{{alumno.horasTotales}}</td>
+                            <td><button mat-flat-button type="button" data-bs-toggle="modal"
+                                    data-bs-target="#detalleModal" (click)="mostrarDetalles(alumno.run)">Ver
+                                    detalles</button></td>
                         </tr>
                         }
                     </thead>
@@ -33,3 +34,97 @@
         </mat-card-content>
     </mat-card>
 </section>
+
+<div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <h4>Detalle del Alumno Ayudante</h4>
+                <main class="container-fluid">
+                    <section class="row">
+                        <article class="col-lg-12">
+                            <h4>Información del alumno</h4>
+                            <ul>
+                                <li>Nombre: {{nombre}}</li>
+                                <li>Run: {{run}}</li>
+                                <li>email: {{email}}</li>
+                                <li>fono: {{fono}}</li>
+                            </ul>
+                        </article>
+
+                        <h4>Horas registradas</h4>
+                        <mat-card appearance="outlined" class="col">
+                            <h5>{{horasTotales}} HR</h5>
+                            Total
+                        </mat-card>
+
+                        <mat-card appearance="outlined" class="col">
+                            <h5>{{horasMes}} HR</h5>
+                            Este Mes
+                        </mat-card>
+
+                        <h4>Horas Aprobadas</h4>
+                        <article class="col-lg-12 table-horas">
+                            <div class="scroll-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Hora inicio</th>
+                                            <th scope="col">Hora termino</th>
+                                            <th scope="col">Area de trabajo</th>
+                                            <th scope="col">Estado</th>
+                                        </tr>
+
+                                        <tr>
+                                            <td scope="row">2</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td><span class="badge text-bg-danger">No aprobado</span></td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+
+                        <h4>Horas no aprobadas</h4>
+
+                        <article class="col-lg-12 table-solicitud">
+                            <div class="scroll-container">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Fecha</th>
+                                            <th scope="col">Hora inicio</th>
+                                            <th scope="col">Hora termino</th>
+                                            <th scope="col">Area de trabajo</th>
+                                            <th scope="col">Estado</th>
+                                        </tr>
+
+                                        <tr>
+                                            <td scope="row">2</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td>2</td>
+                                            <td><span class="badge text-bg-danger">No aprobado</span></td>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </article>
+                    </section>
+                </main>
+            </div>
+        </div>
+    </div>
+</div>

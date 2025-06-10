@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +10,12 @@ export class UserService {
 
   private http = inject(HttpClient)
   private localUrl = 'http://localhost:3000' //https://r-d-a-server-1.onrender.com
+
+  private alumnosSubject = new BehaviorSubject<any>([])
+  alumnosAyudantes$ = this.alumnosSubject.asObservable()
+  setAlumnosAyudantes(alumnos:any){
+    this.alumnosSubject.next(alumnos)
+  }
 
   findUserbyEmail(): Observable<any> {
     return this.http.get(`${this.localUrl}/user/email`, { withCredentials: true })
@@ -20,7 +26,7 @@ export class UserService {
   }
 
   traerAlumnos():Observable<any>{
-    return this.http.get(`${this.localUrl}/user/alumnos`)
+    return this.http.get(`${this.localUrl}/user/alumnos`,{withCredentials:true})
   }
 
   validarPerfilForm(perfilForm: FormGroup): boolean {

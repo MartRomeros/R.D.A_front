@@ -1,5 +1,31 @@
-.table{
-    --bs-table-bg: #FAF9FD;
+section{
+    padding: 4vh;
+    gap: 4vh;
+}
+
+mat-card{
+    padding: 0;
+    background-color: #fff;
+}
+
+mat-card-content{
+    padding: 0;
+}
+
+h3{
+    text-align: center;
+}
+
+
+th{
+    text-align: center;
+    background-color: #012C56;
+    color: #fff;
+}
+
+td{
+    
+    text-align: center;
 }
 
 .scroll-container {

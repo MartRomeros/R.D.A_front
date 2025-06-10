@@ -35,7 +35,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatChipsModule,
     MatRadioModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
   ],
   providers: [],
   exports: [CommonModule,

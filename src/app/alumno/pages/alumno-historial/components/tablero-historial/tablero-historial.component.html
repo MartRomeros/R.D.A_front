@@ -21,34 +21,15 @@
                         Todas las horas
                     </label>
                 </div>
-                <div class="form-check">
+                @for (item of areasTrabajo; track $index) {
+                    <div class="form-check">
                     <input class="form-check-input" type="radio" name="radioDefault" id="difusion"
-                        (click)="asignarArea('difusion');filtrarActividades()">
+                        (click)="asignarArea(item.nombre);filtrarActividades()">
                     <label class="form-check-label" for="difusion">
-                        Difusion
+                        {{item.nombre}}
                     </label>
                 </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="extension"
-                        (click)="asignarArea('extension');filtrarActividades()">
-                    <label class="form-check-label" for="extension">
-                        Extension
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="comunicacion"
-                        (click)="asignarArea('comunicacion');filtrarActividades()">
-                    <label class="form-check-label" for="comunicacion">
-                        Comunicacion
-                    </label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="radioDefault" id="desarrollo-laboral"
-                        (click)="asignarArea('desarrollo_laboral');filtrarActividades()">
-                    <label class="form-check-label" for="desarrollo-laboral">
-                        Desarrollo laboral
-                    </label>
-                </div>
+                }
             </li>
             <li class="list-group-item">
                 <div class="scroll-container">
@@ -67,7 +48,7 @@
                                 <th scope="row">{{item.fecha_actividad}}</th>
                                 <td>{{item.hora_inic_activdad}}</td>
                                 <td>{{item.hora_term_actividad}}</td>
-                                <td>{{item.area_trabajo}}</td>
+                                <td>{{item.area_trabajo.nombre}}</td>
                             </tr>
                             }
                         </tbody>

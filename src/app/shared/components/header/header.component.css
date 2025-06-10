@@ -1,12 +1,13 @@
 /* header section */
 header{
-    background-color: #36243E;
+    background-color: #012C56;
 }
 
 
 /* nav section */
 mat-toolbar{
-    background-color: #36243E;
+    background-color: #012C56;
+    
 }
 
 mat-toolbar img{

@@ -19,8 +19,10 @@ export interface Actividad {
     fecha_actividad: string,
     hora_inic_activdad: string,
     hora_term_actividad: string,
-    area_trabajo: string,
-    run_alumno: string
+    area_trabajo_id: number,
+    run_alumno: string,
+    estado: boolean,
+    area_trabajo: { id: number, nombre: string }
 }
 
 export interface ActividadResponse {
@@ -28,9 +30,9 @@ export interface ActividadResponse {
 }
 
 export interface DetallesAlumno {
-    horasTotales?: number,
+    actividadesPorMes: Actividad[]
     horasTotalesMes?: number,
-    horasArea?: {
+    horasAreaMes?: {
         difusion: number,
         extension: number,
         comunicacion: number,
@@ -38,9 +40,7 @@ export interface DetallesAlumno {
     }
 }
 
-export interface AreaTrabajo{
-    areas:{
-        id:number,
-        nombre:string
-    }
+export interface AreaTrabajo {
+    id: number,
+    nombre: string
 }

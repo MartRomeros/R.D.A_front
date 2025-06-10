@@ -18,9 +18,6 @@ import { ReportesServicesService } from '../../../../../services/reportes-servic
   styleUrl: './resumen.component.css'
 })
 export class ResumenComponent implements OnInit {
-  //servicios
-  private authService = inject(AuthServicesService)
-  private userService = inject(UserService)
   private actividadService = inject(ActividadService)
   private reportesService = inject(ReportesServicesService)
 
@@ -30,7 +27,7 @@ export class ResumenComponent implements OnInit {
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
-  mesActual = new Intl.DateTimeFormat('es-CL',{month:'long'}).format(new Date())
+  mesActual = new Intl.DateTimeFormat('es-CL',{month:'long'}).format(new Date()).toString()
   //variables privadas
 
 

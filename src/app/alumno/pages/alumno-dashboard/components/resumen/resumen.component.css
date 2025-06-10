@@ -1,12 +1,18 @@
+div:first-child{
+    padding-left: 3vh;
+}
+
 
 section {
-    gap: 10vh;
+    gap: 4vh;
     padding: 4vh;
+    
 }
 
-section button {
-    background-color: #36243E;
+mat-card{
+    background-color: #fff;
 }
+
 
 mat-card-header .header {
     display: flex;
@@ -15,6 +21,7 @@ mat-card-header .header {
     width: 100%;
 
 }
+
 
 @media (max-width:768px) {
 

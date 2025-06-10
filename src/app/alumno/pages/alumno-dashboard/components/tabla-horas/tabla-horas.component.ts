@@ -3,7 +3,7 @@ import { GeneralModule } from '../../../../../shared/modules/general/general.mod
 import { AuthServicesService } from '../../../../../services/auth-services.service';
 import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
-import { Actividad, ActividadResponse, User } from '../../../../../models/interfaces';
+import { Actividad, ActividadResponse, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 
 @Component({
@@ -20,15 +20,15 @@ export class TablaHorasComponent implements OnInit {
   private actividadService = inject(ActividadService)
 
   //variables publicas
-  actividades!: Actividad[]
+  actividades: Actividad[] = []
   cargando: boolean = true
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
     await this.CargarActvidades()
-    this.actividadService.actividades$.subscribe((actividades) => {
-      this.actividades = actividades
+    this.actividadService.detallesAlumno$.subscribe((detallesAlumno)=>{
+      this.actividades = detallesAlumno.actividadesPorMes
     })
     this.cargando = false
   }
@@ -38,11 +38,12 @@ export class TablaHorasComponent implements OnInit {
   private async CargarActvidades() {
     try {
       this.cargando = true
-      const actvidadesResponse: ActividadResponse = await lastValueFrom(this.actividadService.traerActividadesByAlumno());
+      const response = await lastValueFrom(this.actividadService.traerDetallesDelAlumno());
       //actualiza las actividades
-      this.actividadService.setActvidades(actvidadesResponse.actividades);
+      this.actividadService.setDetallesAlumnoSubject(response);
     } catch (error: any) {
       alert('Error al cargar actividades');
+      console.error(error)
     } finally {
       this.cargando = false
     }

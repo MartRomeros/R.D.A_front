@@ -2,7 +2,7 @@
 .list-group li:first-child {
     display: flex;
     gap: 2vh;
-    background-color: #36243E;
+    background-color: #012C56;
     border: #36243E 1px solid;
 }
 

@@ -1,9 +1,7 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { AuthServicesService } from '../../../../../services/auth-services.service';
 import { lastValueFrom } from 'rxjs';
-import { UserService } from '../../../../../services/user.service';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { ActividadService } from '../../../../../services/actividad.service';
 
@@ -122,7 +120,6 @@ export class HistorialResumenComponent implements OnInit {
     const mesFiltro = mes + 1
     try {
       const responseHoras = await lastValueFrom(this.actividadService.traerHorasFiltradas(`0${mesFiltro}${year}`))
-      console.log(responseHoras)
       this.horasDesarrolloLaboral = responseHoras.horasArea.desarrolloLaboral
       this.horasComunicacion = responseHoras.horasArea.comunicacion
       this.horasDifusion = responseHoras.horasArea.difusion

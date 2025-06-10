@@ -42,9 +42,21 @@ export class ActividadService {
     this.horasTotalesMesSubject.next(horasTotalesMes)
   }
 
-  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({})
+  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({actividadesPorMes:[]})
   horasPorArea$ = this.horasPorAreaSubject.asObservable()
   setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
+    horasPorArea.actividadesPorMes.forEach((actividad)=>{
+      //formateo de fecha y hora a cl
+      const fechaUTC = new Date(actividad.fecha_actividad)
+      const fechaFormateada = this.fechaCL.format(fechaUTC)
+      actividad.fecha_actividad = fechaFormateada
+      const horaInicUTC = new Date(actividad.hora_inic_activdad)
+      const horaInicFormateada = this.horaCL.format(horaInicUTC)
+      actividad.hora_inic_activdad = horaInicFormateada
+      const horaTermUTC = new Date(actividad.hora_term_actividad)
+      const horaTermCL = this.horaCL.format(horaTermUTC)
+      actividad.hora_term_actividad = horaTermCL
+    })
     this.horasPorAreaSubject.next(horasPorArea)
   }
 
@@ -88,9 +100,22 @@ export class ActividadService {
     this.actividadesParaFiltrarSubject.next(actividades)
   }
 
-
-  traerActividadesByAlumno(): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/actividades_alumno`, { withCredentials: true })
+  private detallesAlumnoSubject = new BehaviorSubject<DetallesAlumno>({actividadesPorMes:[]})
+  detallesAlumno$ = this.detallesAlumnoSubject.asObservable()
+  setDetallesAlumnoSubject(detallesAlumno:DetallesAlumno){
+    detallesAlumno.actividadesPorMes.forEach((actividad)=>{
+      //formateo de fecha y hora a cl
+      const fechaUTC = new Date(actividad.fecha_actividad)
+      const fechaFormateada = this.fechaCL.format(fechaUTC)
+      actividad.fecha_actividad = fechaFormateada
+      const horaInicUTC = new Date(actividad.hora_inic_activdad)
+      const horaInicFormateada = this.horaCL.format(horaInicUTC)
+      actividad.hora_inic_activdad = horaInicFormateada
+      const horaTermUTC = new Date(actividad.hora_term_actividad)
+      const horaTermCL = this.horaCL.format(horaTermUTC)
+      actividad.hora_term_actividad = horaTermCL
+    })
+    this.detallesAlumnoSubject.next(detallesAlumno)
   }
 
   registrarActividad(actividad: any): Observable<any> {

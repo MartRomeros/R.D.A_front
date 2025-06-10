@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit {
   private extension: number = 0
   private comunicacion: number = 0
   private desarrolloLaboral: number = 0
-  private areasTrabajo:any
+  private areasTrabajo!: AreaTrabajo[]
 
   chartOptions = {
     tooltip: {
@@ -58,18 +58,20 @@ export class ChartComponent implements OnInit {
   async ngOnInit() {
 
     await this.traerAreaTrabajo()
-    console.log(this.areasTrabajo[0])
+    this.areaTrabajoService.areasTrabajo$.subscribe((areasTrabajo)=>{
+      this.areasTrabajo = areasTrabajo
+    })
     await this.traerHoras()
-    this.actividadService.horasPorArea$.subscribe((detallesAlumno:DetallesAlumno) => {
-      this.difusion = detallesAlumno.horasArea!.difusion
-      this.comunicacion = detallesAlumno.horasArea!.comunicacion
-      this.extension = detallesAlumno.horasArea!.extension
-      this.desarrolloLaboral = detallesAlumno.horasArea!.desarrolloLaboral
+    this.actividadService.detallesAlumno$.subscribe((detallesAlumno: DetallesAlumno) => {
+      this.difusion = detallesAlumno.horasAreaMes!.difusion;
+      this.comunicacion = detallesAlumno.horasAreaMes!.comunicacion
+      this.extension = detallesAlumno.horasAreaMes!.extension
+      this.desarrolloLaboral = detallesAlumno.horasAreaMes!.desarrolloLaboral
       this.actualizarGrafico()
     })
 
     // Si no hay actividades en cache, las trae desde el backend
-    
+
 
   }
 
@@ -77,18 +79,18 @@ export class ChartComponent implements OnInit {
   private async traerHoras() {
     try {
       const response: DetallesAlumno = await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
-      this.actividadService.setHorasPorAreaSubject(response)
+      console.log(response)
+      this.actividadService.setDetallesAlumnoSubject(response)
     } catch (error: any) {
       console.error(error)
     }
   }
 
-  private async traerAreaTrabajo(){
+  private async traerAreaTrabajo() {
     try {
       const response = await lastValueFrom(this.areaTrabajoService.traerAreasTrabajo())
-      this.areasTrabajo = response
-      console.log(response)
-    } catch (error:any) {
+      this.areaTrabajoService.setareasTrabajo(response.areas)
+    } catch (error: any) {
       console.error(error)
     }
 
@@ -101,10 +103,10 @@ export class ChartComponent implements OnInit {
         {
           ...this.chartOptions.series[0], // copia estilos existentes
           data: [
-            { value: this.difusion, name: this.areasTrabajo.areas[0].nombre },
-            { value: this.extension, name: this.areasTrabajo.areas[1].nombre },
-            { value: this.comunicacion, name: this.areasTrabajo.areas[2].nombre },
-            { value: this.desarrolloLaboral, name: this.areasTrabajo.areas[3].nombre }
+            { value: this.difusion, name: this.areasTrabajo[0].nombre },
+            { value: this.extension, name: this.areasTrabajo[1].nombre },
+            { value: this.comunicacion, name: this.areasTrabajo[2].nombre },
+            { value: this.desarrolloLaboral, name: this.areasTrabajo[3].nombre }
           ]
         }
       ]

@@ -3,6 +3,10 @@ mat-card-header{
     flex-direction: column;
 }
 
+h4,.subtitle{
+    text-align: center;
+}
+
 @media (max-width:768px) {
     main{
         padding: 2vh;
@@ -20,4 +24,6 @@ mat-card-header{
         padding: 1vh;
     }
 }
+
+
 

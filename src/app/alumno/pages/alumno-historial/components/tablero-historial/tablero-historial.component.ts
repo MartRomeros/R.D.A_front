@@ -3,7 +3,8 @@ import { GeneralModule } from '../../../../../shared/modules/general/general.mod
 import { MatSelectModule } from '@angular/material/select'
 import { ActividadService } from '../../../../../services/actividad.service';
 import { lastValueFrom } from 'rxjs';
-import { Actividad, ActividadResponse } from '../../../../../models/interfaces';
+import { Actividad, AreaTrabajo } from '../../../../../models/interfaces';
+import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';
 
 @Component({
   selector: 'app-tablero-historial',
@@ -15,6 +16,7 @@ import { Actividad, ActividadResponse } from '../../../../../models/interfaces';
 export class TableroHistorialComponent implements OnInit {
   //servicios
   private actividadService: ActividadService = inject(ActividadService)
+  private areaTrabajoService = inject(AreaTrabajoService)
 
 
   //variables privadas
@@ -27,6 +29,7 @@ export class TableroHistorialComponent implements OnInit {
   //variables publicas
   mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
   actividades!: Actividad[]
+  areasTrabajo!:AreaTrabajo[]
 
   //ngoninit
   async ngOnInit() {
@@ -34,13 +37,16 @@ export class TableroHistorialComponent implements OnInit {
     this.actividadService.actividadesParaFiltrar$.subscribe((actividad) => {
       this.actividades = actividad
     })
+    await this.traerAreasTrabajo()
+    this.areaTrabajoService.areasTrabajo$.subscribe((areasTrabajo)=>{
+      this.areasTrabajo = areasTrabajo
+    })
   }
 
 
   async filtrarActividades() {
     try {
       const response = await lastValueFrom(this.actividadService.traerActividadesFiltradas(this.mesFiltro,this.areaFiltro))
-      console.log(response)
       this.actividadService.setActividadesParaFiltrar(response.actividadesFiltradas)
     } catch (error: any) {
       console.error(error)
@@ -64,6 +70,15 @@ export class TableroHistorialComponent implements OnInit {
       this.areaFiltro = area
     } else {
       this.areaFiltro = undefined
+    }
+  }
+
+  async traerAreasTrabajo(){
+    try {
+      const response = await lastValueFrom(this.areaTrabajoService.traerAreasTrabajo())
+      this.areaTrabajoService.setareasTrabajo(response.areas)
+    } catch (error: any) {
+      console.error(error)
     }
   }
 

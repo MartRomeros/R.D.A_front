@@ -4,6 +4,7 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { provideHttpClient } from '@angular/common/http';
 import { NgxEchartsModule } from 'ngx-echarts';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
 
@@ -15,7 +16,8 @@ export const appConfig: ApplicationConfig = {
       NgxEchartsModule.forRoot({
         echarts: () => import('echarts')
       })
-    )
+    ),
+    {provide:MAT_DATE_LOCALE,useValue:'es-CL'}
   ]
 
 

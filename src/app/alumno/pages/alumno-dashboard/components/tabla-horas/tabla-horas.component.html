@@ -1,13 +1,7 @@
-<mat-card class="col" appearance="outlined">
-    <mat-card-content>
-        <h3>Mis horas registradas</h3>
-        @if (cargando) {
-        <mat-spinner></mat-spinner>
-        }@else {
-        @if(!actividades){
-        No hay actividades registradas!
-        }@else{
-        <div class="scroll-container">
+<section class="row">
+    <mat-card class="col-12" appearance="outlined">
+        <h3>Mis horas aprobadas de este mes</h3>
+        <mat-card-content>
             <table class="table">
                 <thead>
                     <tr>
@@ -15,22 +9,65 @@
                         <th scope="col">Hora inicio</th>
                         <th scope="col">Hora termino</th>
                         <th scope="col">Area de trabajo</th>
+                        <th scope="col">Estado</th>
                     </tr>
                     @for (actividad of actividades; track $index) {
+                    @if (actividad.estado == true) {
                     <tr>
                         <td scope="row">{{actividad.fecha_actividad}}</td>
                         <td>{{actividad.hora_inic_activdad}}</td>
                         <td>{{actividad.hora_term_actividad}}</td>
-                        <td>{{actividad.area_trabajo}}</td>
+                        <td>{{actividad.area_trabajo_id}}</td>
+                        <td><span class="badge text-bg-success">Success</span></td>
                     </tr>
+                    }
                     }
                 </thead>
                 <tbody>
                 </tbody>
             </table>
-        </div>
-        }
-        }
+        </mat-card-content>
+    </mat-card>
+    <mat-card class="col-12" appearance="outlined">
+        <h3>Mis horas por aprobar de este mes</h3>
+        <mat-card-content>
+            @if (cargando) {
+            <mat-spinner></mat-spinner>
+            }@else {
+            @if(!actividades){
+            No hay actividades registradas!
+            }@else{
+            <div class="scroll-container">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora inicio</th>
+                            <th scope="col">Hora termino</th>
+                            <th scope="col">Area de trabajo</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                        @for (actividad of actividades; track $index) {
+                        @if (actividad.estado == false) {
+                            <tr>
+                            <td scope="row">{{actividad.fecha_actividad}}</td>
+                            <td>{{actividad.hora_inic_activdad}}</td>
+                            <td>{{actividad.hora_term_actividad}}</td>
+                            <td>{{actividad.area_trabajo.nombre}}</td>
+                            <td><span class="badge text-bg-danger">No aprobado</span></td>
 
-    </mat-card-content>
-</mat-card>
+                        </tr>
+                        }
+                        }
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            }
+            }
+
+        </mat-card-content>
+    </mat-card>
+
+</section>

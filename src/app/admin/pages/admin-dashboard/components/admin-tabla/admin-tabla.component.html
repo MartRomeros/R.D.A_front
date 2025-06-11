@@ -1,9 +1,26 @@
-<section class="row">
-    <mat-card class="col" appearance="outlined">
-        <mat-card-content>
-            <h3>Alumnos Ayudantes</h3>
+<main class="container-fluid">
+    <section class="row resumen">
+        <h3>Resumen</h3>
+        <article class="col card">
+            <h4>Alumnos ayudantes:</h4>
+            <h6>{{alumnosResumen}} Alumnos</h6>
+        </article>
+        <article class="col card">
+            <h4>Horas totales</h4>
+            <h6>{{horasTotales}} Hrs</h6>
+
+        </article>
+        <article class="col card">
+            <h4>Horas totales por (area)</h4>
+
+        </article>
+    </section>
+
+    <section class="row">
+        <h3>Alumnos Ayudantes</h3>
+        <article class="col card">
             <div class="scroll-container">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Alumno</th>
@@ -11,25 +28,26 @@
                             <th scope="col">Horas totales</th>
                             <th scope="col">Acciones</th>
                         </tr>
+                    </thead>
+                    <tbody>
                         @for (alumno of alumnos; track $index) {
                         <tr>
-                            <td scope="row"> {{alumno.nombre}} {{alumno.apellido_paterno}} {{alumno.apellido_materno}}
+                            <td scope="row"> {{alumno.nombre}}
                             </td>
                             <td> {{alumno.run}} </td>
                             <td>{{alumno.horasTotales}}</td>
-                            <td><button mat-flat-button type="button" data-bs-toggle="modal"
-                                    data-bs-target="#detalleModal" (click)="mostrarDetalles(alumno.run)">Ver
+                            <td><button type="button" data-bs-toggle="modal" data-bs-target="#detalleModal"
+                                    (click)="mostrarDetalles(alumno.run)">Ver
                                     detalles</button></td>
                         </tr>
                         }
-                    </thead>
-                    <tbody>
                     </tbody>
                 </table>
             </div>
-        </mat-card-content>
-    </mat-card>
-</section>
+        </article>
+    </section>
+
+</main>
 
 <div class="modal fade" id="detalleModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -82,7 +100,7 @@
                                             <td>{{item.hora_inic_activdad}}</td>
                                             <td>{{item.hora_term_actividad}}</td>
                                             <td>{{item.area_trabajo?.nombre}}</td>
-                                            <td><span class="badge text-bg-sucessfull">Aprobado</span></td>
+                                            <td><span class="badge text-bg-success">Aprobada</span></td>
 
                                         </tr>
                                         }
@@ -115,8 +133,7 @@
                                             <td>{{item.hora_inic_activdad}}</td>
                                             <td>{{item.hora_term_actividad}}</td>
                                             <td>{{item.area_trabajo?.nombre}}</td>
-                                            <td><span class="badge text-bg-danger">No aprobadas</span></td>
-
+                                            <td><span class="badge text-bg-warning">En observacion</span></td>
                                         </tr>
                                         }
                                         }

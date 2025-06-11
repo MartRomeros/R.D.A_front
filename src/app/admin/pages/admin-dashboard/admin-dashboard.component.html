@@ -1,10 +1,21 @@
 <app-header></app-header>
-<main>
-    <mat-card appearance="outlined">
-        <main class="container-fluid">
-            <app-admin-resumen></app-admin-resumen>
-            <app-admin-tabla></app-admin-tabla>
-            <app-solicitudes></app-solicitudes>
+<div class="container-fluid">
+    <div class="row">
+
+        <aside class="col-12 col-md-3 col-lg-2 d-none d-md-block bg-light sidebar py-3">
+            <h4>Panel de Administración</h4>
+            <nav class="nav flex-column">
+                <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/notificacion.svg"> Solicitudes</a>
+                <a class="nav-link active" routerLink="/admin/alumnos" routerLinkActive="active"> <img
+                        src="assets/iconos/usuarios.svg" alt=""> Alumnos Ayudantes</a>
+                <a class="nav-link" routerLink="/admin/ordenes_compra" routerLinkActive="active"> <img
+                        src="assets/iconos/orden_compra.svg"> Ordenes de compra</a>
+            </nav>
+        </aside>
+
+        <main class="col-12 col-md-9 col-lg-10 ms-sm-auto px-4 py-4">
+            <router-outlet></router-outlet>
         </main>
-    </mat-card>
-</main>
+    </div>
+</div>

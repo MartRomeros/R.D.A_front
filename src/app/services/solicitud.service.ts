@@ -50,5 +50,22 @@ export class SolicitudService {
     return this.http.put(`${this.url}/solicitudes/aprobar/${id}`, {}, { withCredentials: true })
   }
 
+  traerSolicitudId(id: number): Observable<any> {
+    return this.http.get(`${this.url}/solicitudes/${id}`, { withCredentials: true })
+  }
+
+  formatearFecha(solicitud: any) {
+    const fechaUTC = new Date(solicitud.actividad.fecha_actividad)
+    const fechaFormateada = this.fechaCL.format(fechaUTC)
+    solicitud.actividad.fecha_actividad = fechaFormateada
+    const horaInicUTC = new Date(solicitud.actividad.hora_inic_activdad)
+    const horaInicFormateada = this.horaCL.format(horaInicUTC)
+    solicitud.actividad.hora_inic_activdad = horaInicFormateada
+    const horaTermUTC = new Date(solicitud.actividad.hora_term_actividad)
+    const horaTermCL = this.horaCL.format(horaTermUTC)
+    solicitud.actividad.hora_term_actividad = horaTermCL
+    return solicitud
+  }
+
 
 }

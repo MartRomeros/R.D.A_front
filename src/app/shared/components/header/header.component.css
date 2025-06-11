@@ -3,37 +3,22 @@ header{
     background-color: #012C56;
 }
 
-
-/* nav section */
-mat-toolbar{
-    background-color: #012C56;
-    
+nav img{
+    width: 10%;    
 }
 
-mat-toolbar img{
-    width: 15%;
+.navbar-toggler:focus {
+    border: 1px #fff solid;
 }
 
-mat-toolbar button{
-    color: #fff;
+.navbar-toggler-icon{
+    background-image: url('../../../.././assets/iconos/menu.svg');
 }
 
-
-/* side nav section */
-
-.offcanvas-sm{
-    width: 60%;
-
+.navbar-toggler:focus{
+    box-shadow: none;
 }
 
-.example-spacer{
-    flex: 1 1 auto;
-}
-
-@media (max-width:768px) {
-
-    mat-toolbar img{
-        width: 40%;
-    }
-
+.nav-item .nav-link{
+    color: white;
 }

@@ -1,16 +1,20 @@
-import { Component } from '@angular/core';
-import { AdminResumenComponent } from './components/admin-resumen/admin-resumen.component';
+import { Component, inject } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { AdminTablaComponent } from './components/admin-tabla/admin-tabla.component';
-import { SolicitudesComponent } from './components/solicitudes/solicitudes.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [AdminResumenComponent,HeaderComponent,GeneralModule,AdminTablaComponent,SolicitudesComponent],
+  imports: [HeaderComponent,GeneralModule],
   templateUrl: './admin-dashboard.component.html',
   styleUrl: './admin-dashboard.component.css'
 })
 export class AdminDashboardComponent {
+
+  private router:Router = new Router()
+
+  goTo(ruta:string){
+    this.router.navigate([ruta])
+  }
 
 }

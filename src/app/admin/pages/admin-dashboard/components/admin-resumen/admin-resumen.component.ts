@@ -28,7 +28,6 @@ export class AdminResumenComponent implements OnInit {
 
     try {
       const response = await lastValueFrom(this.actividadService.traerTotales())
-      console.log(response)
       this.horasMes = response.horasMes
       this.alumnos = response.alumnos
       const promedio = Math.round(this.horasMes!/this.alumnos!)

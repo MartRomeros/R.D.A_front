@@ -1,63 +1,35 @@
+h2{
+    text-align: center;
+}
 section{
+    margin-top: 2vh;
     gap: 2vh;
 }
 
-
-.table{
-    --bs-table-bg: #FAF9FD;
+.card{
+    padding: 1vh;
 }
 
-.scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.scroll-container thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-
-td{
+h3{
     text-align: center;
 }
 
-th{
+table tbody tr td button{
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 0.375em;
+    color: #fff;
+    background-color: blue;
+    outline: none;
+    border: none;
+    transition: 0.5s ease background-color;
+}
+
+td,th{
     text-align: center;
 }
 
-.modal-body main {
-    padding: 0;
-}
-
-.modal-body main section{
-    padding: 2vh;
-    gap: 2vh;
-}
-
-.modal-body main section mat-card,
-.modal-body main section mat-card h4
-{
-    text-align: center;
-}
-
-
-@media (max-width:768px) {
-
-    main{
-        padding: 2vh;
-    }
-
-    section {
-        gap: 2vh;
-    }
-
-    mat-card-content{
-        padding: 0;
-    }
-
-    mat-card{
-        padding: 1vh;
-    }
+table tbody tr td button:hover{
+    background-color: #012C56;
 }

@@ -7,8 +7,8 @@ import { LoginComponent } from './auth/pages/login/login.component';
 import { ForgotPasswordComponent } from './auth/pages/forgot-password/forgot-password.component';
 import { authGuardGuard } from './guards/auth-guard.guard';
 import { UnauthorizedComponent } from './shared/components/unauthorized/unauthorized.component';
-import { alumnoGuard } from './guards/alumno.guard';
-import { adminGuard } from './guards/admin.guard';
+import { SolicitudesComponent } from './admin/pages/admin-dashboard/components/solicitudes/solicitudes.component';
+import { AdminTablaComponent } from './admin/pages/admin-dashboard/components/admin-tabla/admin-tabla.component';
 
 
 
@@ -30,7 +30,11 @@ export const routes: Routes = [
     {
         path: 'admin',
         component: AdminDashboardComponent,
-        canActivate: [adminGuard]
+        children:[
+            {path:'solicitudes',component:SolicitudesComponent},
+            {path:'alumnos',component:AdminTablaComponent},
+            {path:'',redirectTo:'solicitudes',pathMatch:'full'}
+        ]
     },
     //ruta login component
     {

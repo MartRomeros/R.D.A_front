@@ -1,6 +1,13 @@
-.table{
-    --bs-table-bg: #FAF9FD;
+.resumen{
+    gap: 2vh;
+    margin-bottom: 2vh;
 }
+
+.card{
+    padding: 2vh;
+}
+
+
 
 .scroll-container {
     max-height: 300px;
@@ -13,19 +20,32 @@
     z-index: 1;
 }
 
-mat-form-field{
-    width: 100%;
+
+table tbody tr td button{
+    padding: 0.35em 0.65em;
+    font-size: 0.75em;
+    font-weight: 700;
+    border-radius: 0.375em;
+    color: #fff;
+    background-color: blue;
+    outline: none;
+    border: none;
+    transition: 0.5s ease background-color;
 }
 
 
-td{
+table tbody tr td button:hover{
+    background-color: #012C56;
+}
+
+
+td,th,h3,h4,h6{
     text-align: center;
 }
 
-th{
-    text-align: center;
-}
 
+
+/* modal */
 .modal-body main {
     padding: 0;
 }

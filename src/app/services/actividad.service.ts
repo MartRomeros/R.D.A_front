@@ -36,12 +36,6 @@ export class ActividadService {
     this.horasTotalesSubject.next(horasTotales)
   }
 
-  private horasTotalesMesSubject = new BehaviorSubject<number | null>(null);
-  horasTotalesMes$ = this.horasTotalesMesSubject.asObservable()
-  setHorasTotalesMes(horasTotalesMes: number) {
-    this.horasTotalesMesSubject.next(horasTotalesMes)
-  }
-
   private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
   horasPorArea$ = this.horasPorAreaSubject.asObservable()
   setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
@@ -182,11 +176,6 @@ export class ActividadService {
     actividad.hora_term_actividad = horaTermCL
     return actividad
   }
-
-
-
-
-
 
   validarActividad(actividadForm: FormGroup): boolean {
 

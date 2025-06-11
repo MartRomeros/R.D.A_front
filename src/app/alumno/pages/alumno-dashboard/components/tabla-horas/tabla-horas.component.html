@@ -18,7 +18,7 @@
                         <td>{{actividad.hora_inic_activdad}}</td>
                         <td>{{actividad.hora_term_actividad}}</td>
                         <td>{{actividad.area_trabajo_id}}</td>
-                        <td><span class="badge text-bg-success">Success</span></td>
+                        <td><span class="badge text-bg-success">Aprobado</span></td>
                     </tr>
                     }
                     }
@@ -53,7 +53,7 @@
                             <td scope="row">{{actividad.fecha_actividad}}</td>
                             <td>{{actividad.hora_inic_activdad}}</td>
                             <td>{{actividad.hora_term_actividad}}</td>
-                            <td>{{actividad.area_trabajo.nombre}}</td>
+                            <td>{{actividad.area_trabajo?.nombre}}</td>
                             <td><span class="badge text-bg-danger">No aprobado</span></td>
 
                         </tr>

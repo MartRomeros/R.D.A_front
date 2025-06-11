@@ -58,6 +58,7 @@ export class ActividadFormComponent implements OnInit {
       this.areasTrabajo = areasTrabajo
     })
   }
+
   //metodo para registrar horas (Public)
   async registrarHora() {
     //validar formulario
@@ -81,19 +82,13 @@ export class ActividadFormComponent implements OnInit {
         hora_term_actividad: horaTermIso,
         area_trabajo: this.actividadForm.get('area')?.value
       }
-
       const response = await lastValueFrom(this.actividadService.registrarActividad(body))
       this.mensajeService.mostrarMensajeExito(response.message)
-
       const actividadResponse: DetallesAlumno = await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
       this.actividades = actividadResponse.actividadesPorMes
       this.actividadService.setDetallesAlumnoSubject(actividadResponse)
-
       const detalleAlumno: DetallesAlumno = await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
-      this.actividadService.setHorasTotalesMes(detalleAlumno.horasTotalesMes!)
       this.actividadService.setHorasPorAreaSubject(detalleAlumno)
-
-
     } catch (error: any) {
       this.mensajeService.mostrarMensajeError('error al registrar las horas');
     }

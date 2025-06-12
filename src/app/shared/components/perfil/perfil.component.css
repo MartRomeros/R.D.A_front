@@ -35,3 +35,30 @@ mat-card-content form{
 form fieldset button{
     background-color: #36243E;
 }
+
+@media(max-width:369px){
+    mat-hint {
+        font-size: 11px;
+    }
+    mat-label{
+        font-size: 14px;
+    }
+    mat-icon{
+        font-size: 23px;
+    }
+}
+
+@media(max-width:354px){
+    #cambiar {
+        margin-top: 1rem;
+    }
+    mat-hint {
+        font-size: 9px;
+    }
+    mat-label{
+        font-size: 12px;
+    }
+    mat-icon{
+        font-size: 20px;
+    }
+}

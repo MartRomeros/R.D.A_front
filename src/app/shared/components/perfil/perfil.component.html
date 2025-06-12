@@ -27,7 +27,7 @@
                         <mat-icon matListItemIcon>location_on</mat-icon>
                         <h3 matListItemTitle>Sede Melipilla</h3>
                         <p matListItemLine>
-                            <span>Ubicacion</span>
+                            <span>Ubicación</span>
                         </p>
                     </mat-list-item>
 
@@ -54,7 +54,7 @@
             <mat-card-header>
                 <div class="edit-info-title">
                     <h4>Informacion Personal</h4>
-                    <h6 class="subtitle">Actualiza tus de contacto o genera una nueva contrasena</h6>
+                    <h6 class="subtitle">Actualiza tus de contacto o genera una nueva contraseña</h6>
                 </div>
             </mat-card-header>
 
@@ -66,37 +66,37 @@
                         <mat-label>Numero de telefono</mat-label>
                         <input matInput placeholder="Ej: 9 9999 9999" formControlName="fono" type="number">
                         <mat-icon matSuffix>call</mat-icon>
-                        <mat-hint>tu numero de telefono debe seguir el siguiente formato: 9 9999 9999</mat-hint>
+                        <mat-hint>Tu numero de telefono debe seguir el siguiente formato: 9 9999 9999</mat-hint>
                     </mat-form-field>
 
-                    <h6>Cambiar de contrasena</h6>
+                    <h6 id="cambiar">Cambiar de contraseña</h6>
                     <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Nueva Contrasenna</mat-label>
+                        <mat-label>Nueva Contraseña</mat-label>
                         <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna1" />
                         <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
                             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-hint>Tu contrasena debe cumplir con:</mat-hint>
+                        <mat-hint>Tu contraseña debe cumplir con:</mat-hint>
                     </mat-form-field>
 
                     <div class="col-12">
                         <mat-hint>- Caracteres en mayuscula</mat-hint> <br>
                         <mat-hint>- Caracteres en minuscula</mat-hint> <br>
                         <mat-hint>- 4 numeros</mat-hint> <br>
-                        <mat-hint>- Un caracter extrano</mat-hint> <br>
-                        <mat-hint>- La contrasena debe tener una longitud maxima de 20 caracteres</mat-hint> <br>
+                        <mat-hint>- Un caracter extraño</mat-hint> <br>
+                        <mat-hint>- La contraseña debe tener una longitud maxima de 20 caracteres</mat-hint> <br>
 
                     </div>
 
                     <mat-form-field appearance="outline" class="col-12">
-                        <mat-label>Repite tu contrasenna</mat-label>
+                        <mat-label>Repite tu contraseña</mat-label>
                         <input matInput [type]="hide() ? 'password' : 'text'" formControlName="contrasenna2" />
                         <button mat-icon-button matSuffix (click)="clickEvent($event)" type="button"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
                             <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
                         </button>
-                        <mat-hint>Tu contrasena debe cumplir con:</mat-hint>
+                        <mat-hint>Tu contraseña debe cumplir con:</mat-hint>
                     </mat-form-field>
 
 

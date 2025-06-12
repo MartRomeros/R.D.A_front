@@ -1,14 +1,22 @@
 <app-header></app-header>
 
-<main class="container-fluid">
-    <app-resumen></app-resumen>
-    <app-tabla-horas></app-tabla-horas>
-    <section class="row registro-chart">
-        <article class="col">
-            <app-actividad-form></app-actividad-form>
-        </article>
-        <article class="col">
-            <app-chart></app-chart>
-        </article>
-    </section>
-</main>
+<div class="container-fluid">
+    <div class="row">
+
+        <aside class="col-12 col-md-3 col-lg-2 d-none d-md-block bg-light sidebar py-3">
+            <h4>Alumno Ayudante</h4>
+            <nav class="nav flex-column">
+                <a class="nav-link" routerLink="/alumno/registro_horas" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/formulario.svg"> Registrar hora</a>
+                <a class="nav-link active" routerLink="/alumno/historial" routerLinkActive="active"> <img
+                        src="assets/iconos/historial.svg" alt=""> Historial</a>
+                <a class="nav-link" routerLink="/alumno/horas_mes" routerLinkActive="active"> <img
+                        src="assets/iconos/informe.svg"> Mis horas de este mes</a>
+            </nav>
+        </aside>
+
+        <main class="col-12 col-md-9 col-lg-10 ms-sm-auto px-4 py-4">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>

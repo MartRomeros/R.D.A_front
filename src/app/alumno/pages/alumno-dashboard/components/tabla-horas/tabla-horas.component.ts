@@ -5,18 +5,17 @@ import { UserService } from '../../../../../services/user.service';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { Actividad, ActividadResponse, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
+import { ResumenComponent } from '../resumen/resumen.component';
 
 @Component({
   selector: 'app-tabla-horas',
-  imports: [GeneralModule],
+  imports: [GeneralModule,ResumenComponent],
   templateUrl: './tabla-horas.component.html',
   styleUrl: './tabla-horas.component.css'
 })
 export class TablaHorasComponent implements OnInit {
 
   //servicios
-  private authService = inject(AuthServicesService)
-  private usuarioService = inject(UserService)
   private actividadService = inject(ActividadService)
 
   //variables publicas

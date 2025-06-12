@@ -1,0 +1,55 @@
+<main class="container-fluid">
+    <section class="row">
+        <h3>Historial de horas trabajadas</h3>
+        <h6 class="subtitle">Visualiza tus horas trabajadas como alumno ayudante por sección</h6>
+    </section>
+    <section class="row">
+        <h6 class="col-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
+        <mat-form-field class="col-3" appearance="outline">
+            <mat-label>Ingresa el mes</mat-label>
+            <mat-select>
+                <mat-option (click)="detallesInicialesAlumno()">Todas las actividades</mat-option>
+                @for (meses of mesesHastaAhora; track $index) {
+                <mat-option value="{{$index}}" (click)="filtrarHorasMes($index)">{{meses}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </section>
+
+    <section class="row">
+        <article class="col">
+            <mat-card-content>
+                <div echarts [options]="barChartOptions" class="demo-chart" style="height: 400px;"></div>
+            </mat-card-content>
+        </article>
+        <article class="col">
+            <mat-card-content class="area-section">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col" id="difusion">
+                            <h4>Difusion</h4>
+                            <h6>{{horasDifusion}}</h6>
+                        </div>
+                        <div class="col" id="extension">
+                            <h4>Extension</h4>
+                            <h6>{{horasExtension}}</h6>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col" id="comunicacion">
+                            <h4>Comunicacion</h4>
+                            <h6>{{horasComunicacion}}</h6>
+                        </div>
+                        <div class="col" id="desarrollo-laboral">
+                            <h4>Desarrollo laboral</h4>
+                            <h6>{{horasDesarrolloLaboral}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </mat-card-content>
+        </article>
+    </section>
+
+    <app-tablero-historial></app-tablero-historial>
+
+</main>

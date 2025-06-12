@@ -4,11 +4,12 @@ import { NgxEchartsModule } from 'ngx-echarts';
 import { lastValueFrom } from 'rxjs';
 import { Actividad, User } from '../../../../../models/interfaces';
 import { ActividadService } from '../../../../../services/actividad.service';
+import { TableroHistorialComponent } from '../tablero-historial/tablero-historial.component';
 
 
 @Component({
   selector: 'app-historial-resumen',
-  imports: [GeneralModule, NgxEchartsModule],
+  imports: [GeneralModule, NgxEchartsModule,TableroHistorialComponent],
   templateUrl: './historial-resumen.component.html',
   styleUrl: './historial-resumen.component.css'
 })

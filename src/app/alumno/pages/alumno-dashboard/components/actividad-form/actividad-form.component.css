@@ -1,3 +1,7 @@
+section{
+    gap: 2vh;
+}
+
 .hour-registry mat-card-header{
     display: flex;
     flex-direction: column;
@@ -12,5 +16,19 @@ h4,h6{
     gap: 2vh;
     display: flex;
     flex-direction: column;
+}
+
+fieldset button{
+    padding: 2vh;
+    outline: none;
+    color: white;
+    border: none;
+    border-radius: 2vh;
+    background-color: blue;
+    transition: 0.5s ease background-color;
+}
+
+fieldset button:hover{
+    background-color: #012C56;
 }
 

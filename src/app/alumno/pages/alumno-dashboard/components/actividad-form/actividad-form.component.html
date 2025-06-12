@@ -1,54 +1,63 @@
-<mat-card appearance="outlined" class="hour-registry">
-    <mat-card-header>
-        <h4>Registro de horas</h4>
-        <h6 class="subtitle">Ingresa las
-            horas trabajadas</h6>
-    </mat-card-header>
+<main class="container-fluid">
+    <section class="row">
+        <mat-card appearance="outlined" class="hour-registry col-lg">
+            <mat-card-header>
+                <h4>Registro de horas</h4>
+                <h6 class="subtitle">Ingresa las
+                    horas trabajadas</h6>
+            </mat-card-header>
 
-    <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
-        <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="dd-mm-yyyy" formControlName="fecha">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field>
+            <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
+                <mat-form-field>
+                    <input matInput [matDatepicker]="picker" placeholder="dd-mm-yyyy" formControlName="fecha">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Hora de inicio</mat-label>
-            <mat-select matNativeControl formControlName="horaInic">
-                @for (item of horasAM; track $index) {
-                <mat-option value="{{item}}">{{item}} AM</mat-option>
-                }
-                @for (item of horasPM; track $index) {
-                <mat-option value="{{item}}">{{item}} PM</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Hora de inicio</mat-label>
+                    <mat-select matNativeControl formControlName="horaInic">
+                        @for (item of horasAM; track $index) {
+                        <mat-option value="{{item}}">{{item}} AM</mat-option>
+                        }
+                        @for (item of horasPM; track $index) {
+                        <mat-option value="{{item}}">{{item}} PM</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Hora de termino</mat-label>
-            <mat-select matNativeControl formControlName="horaTerm">
-                @for (item of horasAM; track $index) {
-                <mat-option value="{{item}}">{{item}} AM</mat-option>
-                }
-                @for (item of horasPM; track $index) {
-                <mat-option value="{{item}}">{{item}} PM</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Hora de termino</mat-label>
+                    <mat-select matNativeControl formControlName="horaTerm">
+                        @for (item of horasAM; track $index) {
+                        <mat-option value="{{item}}">{{item}} AM</mat-option>
+                        }
+                        @for (item of horasPM; track $index) {
+                        <mat-option value="{{item}}">{{item}} PM</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
 
-        <mat-form-field>
-            <mat-label>Area de trabajo</mat-label>
-            <mat-select matNativeControl formControlName="area">
-                @for (item of areasTrabajo; track $index) {
-                <mat-option value="{{item.id}}">{{item.nombre}}</mat-option>
-                }
-            </mat-select>
-        </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Area de trabajo</mat-label>
+                    <mat-select matNativeControl formControlName="area">
+                        @for (item of areasTrabajo; track $index) {
+                        <mat-option value="{{item.id}}">{{item.nombre}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
 
-        <fieldset>
-            <button type="submit" mat-flat-button>Registrar Hora</button>
-        </fieldset>
-    </form>
+                <fieldset>
+                    <button type="submit">Registrar Hora</button>
+                </fieldset>
+            </form>
+        </mat-card>
 
-</mat-card>
+        <article class="col-lg">
+            <app-chart></app-chart>
+        </article>
+
+    </section>
+
+</main>

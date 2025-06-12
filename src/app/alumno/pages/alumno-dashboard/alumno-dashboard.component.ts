@@ -9,7 +9,7 @@ import { AuthServicesService } from '../../../services/auth-services.service';
 
 @Component({
   selector: 'app-alumno-dashboard',
-  imports: [HeaderComponent, ChartComponent, TablaHorasComponent, ResumenComponent, ActividadFormComponent, GeneralModule],
+  imports: [HeaderComponent, GeneralModule],
   templateUrl: './alumno-dashboard.component.html',
   styleUrl: './alumno-dashboard.component.css'
 })

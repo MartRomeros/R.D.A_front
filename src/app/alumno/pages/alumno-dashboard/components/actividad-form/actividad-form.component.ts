@@ -4,15 +4,15 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { ActividadService } from '../../../../../services/actividad.service';
 import { lastValueFrom } from 'rxjs';
 import { Actividad, ActividadResponse, AreaTrabajo, DetallesAlumno, User } from '../../../../../models/interfaces';
-import { UserService } from '../../../../../services/user.service';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';
 import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';
+import { ChartComponent } from '../chart/chart.component';
 
 
 @Component({
   selector: 'app-actividad-form',
-  imports: [GeneralModule, ReactiveFormsModule, FormsModule],
+  imports: [GeneralModule, ReactiveFormsModule, FormsModule,ChartComponent],
   templateUrl: './actividad-form.component.html',
   styleUrl: './actividad-form.component.css',
   providers: [provideNativeDateAdapter()]

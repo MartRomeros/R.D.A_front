@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { SolicitudService } from '../../../../../services/solicitud.service';
 import { lastValueFrom } from 'rxjs';
 import { ActividadService } from '../../../../../services/actividad.service';
 import { Solicitud } from '../../../../../models/interfaces';
 import Swal from 'sweetalert2';
+import { SolicitudService } from '../../../../../services/admin/solicitud.service';
 
 @Component({
   selector: 'app-solicitudes',

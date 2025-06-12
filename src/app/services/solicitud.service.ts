@@ -11,7 +11,7 @@ export class SolicitudService {
 
   private actividadService = inject(ActividadService)
   private http = inject(HttpClient)
-  private url = 'http://localhost:3000'
+  private url = 'https://r-d-a-server.onrender.com'
   private horaCL = Intl.DateTimeFormat('es-CL', {
     timeZone: 'America/Santiago',
     hour: '2-digit',

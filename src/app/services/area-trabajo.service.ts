@@ -8,7 +8,7 @@ import { AreaTrabajo } from '../models/interfaces';
 })
 export class AreaTrabajoService {
   private http = inject(HttpClient)
-  private url = 'http://localhost:3000'
+  private url = 'https://r-d-a-server.onrender.com'
 
   private areasTrabajoSubject = new BehaviorSubject<AreaTrabajo[]>([])
   areasTrabajo$ = this.areasTrabajoSubject.asObservable()

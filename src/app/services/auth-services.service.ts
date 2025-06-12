@@ -11,7 +11,7 @@ export class AuthServicesService {
   private router:Router = new Router()
 
   private http = inject(HttpClient)
-  private localUrl = 'http://localhost:3000'
+  private localUrl = 'https://r-d-a-server.onrender.com'
   private rendelUrl = 'https://r-d-a-server-1.onrender.com'
 
   login(valores: any): Observable<any> {

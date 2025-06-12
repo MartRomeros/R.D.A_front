@@ -10,7 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class ActividadService {
 
   private http = inject(HttpClient)
-  private url = 'http://localhost:3000'//pruebas locales
+  private url = 'https://r-d-a-server.onrender.com'//pruebas locales
 
   private now = new Date();
   private month = String(this.now.getMonth() + 1).padStart(2, '0'); // getMonth() devuelve 0-11

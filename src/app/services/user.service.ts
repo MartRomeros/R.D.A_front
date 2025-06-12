@@ -9,7 +9,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserService {
 
   private http = inject(HttpClient)
-  private localUrl = 'http://localhost:3000' //https://r-d-a-server-1.onrender.com
+  private localUrl = 'https://r-d-a-server.onrender.com' //https://r-d-a-server-1.onrender.com
 
   private alumnosSubject = new BehaviorSubject<any>([])
   alumnosAyudantes$ = this.alumnosSubject.asObservable()

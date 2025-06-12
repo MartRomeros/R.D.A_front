@@ -9,7 +9,7 @@ import { HorasAreasMes } from '../../alumno/pages/alumno-dashboard/models/interf
 export class AlumnoService {
 
   private http: HttpClient = inject(HttpClient)
-  private url: string = 'http://localhost:3000'
+  private url: string = 'https://r-d-a-server.onrender.com'
 
   private horasAreaMesSubject = new BehaviorSubject<HorasAreasMes>({ comunicacion: 0, desarrollo_laboral: 0, difusion: 0, extension: 0 })
   horasAreaMes$ = this.horasAreaMesSubject.asObservable()

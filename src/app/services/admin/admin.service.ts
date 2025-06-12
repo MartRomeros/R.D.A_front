@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class AdminService {
 
   private http: HttpClient = inject(HttpClient)
-  private url: string = 'http://localhost:3000'
+  private url: string = 'https://r-d-a-server.onrender.com'
 
 
 

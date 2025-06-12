@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Solicitud } from '../../models/interfaces';
-import { ActividadService } from '../actividad.service';
+import { ActividadService } from '../alumno/actividad.service';
 
 @Injectable({
   providedIn: 'root'

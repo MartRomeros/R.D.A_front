@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { ActividadService } from '../../../../../services/actividad.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { Actividad, AreaTrabajo, DetallesAlumno } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';

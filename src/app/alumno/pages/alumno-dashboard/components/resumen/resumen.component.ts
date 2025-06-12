@@ -1,11 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { ActividadService } from '../../../../../services/actividad.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { Actividad, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { ResumenMes } from '../../models/interfaces';
+import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 
 
 @Component({
@@ -17,10 +19,11 @@ import { MatButtonModule } from '@angular/material/button';
 export class ResumenComponent implements OnInit {
   //servicios
   private actividadService = inject(ActividadService)
+  private alumnoService = inject(AlumnoService)
 
   //variables publicas
-  montoAcumulado?: any
-  horasTrabajadas?: any
+  montoAcumulado?: string
+  horasTrabajadas?: number
   fechaPago: any
   diasRestantes: any
   cargando: boolean = true
@@ -31,11 +34,7 @@ export class ResumenComponent implements OnInit {
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
-    await this.traerDetallesAlumno()
-    this.actividadService.detallesAlumno$.subscribe((detalleAlumno) => {
-      this.montoAcumulado = detalleAlumno.horasTotalesMes! * 2450
-      this.horasTrabajadas = detalleAlumno.horasTotalesMes
-    })
+    await this.traerResumenMes()
     this.traerFechaAproxPago()
     this.cargando = false
   }
@@ -78,11 +77,11 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  private async traerDetallesAlumno() {
+  private async traerResumenMes() {
     try {
-      const response: DetallesAlumno = await lastValueFrom(this.actividadService.traerDetallesDelAlumno());
-      this.actividadService.setDetallesAlumnoSubject(response)
-
+      const response: ResumenMes = await lastValueFrom(this.alumnoService.traerResumenMes());
+      this.montoAcumulado = response.montoFormateado
+      this.horasTrabajadas = response.horasMes
     } catch (error: any) {
       console.log(error);
     }
@@ -95,7 +94,6 @@ export class ResumenComponent implements OnInit {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(valor)
-
   }
 
 

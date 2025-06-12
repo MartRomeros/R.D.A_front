@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { MatSelectModule } from '@angular/material/select'
-import { ActividadService } from '../../../../../services/actividad.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { lastValueFrom } from 'rxjs';
 import { Actividad, AreaTrabajo } from '../../../../../models/interfaces';
 import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';

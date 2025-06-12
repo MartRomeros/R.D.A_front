@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { lastValueFrom } from 'rxjs';
-import { ActividadService } from '../../../../../services/actividad.service';
 import { AdminService } from '../../../../../services/admin/admin.service';
 import { Actividad, Administrador, Alumno, Detalles, TotalesMes } from '../../models/interfaces';
 

@@ -1,9 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { AuthServicesService } from '../../../../../services/auth-services.service';
-import { UserService } from '../../../../../services/user.service';
-import { ActividadService } from '../../../../../services/actividad.service';
-import { Actividad, ActividadResponse, DetallesAlumno, User } from '../../../../../models/interfaces';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
+import { Actividad, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { ResumenComponent } from '../resumen/resumen.component';
 

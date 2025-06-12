@@ -39,6 +39,14 @@ td{
     z-index: 1;
 }
 
+table{
+    border-radius: 0.375em;
+}
+
+.card{
+    padding: 0;
+}
+
 @media (max-width:768px) {
 
     main{

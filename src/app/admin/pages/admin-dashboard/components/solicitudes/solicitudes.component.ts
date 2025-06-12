@@ -1,7 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { lastValueFrom } from 'rxjs';
-import { ActividadService } from '../../../../../services/actividad.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { Solicitud } from '../../../../../models/interfaces';
 import Swal from 'sweetalert2';
 import { SolicitudService } from '../../../../../services/admin/solicitud.service';

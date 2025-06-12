@@ -3,7 +3,7 @@ import { GeneralModule } from '../../../../../shared/modules/general/general.mod
 import { NgxEchartsModule } from 'ngx-echarts';
 import { lastValueFrom } from 'rxjs';
 import { Actividad, User } from '../../../../../models/interfaces';
-import { ActividadService } from '../../../../../services/actividad.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { TableroHistorialComponent } from '../tablero-historial/tablero-historial.component';
 
 

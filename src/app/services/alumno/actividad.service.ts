@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Actividad, DetallesAlumno } from '../models/interfaces';
+import { Actividad,DetallesAlumno } from '../../models/interfaces';
 import { FormGroup } from '@angular/forms';
 
 @Injectable({
@@ -39,18 +39,6 @@ export class ActividadService {
   private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
   horasPorArea$ = this.horasPorAreaSubject.asObservable()
   setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
-    horasPorArea.actividadesPorMes.forEach((actividad) => {
-      //formateo de fecha y hora a cl
-      const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaFormateada = this.fechaCL.format(fechaUTC)
-      actividad.fecha_actividad = fechaFormateada
-      const horaInicUTC = new Date(actividad.hora_inic_activdad)
-      const horaInicFormateada = this.horaCL.format(horaInicUTC)
-      actividad.hora_inic_activdad = horaInicFormateada
-      const horaTermUTC = new Date(actividad.hora_term_actividad)
-      const horaTermCL = this.horaCL.format(horaTermUTC)
-      actividad.hora_term_actividad = horaTermCL
-    })
     this.horasPorAreaSubject.next(horasPorArea)
   }
 
@@ -79,36 +67,13 @@ export class ActividadService {
       this.actividadesParaFiltrarSubject.next([])
       return
     }
-    actividades.forEach((actividad) => {
-      //formateo de fecha y hora a cl
-      const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaFormateada = this.fechaCL.format(fechaUTC)
-      actividad.fecha_actividad = fechaFormateada
-      const horaInicUTC = new Date(actividad.hora_inic_activdad)
-      const horaInicFormateada = this.horaCL.format(horaInicUTC)
-      actividad.hora_inic_activdad = horaInicFormateada
-      const horaTermUTC = new Date(actividad.hora_term_actividad)
-      const horaTermCL = this.horaCL.format(horaTermUTC)
-      actividad.hora_term_actividad = horaTermCL
-    })
     this.actividadesParaFiltrarSubject.next(actividades)
   }
 
   private detallesAlumnoSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
   detallesAlumno$ = this.detallesAlumnoSubject.asObservable()
-  setDetallesAlumnoSubject(detallesAlumno: DetallesAlumno) {
-    detallesAlumno.actividadesPorMes.forEach((actividad) => {
-      //formateo de fecha y hora a cl
-      const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaFormateada = this.fechaCL.format(fechaUTC)
-      actividad.fecha_actividad = fechaFormateada
-      const horaInicUTC = new Date(actividad.hora_inic_activdad)
-      const horaInicFormateada = this.horaCL.format(horaInicUTC)
-      actividad.hora_inic_activdad = horaInicFormateada
-      const horaTermUTC = new Date(actividad.hora_term_actividad)
-      const horaTermCL = this.horaCL.format(horaTermUTC)
-      actividad.hora_term_actividad = horaTermCL
-    })
+  setDetallesAlumnoSubject(detallesAlumno: any) {
+
     this.detallesAlumnoSubject.next(detallesAlumno)
   }
 

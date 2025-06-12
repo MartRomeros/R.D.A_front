@@ -14,6 +14,18 @@
   }
 }
 
+@media (max-width: 372px){
+  a {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 296px){
+  a {
+    font-size: 10px;
+  }
+}
+
 @media (max-width: 1200px){
   h4 {
     font-size: 20px;

@@ -32,3 +32,18 @@ fieldset button:hover{
     background-color: #012C56;
 }
 
+@media (max-width: 500px) {
+    mat-form-field {
+        width: 100% !important;
+        min-width: 100px;
+    }
+
+    input, select, .mat-select-trigger {
+        font-size: 12px;
+    }
+
+    button {
+        width: 100%;
+        font-size: 14px;
+    }
+}

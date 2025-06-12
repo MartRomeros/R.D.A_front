@@ -2,6 +2,31 @@ section{
     margin-bottom: 2vh;
 }
 
+mat-form-field {
+    width: 13rem;
+}
+
+@media(max-width:410px){
+    th{
+        font-size: 14px;
+    }
+}
+
+@media(max-width:380px){
+    th{
+        font-size: 11px;
+    }
+}
+
+@media(max-width:366px){
+    mat-form-field{
+        height: 1.3rem;
+    }
+    h6 {
+        font-size: 11px;
+    }
+}
+
 /* tablero de horas registradas */
 .list-group li:first-child {
     display: flex;

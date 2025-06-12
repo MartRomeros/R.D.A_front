@@ -12,9 +12,22 @@ main section:nth-child(2) {
     align-items: center;
 }
 
+@media (max-width:991px){
+    mat-form-field {
+        width: 13rem;
+    }
+}
 
+@media(max-width:366px){
+    mat-form-field{
+        height: 1.3rem;
+    }
+    h6 {
+        font-size: 11px;
+    }
+}
 
-/* cuadros de areas que muestran la cantidad de horas */
+/* cuadros de areas que muestran la cantidad de horas 991 */
 main{
     padding: 2vh;
 }

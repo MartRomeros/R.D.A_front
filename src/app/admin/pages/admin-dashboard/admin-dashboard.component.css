@@ -1,6 +1,23 @@
 .sidebar {
-  min-height: 100vh;
   border-right: 1px solid #ddd;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    min-height: 100vh;
+  }
+}
+
+@media (max-width: 410px){
+  a {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 1200px){
+  h4 {
+    font-size: 20px;
+  }
 }
 
 h4{

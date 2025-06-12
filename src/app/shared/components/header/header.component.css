@@ -1,10 +1,40 @@
-/* header section */
+/* header section 720*/
 header{
     background-color: #012C56;
 }
 
 nav img{
     width: 10%;    
+}
+
+@media (max-width: 720px) {
+ nav img{
+    width: 15%;
+ }
+}
+
+@media (max-width: 590px) {
+ nav img{
+    width: 20%;
+ }
+}
+
+@media (max-width: 450px) {
+ nav img{
+    width: 23%;
+ }
+}
+
+@media (max-width: 360px) {
+ nav img{
+    width: 25%;
+ }
+}
+
+@media (max-width: 315px) {
+ nav img{
+    width: 28%;
+ }
 }
 
 .navbar-toggler:focus {

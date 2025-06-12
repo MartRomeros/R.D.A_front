@@ -8,6 +8,8 @@ import { provideNativeDateAdapter } from '@angular/material/core';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';
 import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';
 import { ChartComponent } from '../chart/chart.component';
+import { AlumnoService } from '../../../../../services/alumno/alumno.service';
+import { HorasAreasMes } from '../../models/interfaces';
 
 
 @Component({
@@ -23,9 +25,7 @@ export class ActividadFormComponent implements OnInit {
   private actividadService = inject(ActividadService)
   private areaTrabajoService = inject(AreaTrabajoService)
   private mensajeService = inject(MensajeriaService)
-
-  //variables privadas
-  private actividades!: Actividad[]
+  private alumnoService = inject(AlumnoService)
 
   //formbuilder
   private fb = inject(FormBuilder)
@@ -84,8 +84,9 @@ export class ActividadFormComponent implements OnInit {
       }
       const response = await lastValueFrom(this.actividadService.registrarActividad(body))
       this.mensajeService.mostrarMensajeExito(`${response.message} Tus horas seran validadas pronto!`)
-      await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
-      await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
+      const horasAreas: HorasAreasMes = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
+      this.alumnoService.setHorasAreaMes(horasAreas)
+
     } catch (error: any) {
       this.mensajeService.mostrarMensajeError('error al registrar las horas');
     }

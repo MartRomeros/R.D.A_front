@@ -46,19 +46,8 @@ export class ActividadService {
     this.actividadesParaFiltrarSubject.next(actividades)
   }
 
-  private detallesAlumnoSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
-  detallesAlumno$ = this.detallesAlumnoSubject.asObservable()
-  setDetallesAlumnoSubject(detallesAlumno: any) {
-
-    this.detallesAlumnoSubject.next(detallesAlumno)
-  }
-
   registrarActividad(actividad: any): Observable<any> {
     return this.http.post(`${this.url}/actividad/actividades`, actividad, { withCredentials: true })
-  }
-
-  traerDetallesDelAlumno(mesYanio: string = this.mesAnio): Observable<any> {
-    return this.http.get(`${this.url}/actividad/detalles_alumno/${mesYanio}`, { withCredentials: true })
   }
 
   traerTotalesAlumno(): Observable<any> {
@@ -67,10 +56,6 @@ export class ActividadService {
 
   traerHorasFiltradas(mesYanio: string): Observable<any> {
     return this.http.get(`${this.url}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
-  }
-
-  traerDetallesRun(run: string): Observable<any> {
-    return this.http.get(`${this.url}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
   traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
@@ -83,11 +68,6 @@ export class ActividadService {
     }
     return this.http.get(`${this.url}/actividad/actividades_filtradas`, { params, withCredentials: true })
   }
-
-  traerTotales(): Observable<any> {
-    return this.http.get(`${this.url}/actividad/totales`, { withCredentials: true })
-  }
-
 
   validarActividad(actividadForm: FormGroup): boolean {
 

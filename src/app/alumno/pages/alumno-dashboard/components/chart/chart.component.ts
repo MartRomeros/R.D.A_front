@@ -22,7 +22,7 @@ export class ChartComponent implements OnInit {
   private horasAreaMes!: HorasAreasMes
   private areasTrabajo!: Area_Trabajo[]
 
-  chartOptions:any = {
+  chartOptions: any = {
     tooltip: {
       trigger: 'item'
     },
@@ -51,8 +51,9 @@ export class ChartComponent implements OnInit {
   async ngOnInit() {
     await this.traerAreas()
     await this.traerHorasArea()
-    this.alumnoService.horasAreaMes$.subscribe((horasAreas)=>{
+    this.alumnoService.horasAreaMes$.subscribe((horasAreas) => {
       this.horasAreaMes = horasAreas
+      this.actualizarGrafico()
     })
     this.actualizarGrafico()
     // Si no hay actividades en cache, las trae desde el backend
@@ -75,6 +76,7 @@ export class ChartComponent implements OnInit {
   private async traerHorasArea() {
     try {
       const response: HorasAreasMes = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
+      this.alumnoService.setHorasAreaMes(response)
       this.horasAreaMes = response
     } catch (error) {
       console.error(error)

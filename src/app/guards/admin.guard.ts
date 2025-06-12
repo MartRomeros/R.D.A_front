@@ -13,17 +13,11 @@ export const adminGuard: CanActivateFn = async (route, state) => {
 
   try {
     const usuario: User = await lastValueFrom(userService.findUserbyEmail());
-    if (usuario.tipo_usuario === 3) {
+    console.log(usuario)
+    if (usuario.tipo_usuario_id === 1 && url.startsWith('/admin')) {
       router.navigate(['/no_autorizado']);
       return false
     }
-
-    const response = await lastValueFrom(authServices.isAuthenticated())
-    if(!response.isAuthenticated){
-      router.navigate(['/login'])
-      return false
-    }
-
 
     return true
   } catch (error: any) {
@@ -31,5 +25,4 @@ export const adminGuard: CanActivateFn = async (route, state) => {
       return false;    
   }
 
-  return true;
 };

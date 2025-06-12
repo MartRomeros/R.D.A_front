@@ -11,44 +11,28 @@ export const authGuardGuard: CanActivateFn = async (route, state) => {
   const router: Router = inject(Router);
   const url = state.url;
 
+  const publicRoutes = ['/login', '/forgot-password', '/no_autorizado'];
+  if (publicRoutes.includes(url)) {
+    return true;
+  }
+
   try {
-    //comprobar si esta autenticado
-    const autenticated = await lastValueFrom(authService.isAuthenticated());
-    if (!autenticated.isAuthenticated) {
-      if (url !== 'login' && url !== '/forgot-password') {
-        router.navigate(['/login']);
-        return false;
-      }
-      return true
-    }
-
-    //traer al usuario si ya esta autenticado
+    await lastValueFrom(authService.isAuthenticated());
     const usuario: User = await lastValueFrom(userService.findUserbyEmail());
-    //verificar si es alumno y si esta autenticado llevarlo al home de alumno
-    if (url === '/login' || url === '/forgot-password') {
-      if(usuario.tipo_usuario === 3){
-        router.navigate(['/alumno']);
-        return false;
-      }
-      if(usuario.tipo_usuario === 4){
-        router.navigate(['/admin']);
-        return false;
-      }      
-    }
 
-    return true
-
-
-
-  } catch (error) {
-
-    if (url !== '/login') {
-      router.navigate(['/login']);
+    if (usuario.tipo_usuario_id === 1 && !url.startsWith('/alumno')) {
+      await router.navigate(['/alumno']);
       return false;
     }
 
+    if (usuario.tipo_usuario_id === 2 && !url.startsWith('/admin')) {
+      await router.navigate(['/admin']);
+      return false;
+    }
+
+    return true; // Ya está en la ruta correcta
+  } catch (error: any) {
+    await router.navigate(['/login']);
+    return false;
   }
-
-
-  return true
 };

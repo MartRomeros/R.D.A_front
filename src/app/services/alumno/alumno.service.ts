@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { HorasAreasMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
+import { ruta } from '../rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ import { HorasAreasMes } from '../../alumno/pages/alumno-dashboard/models/interf
 export class AlumnoService {
 
   private http: HttpClient = inject(HttpClient)
-  private url: string = 'https://r-d-a-server.onrender.com'
+  private url: string = ruta
 
   private horasAreaMesSubject = new BehaviorSubject<HorasAreasMes>({ comunicacion: 0, desarrollo_laboral: 0, difusion: 0, extension: 0 })
   horasAreaMes$ = this.horasAreaMesSubject.asObservable()

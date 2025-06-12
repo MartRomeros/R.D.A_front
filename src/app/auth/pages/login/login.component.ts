@@ -18,7 +18,7 @@ export class LoginComponent {
   //servicios
   private authService = inject(AuthServicesService)
   private fb = inject(FormBuilder)
-  private mensajeriaService:MensajeriaService = inject(MensajeriaService)
+  private mensajeriaService: MensajeriaService = inject(MensajeriaService)
 
 
   //variables publicas
@@ -26,6 +26,8 @@ export class LoginComponent {
     email: ['', [Validators.required, Validators.email]],
     password: ['', Validators.required]
   })
+
+  cargando: boolean = false
 
 
 
@@ -53,9 +55,11 @@ export class LoginComponent {
   }
 
   async login() {
+    this.cargando = true
     //validar campos
     if (!this.validarCampos()) {
       this.mensajeriaService.mostrarMensajeError('Por favor verifica los campos o las credenciales!');
+      this.cargando = false
       return
     }
 
@@ -65,16 +69,22 @@ export class LoginComponent {
     }
 
     try {
+      
       const response: LoginResponse = await lastValueFrom(this.authService.login(valores))
       if (response.tipoUsuario === 1) {
         this.router.navigate(['alumno']);
-      }else{
+        this.cargando = false
+      } else {
         this.router.navigate(['admin']);
+        this.cargando = false
       }
+
     } catch (error: any) {
       console.log(error);
       this.mensajeriaService.mostrarMensajeError(error.error.message)
 
+    } finally {
+      this.cargando = false
     }
 
 

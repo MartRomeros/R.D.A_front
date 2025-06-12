@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { ruta } from './rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,15 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class UserService {
 
   private http = inject(HttpClient)
-  private localUrl = 'https://r-d-a-server.onrender.com' //https://r-d-a-server-1.onrender.com
+  private localUrl = ruta
 
-  private alumnosSubject = new BehaviorSubject<any>([])
-  alumnosAyudantes$ = this.alumnosSubject.asObservable()
-  setAlumnosAyudantes(alumnos:any){
-    this.alumnosSubject.next(alumnos)
-  }
 
   findUserbyEmail(): Observable<any> {
-    return this.http.get(`${this.localUrl}/user/email`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/user/`, { withCredentials: true })
   }
 
   actualizarDatos(valores: any): Observable<any> {
     return this.http.put(`${this.localUrl}/user/update`, valores, { withCredentials: true })
-  }
-
-  traerAlumnos():Observable<any>{
-    return this.http.get(`${this.localUrl}/user/alumnos`,{withCredentials:true})
   }
 
   validarPerfilForm(perfilForm: FormGroup): boolean {
@@ -50,8 +42,6 @@ export class UserService {
       alert('las contrasenas deben coincidir')
       return false
     }
-
-
     return true
   }
 

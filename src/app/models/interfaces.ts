@@ -9,7 +9,7 @@ export interface User {
     apellido_materno: string,
     email: string,
     fono: number,
-    tipo_usuario: number,
+    tipo_usuario_id: number,
     run: string,
     password: string
 }

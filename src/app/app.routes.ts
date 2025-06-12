@@ -11,29 +11,34 @@ import { AdminTablaComponent } from './admin/pages/admin-dashboard/components/ad
 import { HistorialResumenComponent } from './alumno/pages/alumno-dashboard/components/historial-resumen/historial-resumen.component';
 import { ActividadFormComponent } from './alumno/pages/alumno-dashboard/components/actividad-form/actividad-form.component';
 import { TablaHorasComponent } from './alumno/pages/alumno-dashboard/components/tabla-horas/tabla-horas.component';
+import { alumnoGuard } from './guards/alumno.guard';
+import { adminGuard } from './guards/admin.guard';
 
 
 
 export const routes: Routes = [
     {
         path: '',
-        component: LoginComponent,
-        canActivate: [authGuardGuard]
+        redirectTo: '/login',
+        pathMatch:'full'
     },
     {
         path: 'alumno',
         component: AlumnoDashboardComponent,
+        canActivate:[authGuardGuard,alumnoGuard],
+        canActivateChild:[authGuardGuard,alumnoGuard],
         children: [
             { path: 'registro_horas', component: ActividadFormComponent },
             { path: 'historial', component: HistorialResumenComponent },
             {path: 'horas_mes',component:TablaHorasComponent},
             { path: '', redirectTo: 'registro_horas', pathMatch: 'full' }
         ]
-        //canActivate: [authGuardGuard, alumnoGuard]
     },
     {
         path: 'admin',
         component: AdminDashboardComponent,
+        canActivate:[authGuardGuard,adminGuard],
+        canActivateChild:[authGuardGuard,adminGuard],
         children: [
             { path: 'solicitudes', component: SolicitudesComponent },
             { path: 'alumnos', component: AdminTablaComponent },
@@ -44,23 +49,26 @@ export const routes: Routes = [
     {
         path: 'login',
         component: LoginComponent,
-        //canActivate: [authGuardGuard]
+        canActivate: [authGuardGuard]
     },
     {
         path: 'perfil',
-        component: PerfilComponent
+        component: PerfilComponent,
+        canActivate:[authGuardGuard]
     },
     {
-        path: 'forgot-password', component: ForgotPasswordComponent,
+        path: 'forgot-password', 
+        component: ForgotPasswordComponent,
         canActivate: [authGuardGuard]
     },
     {
         path: 'no_autorizado',
-        component: UnauthorizedComponent
+        component: UnauthorizedComponent,
     },
     {
-        path: '**', component: LoginComponent,
-        canActivate: [authGuardGuard]
+        path: '**', 
+        redirectTo: '/login',
+
     },
 
 ];

@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { ruta } from '../rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs';
 export class AdminService {
 
   private http: HttpClient = inject(HttpClient)
-  private url: string = 'https://r-d-a-server.onrender.com'
+  private url: string = ruta  
 
 
 

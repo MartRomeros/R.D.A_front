@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ruta } from './rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,7 @@ export class AuthServicesService {
   private router:Router = new Router()
 
   private http = inject(HttpClient)
-  private localUrl = 'https://r-d-a-server.onrender.com'
-  private rendelUrl = 'https://r-d-a-server-1.onrender.com'
+  private localUrl = ruta 
 
   login(valores: any): Observable<any> {
     return this.http.post(`${this.localUrl}/auth/login`, valores, { withCredentials: true })

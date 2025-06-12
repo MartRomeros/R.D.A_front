@@ -1,0 +1,1 @@
+export const ruta:string = 'http://localhost:3000'

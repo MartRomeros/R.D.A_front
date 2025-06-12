@@ -11,19 +11,16 @@ export const alumnoGuard: CanActivateFn = async (route, state) => {
   const router: Router = inject(Router)
 
   try {
-    const usuario:User = await lastValueFrom(userService.findUserbyEmail());
-    if(usuario.tipo_usuario === 3&& url === '/admin'){
-      router.navigate(['/no_autorizado']);
+    const usuario: User = await lastValueFrom(userService.findUserbyEmail());
+    if(usuario.tipo_usuario_id === 2 && url.startsWith('/alumno')){
+      router.navigate(['/no_autorizado'])
       return false
     }
 
-
     return true
   } catch (error: any) {
-    if (url !== '/login') {
-      router.navigate(['/login']);
-      return false;
-    }
+    router.navigate(['/login']); 
+    return false;
   }
 
   return true;

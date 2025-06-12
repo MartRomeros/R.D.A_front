@@ -3,6 +3,7 @@ import { GeneralModule } from '../../../shared/modules/general/general.module';
 import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';
+import { MensajeriaService } from '../../../services/mensajeria.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -13,10 +14,12 @@ import { AuthServicesService } from '../../../services/auth-services.service';
 export class ForgotPasswordComponent {
   private fb = inject(FormBuilder)
   private authService = inject(AuthServicesService)
+  private mensajeService = inject(MensajeriaService)
 
   forgotForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]]
   })
+  cargando: boolean = false
 
   //contador de caracteres
   showCounter(field: string): number {
@@ -32,23 +35,24 @@ export class ForgotPasswordComponent {
   }
 
   async recuperarClave() {
+    this.cargando = true
 
     if (this.forgotForm.get('email')?.hasError('email') || this.forgotForm.get('email')?.hasError('required')) {
-      alert('no es posible recuperar la contraseña')
+      this.mensajeService.mostrarMensajeError('Por favor verifica tu correo electronico!')
+      this.cargando = false
       return
     }
 
     const valores = this.forgotForm.get('email')?.value
 
-    console.log(valores)
-
     try {
-      const response = await lastValueFrom(this.authService.recuperarClave(valores))
-      alert('no es posible recuperar la contrasena')
-
+      await lastValueFrom(this.authService.recuperarClave(valores))
+      this.mensajeService.mostrarMensajeExito('Contraseña actualizada!, en instantes te llegara un correo con tu nueva contraseña!')
     } catch (error: any) {
-      alert('no es posible recuperar la contrasena error server')
+      this.mensajeService.mostrarMensajeError('Ha ocurrido un error al actualizar tu contraseña!')
       console.log(error)
+    } finally {
+      this.cargando = false
     }
 
   }

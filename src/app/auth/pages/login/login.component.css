@@ -4,12 +4,20 @@ main{
     padding: 2vh;
 }
 
-form{    
-    flex-direction: column;
-    align-items: center;
-    gap: 2vh;
+section{
     padding: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 95vh;
 }
+
+form{    
+    display: flex;
+    flex-direction: column;
+    gap: 2vh;
+}
+
 
 form fieldset h1,
 form fieldset h3{
@@ -36,4 +44,5 @@ mat-form-flied mat-hint{
 fieldset{
     display: flex;
     flex-direction: column;
+    align-items: center;
 }

@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Solicitud } from '../models/interfaces';
 import { ActividadService } from './alumno/actividad.service';
+import { ruta } from './rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ export class SolicitudService {
 
   private actividadService = inject(ActividadService)
   private http = inject(HttpClient)
-  private url = 'https://r-d-a-server.onrender.com'
+  private url = ruta
   private horaCL = Intl.DateTimeFormat('es-CL', {
     timeZone: 'America/Santiago',
     hour: '2-digit',

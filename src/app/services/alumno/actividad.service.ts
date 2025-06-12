@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Actividad,DetallesAlumno } from '../../models/interfaces';
 import { FormGroup } from '@angular/forms';
+import { ruta } from '../rutas';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { FormGroup } from '@angular/forms';
 export class ActividadService {
 
   private http = inject(HttpClient)
-  private url = 'https://r-d-a-server.onrender.com'//pruebas locales
+  private url = ruta
 
   private now = new Date();
   private month = String(this.now.getMonth() + 1).padStart(2, '0'); // getMonth() devuelve 0-11

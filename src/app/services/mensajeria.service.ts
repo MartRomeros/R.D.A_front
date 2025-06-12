@@ -9,7 +9,7 @@ export class MensajeriaService {
   mostrarMensajeExito(mensaje: string) {
     Swal.fire({
       icon: "success",
-      title: mensaje,
+      text:mensaje,
       showConfirmButton: true
     });
   }
@@ -17,7 +17,6 @@ export class MensajeriaService {
   mostrarMensajeError(mensaje: string) {
     Swal.fire({
       icon: "error",
-      title: "Oops...",
       text: mensaje,
     });
   }

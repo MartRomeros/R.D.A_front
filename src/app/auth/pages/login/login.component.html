@@ -1,50 +1,55 @@
 <main class="container-fluid">
+  <section class="row">
+    <form class="col-lg-6" [formGroup]="loginForm" (ngSubmit)="login()">
+      <fieldset>
+        <h1>Inicio de sesión</h1>
+        <h3 class="subtitle">Completa los campos para ingresar</h3>
+      </fieldset>
 
-  <form class="row" [formGroup]="loginForm" (ngSubmit)="login()">
-    <fieldset class="col-lg-6">
-      <h1>Inicio de sesión</h1>
-      <h3 class="subtitle">Completa los campos para ingresar</h3>
-    </fieldset>
-
-    <mat-form-field appearance="outline" class="col-lg-6">
-      <mat-label class="text-general">Correo electronico</mat-label>
-      <input matInput placeholder="Ingresa tu correo electronico" formControlName="email" name="email" autocomplete="email" class="text-general"/>
-      <mat-hint class="text-general">{{showCounter("email")}}/100</mat-hint>      
-    </mat-form-field>
-    <div class="col-lg-6">
-      @if (hasErrors('email','required')) {
+      <mat-form-field appearance="outline">
+        <mat-label class="text-general">Correo electronico</mat-label>
+        <input matInput placeholder="Ingresa tu correo electronico" formControlName="email" name="email"
+          autocomplete="email" class="text-general" />
+        <mat-hint class="text-general">{{showCounter("email")}}/100</mat-hint>
+      </mat-form-field>
+      <div>
+        @if (hasErrors('email','required')) {
         <div class="text-danger text-general">Email es requerido!</div>
+        }
+
+        @if (hasErrors('email','email')) {
+        <div class="text-danger text-general">Formato no valido!</div>
+        }
+      </div>
+
+      <mat-form-field appearance="outline">
+        <mat-label class="text-general">Ingresa tu contraseña</mat-label>
+        <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" name="password"
+          autocomplete="current-password" class="text-general" />
+        <button type="button" class="text-general" mat-icon-button matSuffix (click)="clickEvent($event)"
+          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+          <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+        <mat-hint class="text-general">{{showCounter("password")}}/100</mat-hint>
+      </mat-form-field>
+
+      <div>
+        @if (hasErrors('password','required')) {
+        <div class="text-danger">Contraseña es obligatoria!</div>
+        }
+      </div>
+      @if (!cargando) {
+      <button mat-flat-button type="submit">Iniciar Sesión</button>
+      }@else {
+      <fieldset>
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </fieldset>
       }
+      <a class="linkRegistro" [routerLink]="'/forgot-password'">¿Olvidaste tu contraseña?.</a>
 
-      @if (hasErrors('email','email')) {
-        <div class="text-danger text-general" >Formato no valido!</div>
-      }
-    </div>
+    </form>
 
-    <mat-form-field class="col-lg-6" appearance="outline">
-      <mat-label class="text-general">Ingresa tu contraseña</mat-label>
-      <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" name="password" autocomplete="current-password" class="text-general"/>
-      <button type="button" class="text-general" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
-        [attr.aria-pressed]="hide()">
-        <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
-      </button>
-      <mat-hint class="text-general">{{showCounter("password")}}/100</mat-hint>
-    </mat-form-field>
-    <div class="col-lg-6">
-      @if (hasErrors('password','required')) {
-        <div class="text-danger">Contraseña es obligatoria!</div> 
-      }
-    </div>
-
-    <fieldset class="col-lg-6">
-      <button mat-flat-button type="submit" >Iniciar Sesión</button>
-    </fieldset>
-
-    <a class="linkRegistro" [routerLink]="'/forgot-password'">¿Olvidaste tu contraseña?.</a> <!--Cambiar a contrasena--> 
-
-    <fieldset class="col-6 login-options">
-
-    </fieldset>
-
-  </form>
+  </section>
 </main>

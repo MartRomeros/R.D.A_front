@@ -48,8 +48,7 @@ export const routes: Routes = [
     },
     {
         path: 'perfil',
-        component: PerfilComponent,
-        canActivate: [authGuardGuard]
+        component: PerfilComponent
     },
     {
         path: 'forgot-password', component: ForgotPasswordComponent,

@@ -10,19 +10,7 @@ import { FormGroup } from '@angular/forms';
 export class ActividadService {
 
   private http = inject(HttpClient)
-  private localUrl = 'http://localhost:3000'//pruebas locales
-  private horaCL = Intl.DateTimeFormat('es-CL', {
-    timeZone: 'America/Santiago',
-    hour: '2-digit',
-    minute: '2-digit'
-  })
-
-  private fechaCL = new Intl.DateTimeFormat('es-CL', {
-    timeZone: 'America/Santiago',
-    day: '2-digit',
-    month: '2-digit',
-    year: '2-digit'
-  })
+  private url = 'http://localhost:3000'//pruebas locales
 
   private now = new Date();
   private month = String(this.now.getMonth() + 1).padStart(2, '0'); // getMonth() devuelve 0-11
@@ -45,18 +33,6 @@ export class ActividadService {
   private actividadesSubject = new BehaviorSubject<Actividad[]>([])
   actividades$ = this.actividadesSubject.asObservable()
   setActvidades(nuevasActividades: Actividad[]) {
-    nuevasActividades.forEach((actividad) => {
-      //formateo de fecha y hora a cl
-      const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaFormateada = this.fechaCL.format(fechaUTC)
-      actividad.fecha_actividad = fechaFormateada
-      const horaInicUTC = new Date(actividad.hora_inic_activdad)
-      const horaInicFormateada = this.horaCL.format(horaInicUTC)
-      actividad.hora_inic_activdad = horaInicFormateada
-      const horaTermUTC = new Date(actividad.hora_term_actividad)
-      const horaTermCL = this.horaCL.format(horaTermUTC)
-      actividad.hora_term_actividad = horaTermCL
-    })
     this.actividadesSubject.next(nuevasActividades)
   }
 
@@ -78,23 +54,23 @@ export class ActividadService {
   }
 
   registrarActividad(actividad: any): Observable<any> {
-    return this.http.post(`${this.localUrl}/actividad/actividades`, actividad, { withCredentials: true })
+    return this.http.post(`${this.url}/actividad/actividades`, actividad, { withCredentials: true })
   }
 
   traerDetallesDelAlumno(mesYanio: string = this.mesAnio): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/detalles_alumno/${mesYanio}`, { withCredentials: true })
+    return this.http.get(`${this.url}/actividad/detalles_alumno/${mesYanio}`, { withCredentials: true })
   }
 
   traerTotalesAlumno(): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/totales_alumno`, { withCredentials: true })
+    return this.http.get(`${this.url}/actividad/totales_alumno`, { withCredentials: true })
   }
 
   traerHorasFiltradas(mesYanio: string): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
+    return this.http.get(`${this.url}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
   }
 
   traerDetallesRun(run: string): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/actividades/${run}`, { withCredentials: true })
+    return this.http.get(`${this.url}/actividad/actividades/${run}`, { withCredentials: true })
   }
 
   traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
@@ -105,42 +81,13 @@ export class ActividadService {
     if (area) {
       params.area = area
     }
-    return this.http.get(`${this.localUrl}/actividad/actividades_filtradas`, { params, withCredentials: true })
+    return this.http.get(`${this.url}/actividad/actividades_filtradas`, { params, withCredentials: true })
   }
 
   traerTotales(): Observable<any> {
-    return this.http.get(`${this.localUrl}/actividad/totales`, { withCredentials: true })
+    return this.http.get(`${this.url}/actividad/totales`, { withCredentials: true })
   }
 
-  formatearActividades(actividades: Actividad[]): Actividad[] {
-    actividades.forEach((actividad) => {
-      //formateo de fecha y hora a cl
-      const fechaUTC = new Date(actividad.fecha_actividad)
-      const fechaFormateada = this.fechaCL.format(fechaUTC)
-      actividad.fecha_actividad = fechaFormateada
-      const horaInicUTC = new Date(actividad.hora_inic_activdad)
-      const horaInicFormateada = this.horaCL.format(horaInicUTC)
-      actividad.hora_inic_activdad = horaInicFormateada
-      const horaTermUTC = new Date(actividad.hora_term_actividad)
-      const horaTermCL = this.horaCL.format(horaTermUTC)
-      actividad.hora_term_actividad = horaTermCL
-    })
-    return actividades
-  }
-
-  formatearActividad(actividad: Actividad): Actividad {
-    //formateo de fecha y hora a cl
-    const fechaUTC = new Date(actividad.fecha_actividad)
-    const fechaFormateada = this.fechaCL.format(fechaUTC)
-    actividad.fecha_actividad = fechaFormateada
-    const horaInicUTC = new Date(actividad.hora_inic_activdad)
-    const horaInicFormateada = this.horaCL.format(horaInicUTC)
-    actividad.hora_inic_activdad = horaInicFormateada
-    const horaTermUTC = new Date(actividad.hora_term_actividad)
-    const horaTermCL = this.horaCL.format(horaTermUTC)
-    actividad.hora_term_actividad = horaTermCL
-    return actividad
-  }
 
   validarActividad(actividadForm: FormGroup): boolean {
 

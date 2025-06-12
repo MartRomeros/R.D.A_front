@@ -83,7 +83,7 @@ export class ActividadFormComponent implements OnInit {
         area_trabajo: this.actividadForm.get('area')?.value
       }
       const response = await lastValueFrom(this.actividadService.registrarActividad(body))
-      this.mensajeService.mostrarMensajeExito(response.message)
+      this.mensajeService.mostrarMensajeExito(`${response.message} Tus horas seran validadas pronto!`)
       await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
       await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
     } catch (error: any) {

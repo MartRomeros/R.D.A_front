@@ -5,6 +5,8 @@ import { ActividadService } from '../../../../../services/alumno/actividad.servi
 import { Actividad, AreaTrabajo, DetallesAlumno } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';
+import { AlumnoService } from '../../../../../services/alumno/alumno.service';
+import { Area_Trabajo, HorasAreasMes } from '../../models/interfaces';
 
 @Component({
   selector: 'app-chart',
@@ -15,16 +17,12 @@ import { AreaTrabajoService } from '../../../../../services/area-trabajo.service
 export class ChartComponent implements OnInit {
 
   //servicios
-  private actividadService = inject(ActividadService)
-  private areaTrabajoService = inject(AreaTrabajoService)
+  private alumnoService = inject(AlumnoService)
   //variables privadas
-  private difusion: number = 0
-  private extension: number = 0
-  private comunicacion: number = 0
-  private desarrolloLaboral: number = 0
-  private areasTrabajo!: AreaTrabajo[]
+  private horasAreaMes!: HorasAreasMes
+  private areasTrabajo!: Area_Trabajo[]
 
-  chartOptions = {
+  chartOptions:any = {
     tooltip: {
       trigger: 'item'
     },
@@ -37,12 +35,7 @@ export class ChartComponent implements OnInit {
         name: 'Areas de trabajo',
         type: 'pie',
         radius: '50%',
-        data: [
-          { value: this.difusion, name: 'Difusion' },
-          { value: this.extension, name: 'Extension' },
-          { value: this.comunicacion, name: 'Comunicacion' },
-          { value: this.desarrolloLaboral, name: 'Desarrollo laboral' }
-        ],
+        data: [],
         emphasis: {
           itemStyle: {
             shadowBlur: 10,
@@ -56,45 +49,40 @@ export class ChartComponent implements OnInit {
 
   //ngOnInit (al iniciar la pagina)
   async ngOnInit() {
-
-    await this.traerAreaTrabajo()
-    this.areaTrabajoService.areasTrabajo$.subscribe((areasTrabajo)=>{
-      this.areasTrabajo = areasTrabajo
+    await this.traerAreas()
+    await this.traerHorasArea()
+    this.alumnoService.horasAreaMes$.subscribe((horasAreas)=>{
+      this.horasAreaMes = horasAreas
     })
-    await this.traerHoras()
-    this.actividadService.detallesAlumno$.subscribe((detallesAlumno: DetallesAlumno) => {
-      this.difusion = detallesAlumno.horasAreaMes!.difusion;
-      this.comunicacion = detallesAlumno.horasAreaMes!.comunicacion
-      this.extension = detallesAlumno.horasAreaMes!.extension
-      this.desarrolloLaboral = detallesAlumno.horasAreaMes!.desarrolloLaboral
-      this.actualizarGrafico()
-    })
-
+    this.actualizarGrafico()
     // Si no hay actividades en cache, las trae desde el backend
 
 
   }
 
   //metodos
-  private async traerHoras() {
+  private async traerAreas() {
     try {
-      const response: DetallesAlumno = await lastValueFrom(this.actividadService.traerDetallesDelAlumno())
-      console.log(response)
-      this.actividadService.setDetallesAlumnoSubject(response)
-    } catch (error: any) {
+      const response = await lastValueFrom(this.alumnoService.traerAreas())
+      const areasTrabajo: AreaTrabajo[] = response.areasTrabajo
+      this.areasTrabajo = areasTrabajo
+
+    } catch (error) {
       console.error(error)
     }
   }
 
-  private async traerAreaTrabajo() {
+  private async traerHorasArea() {
     try {
-      const response = await lastValueFrom(this.areaTrabajoService.traerAreasTrabajo())
-      this.areaTrabajoService.setareasTrabajo(response.areas)
-    } catch (error: any) {
+      const response: HorasAreasMes = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
+      this.horasAreaMes = response
+    } catch (error) {
       console.error(error)
     }
-
   }
+
+
+
 
   private actualizarGrafico() {
     this.chartOptions = {
@@ -103,10 +91,10 @@ export class ChartComponent implements OnInit {
         {
           ...this.chartOptions.series[0], // copia estilos existentes
           data: [
-            { value: this.difusion, name: this.areasTrabajo[0].nombre },
-            { value: this.extension, name: this.areasTrabajo[1].nombre },
-            { value: this.comunicacion, name: this.areasTrabajo[2].nombre },
-            { value: this.desarrolloLaboral, name: this.areasTrabajo[3].nombre }
+            { value: this.horasAreaMes.difusion, name: this.areasTrabajo[0].nombre },
+            { value: this.horasAreaMes.extension, name: this.areasTrabajo[1].nombre },
+            { value: this.horasAreaMes.comunicacion, name: this.areasTrabajo[2].nombre },
+            { value: this.horasAreaMes.desarrollo_laboral, name: this.areasTrabajo[3].nombre }
           ]
         }
       ]

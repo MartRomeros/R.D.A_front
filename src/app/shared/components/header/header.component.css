@@ -52,3 +52,7 @@ nav img{
 .nav-item .nav-link{
     color: white;
 }
+
+.nav-link{
+    cursor: pointer;
+}

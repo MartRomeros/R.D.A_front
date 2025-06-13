@@ -16,7 +16,7 @@ export class SocketService {
       withCredentials: true  // permite el envío de cookies si las usas para auth
     });
 
-    this.socket.emit('registerAdmin')
+    this.socket.emit('registerAsAdmin')
   }
 
   listenAdminNotifications(): Observable<string> {

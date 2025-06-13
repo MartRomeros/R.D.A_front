@@ -24,6 +24,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.notificationSub = this.socketService.listenAdminNotifications()
       .subscribe((msg) => {
         this.notificaciones.push(msg);
+        console.log(this.notificaciones)
       });
   }
 

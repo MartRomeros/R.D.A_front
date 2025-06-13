@@ -1,5 +1,5 @@
 <main class="container-fluid">
-    <h2>Solicitudes de este mes:</h2>
+    <h3>Solicitudes de este mes:</h3>
     <section class="row">
         <article class="col-lg card">
             <h3>Solicitudes Aprobadas</h3>
@@ -7,7 +7,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">N° Solicitud</th>
                             <th scope="col">Fecha Actividad</th>
                             <th scope="col">Alumno</th>
                             <th scope="col">Estado</th>
@@ -17,7 +16,6 @@
                         @for (item of solicitudes; track $index) {
                         @if (item.estado == true) {
                         <tr>
-                            <td scope="row"> {{item.id}} </td>
                             <td> {{item.actividad.fecha_actividad}} </td>
                             <td>{{item.alumno.run}}</td>
                             <td><span class="badge text-bg-success">Aprobada</span></td>
@@ -36,7 +34,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">N° Solicitud</th>
                             <th scope="col">Fecha Actividad</th>
                             <th scope="col">Alumno</th>
                             <th scope="col">Opciones</th>
@@ -46,7 +43,6 @@
                         @for (item of solicitudes; track $index) {
                         @if (item.estado == false) {
                         <tr>
-                            <td scope="row"> {{item.id}} </td>
                             <td> {{item.actividad.fecha_actividad}} </td>
                             <td>{{item.alumno.run}}</td>
                             <td> <button (click)="confirmarActualizacion(item.id)">Aprobar</button> </td>
@@ -67,7 +63,6 @@
                 <table class="table table-striped">
                     <thead>
                         <tr>
-                            <th scope="col">N° Solicitud</th>
                             <th scope="col">Fecha Actividad</th>
                             <th scope="col">Alumno</th>
                             <th scope="col">Estado</th>
@@ -77,7 +72,6 @@
                         @for (item of solicitudes; track $index) {
                         @if (item.estado == false) {
                         <tr>
-                            <td scope="row"> {{item.id}} </td>
                             <td> {{item.actividad.fecha_actividad}} </td>
                             <td>{{item.alumno.run}}</td>
                             <td> <span class="badge rounded-pill text-bg-warning">En observación</span> </td>
@@ -85,7 +79,6 @@
                         }
                         @if (item.estado == true) {
                         <tr>
-                            <td scope="row"> {{item.id}} </td>
                             <td> {{item.actividad.fecha_actividad}} </td>
                             <td>{{item.alumno.run}}</td>
                             <td> <span class="badge rounded-pill text-bg-success">Aprobado</span> </td>

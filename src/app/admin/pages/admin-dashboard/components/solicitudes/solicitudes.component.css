@@ -1,37 +1,39 @@
-h2{
-    text-align: center;
-}
-section{
-    margin-top: 2vh;
-    gap: 2vh;
+h2 {
+  text-align: center;
 }
 
-.card{
-    padding: 1vh;
+section {
+  margin-top: 2vh;
+  gap: 2vh;
 }
 
-h3{
-    text-align: center;
+.card {
+  padding: 1vh;
 }
 
-table tbody tr td button{
-    padding: 0.35em 0.65em;
-    font-size: 0.75em;
-    font-weight: 700;
-    border-radius: 0.375em;
-    color: #fff;
-    background-color: blue;
-    outline: none;
-    border: none;
-    transition: 0.5s ease background-color;
+h3 {
+  text-align: center;
 }
 
-td,th{
-    text-align: center;
+table tbody tr td button {
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  font-weight: 700;
+  border-radius: 0.375em;
+  color: #fff;
+  background-color: blue;
+  outline: none;
+  border: none;
+  transition: 0.5s ease background-color;
 }
 
-table tbody tr td button:hover{
-    background-color: #012C56;
+td,
+th {
+  text-align: center;
+}
+
+table tbody tr td button:hover {
+  background-color: #012C56;
 }
 
 @media (max-width: 410px) {
@@ -59,15 +61,18 @@ table tbody tr td button:hover{
 }
 
 @media (max-width: 304px) {
-    main h2 {
-        font-size: 1rem;
-    }
-    main h3 {
-        font-size: 0.8rem;
-    }
-    main table {
+  main h2 {
+    font-size: 1rem;
+  }
+
+  main h3 {
+    font-size: 0.8rem;
+  }
+
+  main table {
     font-size: 0.65rem;
   }
+
   main table tbody td,
   main table thead th {
     padding: 0.2rem;
@@ -76,5 +81,28 @@ table tbody tr td button:hover{
   main table tbody td button {
     font-size: 0.55em;
     padding: 0.2em 0.4em;
+  }
+}
+
+
+/* desktop */
+@media (min-width:1024px) {}
+
+/* tablets */
+@media (min-width:768px) and (max-width:1023px) {}
+
+/* movil */
+@media (max-width:767px) {
+
+  .table td,
+  .table th {
+    white-space: nowrap;
+    /* No permitir saltos de línea */
+    text-overflow: ellipsis;
+    /* Agrega "..." si el texto es muy largo */
+    overflow: hidden;
+    /* Oculta el contenido que desborda */
+    max-width: 200px;
+    /* Ajusta según el ancho disponible */
   }
 }

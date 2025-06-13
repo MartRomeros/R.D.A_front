@@ -1,4 +1,9 @@
+main{
+    padding: 2vh;
+}
+
 section{
+    padding: 2vh;
     gap: 2vh;
 }
 
@@ -32,18 +37,29 @@ fieldset button:hover{
     background-color: #012C56;
 }
 
-@media (max-width: 500px) {
-    mat-form-field {
-        width: 100% !important;
-        min-width: 100px;
+mat-card-header{
+    display: flex;
+    flex-direction: column;
+}
+
+h4,.subtitle{
+    text-align: center;
+}
+
+@media (max-width:768px) {
+    main{
+        padding: 2vh;
     }
 
-    input, select, .mat-select-trigger {
-        font-size: 12px;
+    section {
+        gap: 2vh;
     }
 
-    button {
-        width: 100%;
-        font-size: 14px;
+    mat-card-content{
+        padding: 0;
+    }
+
+    mat-card{
+        padding: 1vh;
     }
 }

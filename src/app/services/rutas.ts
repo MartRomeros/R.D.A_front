@@ -1,1 +1,1 @@
-export const ruta:string = 'https://r-d-a-server.onrender.com'//https://r-d-a-server.onrender.com
+export const ruta:string = 'http://localhost:3000'//https://r-d-a-server.onrender.com

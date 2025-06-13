@@ -1,4 +1,4 @@
-section{
+section {
     margin-bottom: 2vh;
 }
 
@@ -6,22 +6,23 @@ mat-form-field {
     width: 13rem;
 }
 
-@media(max-width:410px){
-    th{
+@media(max-width:410px) {
+    th {
         font-size: 14px;
     }
 }
 
-@media(max-width:380px){
-    th{
+@media(max-width:380px) {
+    th {
         font-size: 11px;
     }
 }
 
-@media(max-width:366px){
-    mat-form-field{
+@media(max-width:366px) {
+    mat-form-field {
         height: 1.3rem;
     }
+
     h6 {
         font-size: 11px;
     }
@@ -45,4 +46,54 @@ mat-form-field {
     top: 0;
     background: white;
     z-index: 1;
+}
+
+/* desktop */
+@media (min-width:1024px) {}
+
+/* tablets */
+@media (min-width:768px) and (max-width:1023px) {}
+
+/* movil */
+@media (max-width:767px) {
+    .container-fluid {
+        padding: 0;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        max-width: 150px;
+        /* Ajusta según tu necesidad */
+    }
+
+    /* Evita desbordamientos dentro de los radios y etiquetas largas */
+    .form-check {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        white-space: nowrap;
+        /* Opcional: evita que el texto salte a otra línea */
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* Forzar que la etiqueta no se desborde */
+    .form-check-label {
+        flex: 1;
+        min-width: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* Opcional: si hay muchas áreas, permite scroll vertical */
+    .list-group-scroll {
+        max-height: 200px;
+        overflow-y: auto;
+    }
+
+
 }

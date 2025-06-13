@@ -1,30 +1,30 @@
-section{
+section {
     padding: 4vh;
     gap: 4vh;
 }
 
-mat-card{
+mat-card {
     padding: 0;
     background-color: #fff;
 }
 
-mat-card-content{
+mat-card-content {
     padding: 0;
 }
 
-h3{
+h3 {
     text-align: center;
 }
 
 
-th{
+th {
     text-align: center;
     background-color: #012C56;
     color: #fff;
 }
 
-td{
-    
+td {
+
     text-align: center;
 }
 
@@ -39,56 +39,47 @@ td{
     z-index: 1;
 }
 
-table{
+table {
     border-radius: 0.375em;
 }
 
-.card{
+.card {
     padding: 0;
+    border: none;
 }
 
-@media (max-width:768px) {
 
-    main{
-        padding: 2vh;
-    }
+/* desktop */
+@media (min-width:1024px) {}
 
-    section {
-        gap: 2vh;
-    }
+/* tablets */
+@media (min-width:768px) and (max-width:1023px) {}
 
-    mat-card-content{
-        padding: 0;
-    }
-
-    mat-card{
+/* movil */
+@media (max-width:767px) {
+    .row {
         padding: 1vh;
+        gap: 1vh;
     }
-}
 
-@media(max-width:815px){
-    h3{
-        font-size: 18px;
+    th {
+        font-size: .75rem;
+        text-align: center;
     }
-    th{
-        font-size: 14px;
-    }
-}
 
-@media(max-width:610px){
-    h3{
-        font-size: 14px;
+    td {
+        font-size: .75rem;
     }
-    th{
-        font-size: 10px;
-    }
-}
 
-@media(max-width:460px){
-    h3{
-        font-size: 12px;
-    }
-    th{
-        font-size: 8px;
+    .table td,
+    .table th {
+        white-space: nowrap;
+        /* No permitir saltos de línea */
+        text-overflow: ellipsis;
+        /* Agrega "..." si el texto es muy largo */
+        overflow: hidden;
+        /* Oculta el contenido que desborda */
+        max-width: 200px;
+        /* Ajusta según el ancho disponible */
     }
 }

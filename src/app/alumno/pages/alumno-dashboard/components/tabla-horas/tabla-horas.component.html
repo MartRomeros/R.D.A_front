@@ -1,44 +1,10 @@
 <main class="container-fluid">
     <app-resumen></app-resumen>
-
     <section class="row">
         <h3>Mis horas aprobadas de este mes</h3>
-        <article class="col-12 card">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">Fecha</th>
-                        <th scope="col">Hora inicio</th>
-                        <th scope="col">Hora termino</th>
-                        <th scope="col">Area de trabajo</th>
-                        <th scope="col">Estado</th>
-                    </tr>
-                    @for (actividad of actividades; track $index) {
-                    @if (actividad.estado == true) {
-                    <tr>
-                        <td scope="row">{{actividad.fecha_actividad}}</td>
-                        <td>{{actividad.hora_inic_activdad}}</td>
-                        <td>{{actividad.hora_term_actividad}}</td>
-                        <td>{{actividad.area_trabajo_id}}</td>
-                        <td><span class="badge text-bg-success">Aprobado</span></td>
-                    </tr>
-                    }
-                    }
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </article>
-        <h3>Mis horas por aprobar de este mes</h3>
-        <article class="col-12 card">
-            @if (cargando) {
-            <mat-spinner></mat-spinner>
-            }@else {
-            @if(!actividades){
-            No hay actividades registradas!
-            }@else{
+        <article class="col-lg-12 card">
             <div class="scroll-container">
-                <table class="table">
+                <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Fecha</th>
@@ -47,6 +13,37 @@
                             <th scope="col">Area de trabajo</th>
                             <th scope="col">Estado</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @for (actividad of actividades; track $index) {
+                        @if (actividad.estado == true) {
+                        <tr>
+                            <td scope="row">{{actividad.fecha_actividad}}</td>
+                            <td>{{actividad.hora_inic_activdad}}</td>
+                            <td>{{actividad.hora_term_actividad}}</td>
+                            <td>{{actividad.area_trabajo?.nombre}}</td>
+                            <td><span class="badge text-bg-success">Aprobado</span></td>
+                        </tr>
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        <h3>Mis horas por aprobar de este mes</h3>
+        <article class="col-lg-12 card">
+            <div class="scroll-container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Hora inicio</th>
+                            <th scope="col">Hora termino</th>
+                            <th scope="col">Area de trabajo</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         @for (actividad of actividades; track $index) {
                         @if (actividad.estado == false) {
                         <tr>
@@ -59,13 +56,10 @@
                         </tr>
                         }
                         }
-                    </thead>
-                    <tbody>
                     </tbody>
                 </table>
             </div>
-            }
-            }
+
         </article>
     </section>
 

@@ -1,70 +1,69 @@
-div:first-child{
-    padding-left: 3vh;
+.title {
+    padding: 2vh;
 }
 
+.title h3 {
+    text-align: center;
+}
 
 section {
-    gap: 4vh;
-    padding: 4vh;
-    
+    gap: 1vh;
+    padding: 2vh;
 }
 
-mat-card{
-    background-color: #fff;
+.card {
+    padding: 2vh;
+}
+
+.header h6 {
+    text-align: center;
+}
+
+.header h6 img {
+    width: 9%;
+}
+
+.content h4 {
+    text-align: center;
+}
+
+.footer {
+    text-align: center;
 }
 
 
-mat-card-header .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
 
-}
+/* desktop */
+@media (min-width:1024px) {}
 
+/* tablets */
+@media (min-width:768px) and (max-width:1023px) {}
 
-
-@media (max-width:768px) {
-
-    main{
-        padding: 2vh;
-    }
-
+/* movil */
+@media (max-width:767px) {
     section {
-        gap: 2vh;
+        justify-content: center;
+        padding: 0;
+        gap: 1vh;
     }
 
-    section > button{
-        width: 20vh;
+    .card {
+        padding: 1vh;
     }
-}
 
-@media(max-width:1200px){
-    mat-icon{
-        font-size: 19px;
+    .header {
+        padding: 1vh;
     }
-}
 
-@media(max-width:815px){
-    h2{
-        font-size: 22px;
+    .header h6 {
+        font-size: .75rem;
     }
-    h6{
-        font-size: 15px;
-    }
-    h3{
-        font-size: 15px;
-    }
-}
 
-@media(max-width:610px){
-    h2{
-        font-size: 18px;
+    .content h4 {
+        font-size: .75rem;
     }
-    h6{
-        font-size: 11px;
-    }
-    h3{
-        font-size: 11px;
+
+    .footer{
+        font-size: .75rem;
     }
 }

@@ -17,4 +17,12 @@ export class AdminDashboardComponent {
     this.router.navigate([ruta])
   }
 
+  async exportar(){
+    try {
+      
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
 }

@@ -1,9 +1,10 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
 import { AuthServicesService } from '../../../services/auth-services.service';
-import { lastValueFrom } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
+import { SocketService } from '../../../services/socket.service';
 
 @Component({
   selector: 'app-alumno-dashboard',
@@ -11,21 +12,26 @@ import { Router } from '@angular/router';
   templateUrl: './alumno-dashboard.component.html',
   styleUrl: './alumno-dashboard.component.css'
 })
-export class AlumnoDashboardComponent {
-
-  private authService: AuthServicesService = inject(AuthServicesService)
-  private router:Router = new Router()
-  
+export class AlumnoDashboardComponent implements OnInit {
+  private socketService = inject(SocketService)
 
 
 
-  private async isAuth() {
-    try {
-      await lastValueFrom(this.authService.isAuthenticated())
-    } catch (error) {
-      this.router.navigate(['/login'])
-    }
+  notificaciones: string[] = [];
+  private notificationSub!: Subscription;
 
+
+
+  ngOnInit(): void {
+    this.socketService.registerAsStudent()
+    this.notificationSub = this.socketService.listenNotification('student')
+      .subscribe((msg) => {
+        this.notificaciones.push(msg);
+      });
   }
 
+  ngOnDestroy(): void {
+    this.notificationSub.unsubscribe();
+    this.socketService.disconnect();
+  }
 }

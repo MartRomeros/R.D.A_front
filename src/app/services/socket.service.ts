@@ -15,19 +15,27 @@ export class SocketService {
     this.socket = io(ruta, {
       withCredentials: true  // permite el envío de cookies si las usas para auth
     });
-
-    this.socket.emit('registerAsAdmin')
   }
 
-  listenAdminNotifications(): Observable<string> {
+  registerAsStudent() {
+    this.socket.emit('registerAsStudent');
+  }
+
+  registerAsAdmin() {
+    this.socket.emit('registerAsAdmin');
+  }
+
+  listenNotification(type: 'admin' | 'student'): Observable<string> {
+    const event = type === 'admin' ? 'adminNotification' : 'studentNotification';
+
     return new Observable<string>((subscriber) => {
-      this.socket.on('adminNotification', (message: string) => {
+      this.socket.on(event, (message: string) => {
         subscriber.next(message);
       });
     });
   }
 
-  disconnect(): void {
+  disconnect() {
     this.socket.disconnect();
   }
 

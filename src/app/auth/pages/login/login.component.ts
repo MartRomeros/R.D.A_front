@@ -80,7 +80,6 @@ export class LoginComponent {
       }
 
     } catch (error: any) {
-      console.log(error);
       this.mensajeriaService.mostrarMensajeError(error.error.message)
 
     } finally {

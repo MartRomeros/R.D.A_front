@@ -9,10 +9,10 @@ import { ruta } from './rutas';
 })
 export class AuthServicesService {
   //servicios
-  private router:Router = new Router()
+  private router: Router = new Router()
 
   private http = inject(HttpClient)
-  private localUrl = ruta 
+  private localUrl = ruta
 
   login(valores: any): Observable<any> {
     return this.http.post(`${this.localUrl}/auth/login`, valores, { withCredentials: true })
@@ -30,8 +30,8 @@ export class AuthServicesService {
     return this.http.get(`${this.localUrl}/auth/is_authenticated`, { withCredentials: true })
   }
 
-  goToLogin(){
+  goToLogin() {
     this.router.navigate(['login'])
-  }  
+  }
 
 }

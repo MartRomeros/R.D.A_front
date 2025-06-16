@@ -7,6 +7,12 @@
             <h4>Alumno Ayudante</h4>
             <nav
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
+
+                <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                    aria-controls="offcanvasExample" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
+                    <img src="assets/iconos/notificacion.svg"> Notificaciones @if (notificaciones.length !=0) {<span
+                        class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
+                        
                 <a class="nav-link" routerLink="/alumno/registro_horas" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/formulario.svg"> Registrar
                     hora</a>
@@ -20,5 +26,21 @@
         <main class="col-12 col-md-9 col-lg-10 px-1 py-1">
             <router-outlet></router-outlet>
         </main>
+    </div>
+</div>
+
+
+<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificaciones Recientes</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+        @for (item of notificaciones; track $index) {
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{item}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+        </div>
+        }
     </div>
 </div>

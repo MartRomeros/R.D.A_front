@@ -2,8 +2,9 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { last, lastValueFrom, Subscription } from 'rxjs';
 import { SocketService } from '../../../services/socket.service';
+import { UserService } from '../../../services/user.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,14 +15,17 @@ import { SocketService } from '../../../services/socket.service';
 export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   private socketService = inject(SocketService)
+  private userServices = inject(UserService)
   private router: Router = new Router()
 
   notificaciones: string[] = [];
   private notificationSub!: Subscription;
 
 
+
   ngOnInit(): void {
-    this.notificationSub = this.socketService.listenAdminNotifications()
+    this.socketService.registerAsAdmin()
+    this.notificationSub = this.socketService.listenNotification('admin')
       .subscribe((msg) => {
         this.notificaciones.push(msg);
         console.log(this.notificaciones)
@@ -45,5 +49,4 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       console.error(error)
     }
   }
-
 }

@@ -50,34 +50,17 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     try {
       const response = await lastValueFrom(this.reporteService.traerDatosAExportar())
       console.log(response)
-
-      const data = {
-        "alumnoResumen": [
-          {
-            "id": 1,
-            "run": "12345678-9",
-            "nombre": "Luis",
-            "apellido_paterno": "Paredes",
-            "apellido_materno": "Gómez",
-            "fono": 987654321,
-            "email": "luis@example.com",
-            "password": "hashedpassword",
-            "tipo_usuario_id": 1,
-            "area_trabajo_id": null,
-            "actividades": [],
-            "horasTotalesMes": []
-          }
-        ]
-      }
-
-      this.reporteService.exportToExcel(data).subscribe(blob => {
-        const a = document.createElement('a');
-        const objectUrl = URL.createObjectURL(blob);
-        a.href = objectUrl;
-        a.download = 'archivo.xlsx';
-        a.click();
-        URL.revokeObjectURL(objectUrl);
-      });
+      this.reporteService.exportToExcel(response).subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'resumen_mensual.xlsx';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      window.URL.revokeObjectURL(url);
+    });
+      
     } catch (error) {
       console.log(error)
     }

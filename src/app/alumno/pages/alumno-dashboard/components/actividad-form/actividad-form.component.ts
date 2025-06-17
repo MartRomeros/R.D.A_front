@@ -83,7 +83,7 @@ export class ActividadFormComponent implements OnInit {
   async ngOnInit() {
     await this.traerAreas()
     await this.traerHorasArea()
-    this.alumnoService.horasAreaMes$.subscribe((horasArea)=>{
+    this.alumnoService.horasAreaMes$.subscribe((horasArea) => {
       this.horasAreaMes = horasArea
       this.actualizarGrafico()
     })
@@ -96,20 +96,25 @@ export class ActividadFormComponent implements OnInit {
       return;
     }
 
+
     //formateo de valores
     const fecha = new Date(this.actividadForm.get('fecha')?.value);
-    const strFecha = fecha.toISOString().slice(0, 10);
+    fecha.setHours(12); // ✅ evitar desfase
+    const fechaUTC = fecha.toISOString(); // ✅ correcto para Prisma/PostgreSQL
 
     //formateo de horas
-    const horaInicIso = new Date(`${strFecha}T${this.actividadForm.get('horaInic')?.value}`)
-    const horaTermIso = new Date(`${strFecha}T${this.actividadForm.get('horaTerm')?.value}`)
+    const horaInic = this.actividadForm.get('horaInic')?.value; // string tipo "15:00"
+    const horaTerm = this.actividadForm.get('horaTerm')?.value; // string tipo "17:00"
+
+    const horaInicDate = this.buildDateLocal(fecha, horaInic);
+    const horaTermDate = this.buildDateLocal(fecha, horaTerm);
 
     try {
       //valores a mandar en el backend
       const body = {
-        fecha_actividad: strFecha,
-        hora_inic_activdad: horaInicIso,
-        hora_term_actividad: horaTermIso,
+        fecha_actividad: fechaUTC,
+        hora_inic_activdad: horaInicDate,
+        hora_term_actividad: horaTermDate,
         area_trabajo: this.actividadForm.get('area')?.value
       }
       const response = await lastValueFrom(this.actividadService.registrarActividad(body))
@@ -158,6 +163,13 @@ export class ActividadFormComponent implements OnInit {
         }
       ]
     };
+  }
+
+  buildDateLocal(fecha: Date, hora: string): Date {
+    const [hh, mm] = hora.split(':').map(Number);
+    const local = new Date(fecha);
+    local.setHours(hh, mm, 0, 0);
+    return local;
   }
 
 

@@ -1,5 +1,4 @@
 import { Routes } from '@angular/router';
-import { PerfilComponent } from './shared/components/perfil/perfil.component';
 import { AlumnoDashboardComponent } from './alumno/pages/alumno-dashboard/alumno-dashboard.component';
 import { AdminDashboardComponent } from './admin/pages/admin-dashboard/admin-dashboard.component';
 import { LoginComponent } from './auth/pages/login/login.component';
@@ -50,11 +49,6 @@ export const routes: Routes = [
         path: 'login',
         component: LoginComponent,
         canActivate: [authGuardGuard]
-    },
-    {
-        path: 'perfil',
-        component: PerfilComponent,
-        canActivate:[authGuardGuard]
     },
     {
         path: 'forgot-password', 

@@ -2,10 +2,8 @@ import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
 import { Router } from '@angular/router';
-import { last, lastValueFrom, Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { SocketService } from '../../../services/socket.service';
-import { UserService } from '../../../services/user.service';
-import { ReporteService } from '../../../services/admin/reporte.service';
 import { ReportesServicesService } from '../../../services/reportes-services.service';
 
 @Component({

@@ -15,9 +15,9 @@
                     [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/notificacion.svg"> Solicitudes</a>
                 <a class="nav-link active" routerLink="/admin/alumnos" routerLinkActive="active"> <img
                         src="assets/iconos/usuarios.svg" alt=""> Alumnos Ayudantes</a>
-                <!--<a class="nav-link" routerLink="/admin/ordenes_compra" routerLinkActive="active"> <img
-                        src="assets/iconos/orden_compra.svg"> Ordenes de compra</a>-->
-                <a class="nav-link" id="exportar" (click)="downloadExcel()"> <img src="assets/iconos/orden_compra.svg"> Exportar</a>
+                <a class="nav-link" routerLink="/admin/gestor_oc" routerLinkActive="active"> <img
+                        src="assets/iconos/orden_compra.svg"> Ordenes de compra</a>
+                <a class="nav-link" id="exportar" (click)="downloadExcel()"> <img src="assets/iconos/excel.svg"> Exportar</a>
             </nav>
         </aside>
 

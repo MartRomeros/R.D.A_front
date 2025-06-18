@@ -1,0 +1,47 @@
+<main class="container-fluid">
+    <section class="row">
+        <h3>Gestor de Órdenes de Compra</h3>
+        <p>Adjunta un archivo Excel para ver los alumnos y sus órdenes de compra</p>
+        <article class="col-lg card">
+            <h4>Cargar Archivo Excel</h4>
+            <p>haz clic para seleccionar para cargar tu archivo Excel</p>
+            <form (ngSubmit)="mandarExcel()">
+                <img src="assets/iconos/upload.svg" alt="">
+                <input type="file" accept=".xlsx,.xls" (change)="onFileSelected($event)">
+                <button type="submit">Mostrar ordenes de compra</button>
+            </form>
+        </article>
+
+        <article class="col-lg-12 card">
+            <h3>Todas las ordenes de compras disponibles de alumnos ayudantes</h3>
+            <div class="scroll-container">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Alumno</th>
+                            <th scope="col">Run</th>
+                            <th scope="col">Monto Total</th>
+                            <th scope="col">N° OC</th>
+                            <th scope="col">Opciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of reporteOC; track $index) {
+                        <tr>
+                            <td> {{item.ALUMNO}}</td>
+                            <td>{{item['RUT Alumno']}}</td>
+                            <td> {{item['Total BH OC']}} </td>
+                            <td> {{item['N° OC']}}</td>
+                            <td> <button>Enviar</button> </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </article>
+        <article class="col-lg-3">
+            <button>Enviar todas</button>
+        </article>
+    </section>
+
+</main>

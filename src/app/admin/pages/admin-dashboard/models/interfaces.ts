@@ -63,3 +63,10 @@ export interface Detalles {
     horasTotalesMes: number,
     actividadesMes: Actividad[]
 }
+
+export interface ModeloOc{
+    "N° OC":number,
+    ALUMNO:string,
+    "RUT Alumno":string,
+    "Total BH OC":Number
+}

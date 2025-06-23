@@ -12,6 +12,7 @@ import { ActividadFormComponent } from './alumno/pages/alumno-dashboard/componen
 import { TablaHorasComponent } from './alumno/pages/alumno-dashboard/components/tabla-horas/tabla-horas.component';
 import { alumnoGuard } from './guards/alumno.guard';
 import { adminGuard } from './guards/admin.guard';
+import { PerfilComponent } from './shared/components/perfil/perfil.component';
 
 
 
@@ -43,6 +44,11 @@ export const routes: Routes = [
             { path: 'alumnos', component: AdminTablaComponent },
             { path: '', redirectTo: 'solicitudes', pathMatch: 'full' }
         ]
+    },
+    {
+        path: 'perfil',
+        component: PerfilComponent,
+        
     },
     //ruta login component
     {

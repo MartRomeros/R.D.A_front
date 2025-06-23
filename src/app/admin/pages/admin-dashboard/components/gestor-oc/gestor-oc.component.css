@@ -1,0 +1,59 @@
+section{
+    padding: 2vh;
+    gap: 4vh;
+}
+.container-fluid .row h3,
+.container-fluid .row p{
+    text-align: center;
+}
+
+.card{
+    padding: 4vh;
+}
+
+.card p{
+    text-align: start !important;
+}
+
+form{
+    padding: 2vh;
+    border: 1px lightgray dashed;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4vh;
+}
+
+form img{
+    width: 6%;
+}
+
+form button{
+    padding: 2vh;
+    background-color: blue;
+    border-radius: 2vh;
+    border: none;
+    outline: none;
+    color: #fff;
+}
+
+td button{
+      padding: 0.35em 0.65em !important;
+  font-size: 0.75em !important;
+  font-weight: 700 !important;
+  border-radius: 0.375em !important;
+  color: #fff;
+  background-color: blue;
+  outline: none;
+  border: none;
+  transition: 0.5s ease background-color !important;
+}
+
+article button{
+    padding: 2vh;
+    color: #fff;
+    background-color: blue;
+    border: none;
+    outline: none;
+    border-radius: 2vh;
+}

@@ -47,12 +47,14 @@
                         </thead>
                         <tbody>
                             @for (item of actividades; track $index) {
+                            @if (item.estado == true) {
                             <tr>
                                 <th scope="row">{{item.fecha_actividad}}</th>
                                 <td>{{item.hora_inic_activdad}}</td>
                                 <td>{{item.hora_term_actividad}}</td>
                                 <td>{{item.area_trabajo?.nombre}}</td>
                             </tr>
+                            }
                             }
                         </tbody>
                     </table>

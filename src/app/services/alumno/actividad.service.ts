@@ -13,11 +13,6 @@ export class ActividadService {
   private http = inject(HttpClient)
   private url = ruta
 
-  private now = new Date();
-  private month = String(this.now.getMonth() + 1).padStart(2, '0'); // getMonth() devuelve 0-11
-  private year = this.now.getFullYear();
-  private mesAnio = `${this.month}${this.year}`;
-
   //variables como total del pago, total de horas trabajadas(año y mes) etc
   private horasTotalesSubject = new BehaviorSubject<number | null>(null);
   horasTotales$ = this.horasTotalesSubject.asObservable()
@@ -48,18 +43,18 @@ export class ActividadService {
   }
 
   registrarActividad(actividad: any): Observable<any> {
-    return this.http.post(`${this.url}/actividad/actividades`, actividad, { withCredentials: true })
+    return this.http.post(`${this.url}/alumno/registrar_actividad`, actividad, { withCredentials: true })
   }
 
   traerTotalesAlumno(): Observable<any> {
     return this.http.get(`${this.url}/actividad/totales_alumno`, { withCredentials: true })
   }
 
-  traerHorasFiltradas(mesYanio: string): Observable<any> {
-    return this.http.get(`${this.url}/actividad/horas_mes/${mesYanio}`, { withCredentials: true })
+  traerHorasFiltradas(mesYanio: number | null = null): Observable<any> {
+    return this.http.get(`${this.url}/alumno/horas_area_mes/${mesYanio}`, { withCredentials: true })
   }
 
-  traerActividadesFiltradas(mesYanio: string | undefined, area: string | undefined): Observable<any> {
+  traerActividadesFiltradas(mesYanio: number | undefined, area: number | undefined): Observable<any> {
     let params: any = {}
     if (mesYanio) {
       params.mesYanio = mesYanio
@@ -67,7 +62,7 @@ export class ActividadService {
     if (area) {
       params.area = area
     }
-    return this.http.get(`${this.url}/actividad/actividades_filtradas`, { params, withCredentials: true })
+    return this.http.get(`${this.url}/alumno/actividades_area_mes`, { params, withCredentials: true })
   }
 
   validarActividad(actividadForm: FormGroup): boolean {

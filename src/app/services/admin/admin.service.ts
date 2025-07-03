@@ -14,11 +14,11 @@ export class AdminService {
 
 
   traerAlumnos(): Observable<any> {
-    return this.http.get(`${this.url}/admin/alumnos`, { withCredentials: true })
+    return this.http.get(`${this.url}/admin/alumnos_ayudantes`, { withCredentials: true })
   }
 
   traerResumenMes(): Observable<any> {
-    return this.http.get(`${this.url}/admin/totales`, { withCredentials: true })
+    return this.http.get(`${this.url}/admin/resumen_mes`, { withCredentials: true })
   }
 
   traerAdmin(): Observable<any> {
@@ -26,7 +26,11 @@ export class AdminService {
   }
 
   traerDetalleAlumno(run: string): Observable<any> {
-    return this.http.get(`${this.url}/admin/alumno/${run}`, { withCredentials: true })
+    return this.http.get(`${this.url}/admin/info_alumno/${run}`, { withCredentials: true })
+  }
+
+  traerActividadesAlumno(run:string):Observable<any>{
+    return this.http.get(`${this.url}/admin/actividades_alumno/${run}`,{withCredentials:true})
   }
 
 

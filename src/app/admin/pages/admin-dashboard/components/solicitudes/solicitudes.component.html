@@ -14,10 +14,10 @@
                     </thead>
                     <tbody>
                         @for (item of solicitudes; track $index) {
-                        @if (item.estado == true) {
+                        @if (item.estado === true) {
                         <tr>
-                            <td> {{item.actividad.fecha_actividad}} </td>
-                            <td>{{item.alumno.run}}</td>
+                            <td> {{item.fecha}} </td>
+                            <td>{{item.alumno}}</td>
                             <td><span class="badge text-bg-success">Aprobada</span></td>
 
                         </tr>
@@ -41,10 +41,10 @@
                     </thead>
                     <tbody>
                         @for (item of solicitudes; track $index) {
-                        @if (item.estado == false) {
+                        @if (item.estado === false) {
                         <tr>
-                            <td> {{item.actividad.fecha_actividad}} </td>
-                            <td>{{item.alumno.run}}</td>
+                            <td> {{item.fecha}} </td>
+                            <td>{{item.alumno}}</td>
                             <td> <button (click)="confirmarActualizacion(item.id)">Aprobar</button> </td>
 
                         </tr>
@@ -69,18 +69,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @for (item of solicitudes; track $index) {
+                        @for (item of allSolicitudes; track $index) {
                         @if (item.estado == false) {
                         <tr>
-                            <td> {{item.actividad.fecha_actividad}} </td>
-                            <td>{{item.alumno.run}}</td>
+                            <td> {{item.fecha}} </td>
+                            <td>{{item.alumno}}</td>
                             <td> <span class="badge rounded-pill text-bg-warning">En observación</span> </td>
                         </tr>
                         }
                         @if (item.estado == true) {
                         <tr>
-                            <td> {{item.actividad.fecha_actividad}} </td>
-                            <td>{{item.alumno.run}}</td>
+                            <td> {{item.fecha}} </td>
+                            <td>{{item.alumno}}</td>
                             <td> <span class="badge rounded-pill text-bg-success">Aprobado</span> </td>
                         </tr>
                         }

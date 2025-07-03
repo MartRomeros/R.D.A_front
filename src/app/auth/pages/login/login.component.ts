@@ -70,8 +70,9 @@ export class LoginComponent {
 
     try {
       
-      const response: LoginResponse = await lastValueFrom(this.authService.login(valores))
-      if (response.tipoUsuario === 1) {
+      const response = await lastValueFrom(this.authService.login(valores))
+      console.log(response)
+      if (response.tipo_usuario_id === 1) {
         this.router.navigate(['alumno']);
         this.cargando = false
       } else {

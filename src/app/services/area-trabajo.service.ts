@@ -19,7 +19,7 @@ export class AreaTrabajoService {
   }
 
   traerAreasTrabajo():Observable<any>{
-    return this.http.get(`${this.url}/area_trabajo/todos`,{withCredentials:true})
+    return this.http.get(`${this.url}/area_trabajo/`,{withCredentials:true})
   }
   
 }

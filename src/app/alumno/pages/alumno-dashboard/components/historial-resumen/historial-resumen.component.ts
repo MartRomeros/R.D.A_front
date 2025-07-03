@@ -25,11 +25,10 @@ export class HistorialResumenComponent implements OnInit {
 
   //variables publicas
   mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
-  actividades!: Actividad[]
   horasDifusion: number = 0
-  horasExtension!: number
-  horasDesarrolloLaboral!: number
-  horasComunicacion!: number
+  horasExtension: number = 0
+  horasDesarrolloLaboral: number = 0
+  horasComunicacion: number = 0
 
   // grafico de barras
   barChartOptions = {
@@ -65,9 +64,8 @@ export class HistorialResumenComponent implements OnInit {
   };
 
   async ngOnInit() {
-    await this.detallesInicialesAlumno()
-    this.actividadService.actividades$.subscribe((actividades) => {
-      this.actividades = actividades
+    await this.filtrarHorasMes()
+    this.actividadService.actividades$.subscribe(() => {
       this.barChartOptions = {
         ...this.barChartOptions,
         series: [
@@ -115,16 +113,34 @@ export class HistorialResumenComponent implements OnInit {
     }
   }
 
-  async filtrarHorasMes(mes:number){
-    const now = new Date()
-    const year = now.getFullYear();
-    const mesFiltro = mes + 1
+  async filtrarHorasMes(mes:number | null = null){
+    let mesFiltro
+    if(mes || mes === 0){
+      mesFiltro = mes + 1
+    }
+
     try {
-      const responseHoras = await lastValueFrom(this.actividadService.traerHorasFiltradas(`0${mesFiltro}${year}`))
-      this.horasDesarrolloLaboral = responseHoras.horasArea.desarrolloLaboral
-      this.horasComunicacion = responseHoras.horasArea.comunicacion
-      this.horasDifusion = responseHoras.horasArea.difusion
-      this.horasExtension = responseHoras.horasArea.extension
+      const responseHoras:any = await lastValueFrom(this.actividadService.traerHorasFiltradas(mesFiltro))
+
+      responseHoras.horasArea.forEach((area:any) => {
+        switch (area.nombre) {
+          case 'Difusión':
+            this.horasDifusion = area.duracion_horas
+            break;
+          case 'Desarrollo Laboral':
+            this.horasDesarrolloLaboral = area.duracion_horas
+            break;
+          case 'Extensión':
+            this.horasExtension = area.duracion_horas
+            break;
+          case 'Comunicación':
+            this.horasComunicacion = area.duracion_horas
+            break;
+        
+          default:
+            break;
+        }  
+      });
 
       this.barChartOptions = {
         ...this.barChartOptions,

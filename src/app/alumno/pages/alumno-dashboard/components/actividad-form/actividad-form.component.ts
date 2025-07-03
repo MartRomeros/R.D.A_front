@@ -6,9 +6,8 @@ import { lastValueFrom } from 'rxjs';
 import { AreaTrabajo } from '../../../../../models/interfaces';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';
-import { AreaTrabajoService } from '../../../../../services/area-trabajo.service';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
-import { HorasAreasMes } from '../../models/interfaces';
+import { HorasArea, HorasAreasMes } from '../../models/interfaces';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 
@@ -23,12 +22,11 @@ export class ActividadFormComponent implements OnInit {
 
   //servicios
   private actividadService = inject(ActividadService)
-  private areaTrabajoService = inject(AreaTrabajoService)
   private mensajeService = inject(MensajeriaService)
   private alumnoService = inject(AlumnoService)
 
   //variables privadas
-  private horasAreaMes!: HorasAreasMes
+  private horasAreaMes!: HorasArea[]
   areasTrabajo!: AreaTrabajo[]
 
   //formbuilder
@@ -81,7 +79,7 @@ export class ActividadFormComponent implements OnInit {
 
 
   async ngOnInit() {
-    await this.traerAreas()
+    await this.traerAreas()//check
     await this.traerHorasArea()
     this.alumnoService.horasAreaMes$.subscribe((horasArea) => {
       this.horasAreaMes = horasArea
@@ -96,31 +94,26 @@ export class ActividadFormComponent implements OnInit {
       return;
     }
 
-
     //formateo de valores
     const fecha = new Date(this.actividadForm.get('fecha')?.value);
     fecha.setHours(12); // ✅ evitar desfase
-    const fechaUTC = fecha.toISOString(); // ✅ correcto para Prisma/PostgreSQL
 
     //formateo de horas
-    const horaInic = this.actividadForm.get('horaInic')?.value; // string tipo "15:00"
-    const horaTerm = this.actividadForm.get('horaTerm')?.value; // string tipo "17:00"
+    const horaInic = this.actividadForm.get('horaInic')?.value;
+    const horaTerm = this.actividadForm.get('horaTerm')?.value;
 
-    const horaInicDate = this.buildDateLocal(fecha, horaInic);
-    const horaTermDate = this.buildDateLocal(fecha, horaTerm);
 
     try {
       //valores a mandar en el backend
       const body = {
-        fecha_actividad: fechaUTC,
-        hora_inic_activdad: horaInicDate,
-        hora_term_actividad: horaTermDate,
+        fecha_actividad: fecha,
+        hora_inic_activdad: horaInic,
+        hora_term_actividad: horaTerm,
         area_trabajo: this.actividadForm.get('area')?.value
       }
       const response = await lastValueFrom(this.actividadService.registrarActividad(body))
       this.mensajeService.mostrarMensajeExito(`${response.message} Tus horas seran validadas pronto!`)
-      const horasAreas: HorasAreasMes = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
-      this.alumnoService.setHorasAreaMes(horasAreas)
+      await this.traerHorasArea()
 
     } catch (error: any) {
       this.mensajeService.mostrarMensajeError('error al registrar las horas');
@@ -130,7 +123,7 @@ export class ActividadFormComponent implements OnInit {
   private async traerAreas() {
     try {
       const response = await lastValueFrom(this.alumnoService.traerAreas())
-      const areasTrabajo: AreaTrabajo[] = response.areasTrabajo
+      const areasTrabajo: AreaTrabajo[] = response
       this.areasTrabajo = areasTrabajo
 
     } catch (error) {
@@ -140,9 +133,9 @@ export class ActividadFormComponent implements OnInit {
 
   private async traerHorasArea() {
     try {
-      const response: HorasAreasMes = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
-      this.alumnoService.setHorasAreaMes(response)
-      this.horasAreaMes = response
+      const response = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
+      console.log(response)
+      this.alumnoService.setHorasAreaMes(response.horasArea)
     } catch (error) {
       console.error(error)
     }
@@ -150,27 +143,17 @@ export class ActividadFormComponent implements OnInit {
 
   private actualizarGrafico() {
     this.chartOptions = {
-      ...this.chartOptions, // mantiene tooltip y leyenda
+      ...this.chartOptions,
       series: [
         {
-          ...this.chartOptions.series[0], // copia estilos existentes
-          data: [
-            { value: this.horasAreaMes.difusion, name: this.areasTrabajo[0].nombre },
-            { value: this.horasAreaMes.extension, name: this.areasTrabajo[1].nombre },
-            { value: this.horasAreaMes.comunicacion, name: this.areasTrabajo[2].nombre },
-            { value: this.horasAreaMes.desarrollo_laboral, name: this.areasTrabajo[3].nombre }
-          ]
+          ...this.chartOptions.series[0],
+          data: this.horasAreaMes.map(horaArea => ({
+            value: horaArea.duracion_horas,
+            name: horaArea.nombre
+          }))
         }
       ]
     };
   }
-
-  buildDateLocal(fecha: Date, hora: string): Date {
-    const [hh, mm] = hora.split(':').map(Number);
-    const local = new Date(fecha);
-    local.setHours(hh, mm, 0, 0);
-    return local;
-  }
-
 
 }

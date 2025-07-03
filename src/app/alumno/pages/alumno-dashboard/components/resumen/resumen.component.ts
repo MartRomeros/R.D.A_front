@@ -1,12 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { ActividadService } from '../../../../../services/alumno/actividad.service';
-import { Actividad, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { ResumenMes } from '../../models/interfaces';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 
 
@@ -18,7 +15,6 @@ import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 })
 export class ResumenComponent implements OnInit {
   //servicios
-  private actividadService = inject(ActividadService)
   private alumnoService = inject(AlumnoService)
 
   //variables publicas
@@ -79,9 +75,10 @@ export class ResumenComponent implements OnInit {
 
   private async traerResumenMes() {
     try {
-      const response: ResumenMes = await lastValueFrom(this.alumnoService.traerResumenMes());
-      this.montoAcumulado = response.montoFormateado
-      this.horasTrabajadas = response.horasMes
+      const response = await lastValueFrom(this.alumnoService.traerResumenMes());
+      console.log(response)
+      this.montoAcumulado = this.formatearCLP(response.monto)
+      this.horasTrabajadas = response.horas_totales_mes
     } catch (error: any) {
       console.log(error);
     }

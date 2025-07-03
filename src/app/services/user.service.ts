@@ -14,7 +14,7 @@ export class UserService {
 
 
   findUserbyEmail(): Observable<any> {
-    return this.http.get(`${this.localUrl}/user/`, { withCredentials: true })
+    return this.http.get(`${this.localUrl}/usuario/`, { withCredentials: true })
   }
 
   actualizarDatos(valores: any): Observable<any> {

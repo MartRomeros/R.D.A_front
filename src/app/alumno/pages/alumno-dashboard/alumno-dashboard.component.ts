@@ -1,9 +1,7 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { AuthServicesService } from '../../../services/auth-services.service';
 import { Subscription } from 'rxjs';
-import { Router } from '@angular/router';
 import { SocketService } from '../../../services/socket.service';
 
 @Component({

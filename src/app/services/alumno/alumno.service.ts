@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { HorasAreasMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
+import { HorasArea, HorasAreasMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
 import { ruta } from '../rutas';
 
 @Injectable({
@@ -12,16 +12,16 @@ export class AlumnoService {
   private http: HttpClient = inject(HttpClient)
   private url: string = ruta
 
-  private horasAreaMesSubject = new BehaviorSubject<HorasAreasMes>({ comunicacion: 0, desarrollo_laboral: 0, difusion: 0, extension: 0 })
+  private horasAreaMesSubject = new BehaviorSubject<HorasArea[]>([])
   horasAreaMes$ = this.horasAreaMesSubject.asObservable()
-  setHorasAreaMes(horasAreaMes: HorasAreasMes) {
+  setHorasAreaMes(horasAreaMes: HorasArea[]) {
     this.horasAreaMesSubject.next(horasAreaMes)
   }
 
 
 
   traerResumenMes(): Observable<any> {
-    return this.http.get(`${this.url}/alumno/resumen`, { withCredentials: true })
+    return this.http.get(`${this.url}/alumno/total_mes`, { withCredentials: true })
   }
 
   traerActividadesMes(): Observable<any> {
@@ -29,11 +29,11 @@ export class AlumnoService {
   }
 
   traerAreas(): Observable<any> {
-    return this.http.get(`${this.url}/alumno/areas`, { withCredentials: true })
+    return this.http.get(`${this.url}/area_trabajo/`, { withCredentials: true })
   }
 
   traerHorasAreasMes(): Observable<any> {
-    return this.http.get(`${this.url}/alumno/horas_area_mes`, { withCredentials: true })
+    return this.http.get(`${this.url}/alumno/horas_area_actual`, { withCredentials: true })
   }
 
 

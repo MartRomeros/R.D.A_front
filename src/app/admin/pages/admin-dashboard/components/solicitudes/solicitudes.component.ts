@@ -1,7 +1,6 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { lastValueFrom } from 'rxjs';
-import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { Solicitud } from '../../../../../models/interfaces';
 import Swal from 'sweetalert2';
 import { SolicitudService } from '../../../../../services/admin/solicitud.service';
@@ -15,9 +14,10 @@ import { SolicitudService } from '../../../../../services/admin/solicitud.servic
 export class SolicitudesComponent implements OnInit {
   // servicios
   private solicitudService = inject(SolicitudService)
-  private actividadService = inject(ActividadService)
 
-  solicitudes?: Solicitud[]
+  solicitudes!: Solicitud[]
+  allSolicitudes!:Solicitud[]
+
   nombreApellido?:string
   fechaActividad?:string
   horaInicio:any
@@ -27,18 +27,20 @@ export class SolicitudesComponent implements OnInit {
 
   async ngOnInit() {
     await this.traerSolicitudes()
-    this.solicitudService.solicitud$.subscribe((solicitudes) => {
+    await this.traerTodasSolicitudes()
+    this.solicitudService.solicitud$.subscribe((solicitudes)=>{
       this.solicitudes = solicitudes
     })
-
+    this.solicitudService.allSolicitudes$.subscribe((solicitudes)=>{
+      this.allSolicitudes = solicitudes
+    })
   }
 
   async traerSolicitudes() {
     try {
-      const response = await lastValueFrom(this.solicitudService.traerSolicitudes())
-      const solicitudes: Solicitud[] = response.solicitudes
-      console.log(solicitudes)
-      this.solicitudService.setSolicitud(solicitudes)
+      const response = await lastValueFrom(this.solicitudService.traerSolicitudesMes())
+      const solicitudes:Solicitud[] = response.solicitudes
+      this.solicitudService.setSolicitud(solicitudes) 
     } catch (error: any) {
       console.error(error)
     }
@@ -48,12 +50,12 @@ export class SolicitudesComponent implements OnInit {
     let response
     try {
       response = await lastValueFrom(this.solicitudService.traerSolicitudId(id))
-      this.nombreApellido = `${response.solicitud.alumno.nombre} ${response.solicitud.alumno.apellido_paterno}`
-      const solicitudFormateada =  this.solicitudService.formatearFecha(response.solicitud)
-      this.fechaActividad = solicitudFormateada.actividad.fecha_actividad
-      this.horaInicio = solicitudFormateada.actividad.hora_inic_activdad
-      this.horaTermino = solicitudFormateada.actividad.hora_term_actividad
-      this.areaTrabajo = response.solicitud.actividad.area_trabajo.nombre
+      console.log(response)
+      this.nombreApellido = response.solicitud.nombre
+      this.fechaActividad = response.solicitud.fecha
+      this.horaInicio = response.solicitud.inicio
+      this.horaTermino = response.solicitud.fin
+      this.areaTrabajo = response.solicitud.area
     } catch (error:any) {
       console.error(error)
     }
@@ -75,7 +77,7 @@ export class SolicitudesComponent implements OnInit {
 
     if (result.isConfirmed) {
       try {
-        await this.actualizarSolicitud(id);  // Suponiendo que puede ser async
+        await this.actualizarSolicitud(id);
         Swal.fire("Actividad aprobada", "", "success");
       } catch (error: any) {
         Swal.fire("Error", error || "", "error");
@@ -89,10 +91,19 @@ export class SolicitudesComponent implements OnInit {
   private async actualizarSolicitud(id: number) {
     try {
       await lastValueFrom(this.solicitudService.aprobarSolicitud(id))
-      const response2 = await lastValueFrom(this.solicitudService.traerSolicitudes())
-      const solicitudes: Solicitud[] = response2.solicitudes
-      this.solicitudService.setSolicitud(solicitudes)
+      await this.traerSolicitudes()
+      await this.traerTodasSolicitudes()
     } catch (error: any) {
+      console.error(error)
+    }
+  }
+
+  private async  traerTodasSolicitudes(){
+    try {
+      const response = await lastValueFrom(this.solicitudService.traerSolicitudes())
+      const solicitudes:Solicitud[] = response.solicitudes
+      this.solicitudService.setAllSolicitudes(solicitudes)
+    } catch (error:any) {
       console.error(error)
     }
   }

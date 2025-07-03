@@ -1,5 +1,5 @@
 export interface LoginResponse {
-    tipoUsuario: number
+    tipo_usuario_id: number
 }
 
 export interface User {
@@ -46,11 +46,9 @@ export interface AreaTrabajo {
 }
 
 export interface Solicitud {
-    actividad:Actividad,
-    alumno:User,
-    descripcion:string,
-    estado:boolean,
     id:number,
-    id_actividad:number,
-    id_alumno:number
+    fecha:string,
+    alumno:string,
+    estado:boolean
 }
+

@@ -15,34 +15,31 @@ export class AdminTablaComponent implements OnInit {
   private adminService: AdminService = inject(AdminService)
 
   //variables publicas
-  horaAreaMes!:number
+  horaAreaMes!: number
   horasResumenMes!: number
-  alumnosResumen!: number
-  area!:string
+  alumnos!: number
 
-
-
+  area!: string
   horasTotales: number = 0
   horasMes: number = 0
   run?: string
   nombre?: string
   email?: string
   fono?: number
-  actividades!: Actividad[]
-  alumnosAyudantes!:Alumno[]
+  actividades: any
+  alumnosAyudantes: any
 
   async ngOnInit() {
-    await this.traerAreaAdministrador()
+    await this.traerResumenMes()
     await this.traerAlumnosAyudantes()
-    await this.traerTotales()
   }
 
   //traer alumnos ayudantes
   private async traerAlumnosAyudantes() {
     try {
       const response = await lastValueFrom(this.adminService.traerAlumnos())
-      const alumnos: Alumno[] = response.alumnos
-      this.alumnosAyudantes = alumnos
+      console.log(response)
+      this.alumnosAyudantes = response.alumnos
 
     } catch (error: any) {
       console.log(error)
@@ -50,12 +47,15 @@ export class AdminTablaComponent implements OnInit {
     }
   }
 
-  private async traerAreaAdministrador(){
+  private async traerResumenMes() {
     try {
-      const response = await lastValueFrom(this.adminService.traerAdmin())
-      const admin:Administrador = response.administrador
-      this.area = admin.area_trabajo.nombre
-      console.log(this.area)
+      const response = await lastValueFrom(this.adminService.traerResumenMes())
+      console.log(response)
+      this.alumnos = response.resumen.alumnos
+      this.horasResumenMes = response.resumen.actividades
+      this.horaAreaMes = response.resumen.actividades_area
+      this.area = response.resumen.area
+
     } catch (error) {
       console.error(error)
     }
@@ -63,36 +63,25 @@ export class AdminTablaComponent implements OnInit {
 
   async mostrarDetalles(run: string) {
     try {
-      const detalles = await lastValueFrom(this.adminService.traerDetalleAlumno(run))
-      const datos:Detalles = detalles.detalles
+      const response = await lastValueFrom(this.adminService.traerDetalleAlumno(run))
+      console.log(response)
+      this.nombre = response.infoAlumno.alumno.nombre
+      this.run = response.infoAlumno.alumno.run
+      this.email = response.infoAlumno.alumno.email
+      this.fono = response.infoAlumno.alumno.fono
+      this.horasTotales = response.infoAlumno.actividades_mes
+      this.horasMes = response.infoAlumno.actividades_area
 
-      this.nombre = `${datos.nombre} ${datos.apellido_paterno} ${datos.apellido_materno}`
-      this.run = datos.run
-      this.email = datos.email
-      this.fono = datos.fono
-      this.horasTotales = datos.horasTotales
-      this.horasMes = datos.horasTotalesMes
-      this.actividades = datos.actividadesMes
-      console.log(this.actividades)
+      const response2 = await lastValueFrom(this.adminService.traerActividadesAlumno(run))
+      console.log(response2)
+      this.actividades = response2.actividades
+
 
     } catch (error: any) {
       console.error(error)
     }
   }
 
-  async traerTotales() {
-
-    try {
-      const response:TotalesMes = await lastValueFrom(this.adminService.traerResumenMes())
-      this.horaAreaMes = response.totalesArea
-      this.horasResumenMes = response.totales
-      this.alumnosResumen = response.alumnosAyudantes
-      
-    } catch (error: any) {
-      console.error(error)
-    }
-
-  }
 
 
 }

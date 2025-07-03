@@ -8,7 +8,7 @@
         <mat-form-field class="col-lg-3" appearance="outline">
             <mat-label>Ingresa el mes</mat-label>
             <mat-select>
-                <mat-option (click)="detallesInicialesAlumno()">Todas las actividades</mat-option>
+                <mat-option (click)="filtrarHorasMes()">Todas las actividades</mat-option>
                 @for (meses of mesesHastaAhora; track $index) {
                 <mat-option value="{{$index}}" (click)="filtrarHorasMes($index)">{{meses}}</mat-option>
                 }

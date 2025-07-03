@@ -23,31 +23,26 @@ export class TableroHistorialComponent implements OnInit {
   private meses: string[] = ["enero", "febrero", "marzo", "abril", "mayo", "junio",
     "julio", "agosto", "septiembre", "octubre", "noviembre", "diciembre"]
   private mesActual: number = new Date().getMonth()
-  private mesFiltro?: string
-  private areaFiltro?: string
+  private mesFiltro!: number | undefined
+  private areaFiltro!: number | undefined
 
   //variables publicas
   mesesHastaAhora: string[] = this.meses.slice(0, this.mesActual + 1)
-  actividades!: Actividad[]
+  actividades: any
   areasTrabajo!:AreaTrabajo[]
 
   //ngoninit
   async ngOnInit() {
-    await this.filtrarActividades()
-    this.actividadService.actividadesParaFiltrar$.subscribe((actividad) => {
-      this.actividades = actividad
-    })
     await this.traerAreasTrabajo()
-    this.areaTrabajoService.areasTrabajo$.subscribe((areasTrabajo)=>{
-      this.areasTrabajo = areasTrabajo
-    })
+    await this.filtrarActividades()
   }
 
 
   async filtrarActividades() {
     try {
       const response = await lastValueFrom(this.actividadService.traerActividadesFiltradas(this.mesFiltro,this.areaFiltro))
-      this.actividadService.setActividadesParaFiltrar(response.actividadesFiltradas)
+      this.actividades = response.actividades
+      console.log(this.actividades)
     } catch (error: any) {
       console.error(error)
     }
@@ -55,18 +50,15 @@ export class TableroHistorialComponent implements OnInit {
 
   asignarMes(mes: number | undefined) {
     if (mes || mes === 0) {
-      const now = new Date()
-      const year = now.getFullYear();
       const mesFiltro = mes + 1
-      const mesYanio = `0${mesFiltro}${year}`
-      this.mesFiltro = mesYanio
+      this.mesFiltro = mesFiltro
     }else{
       this.mesFiltro = undefined
     }
   }
 
-  asignarArea(area: string) {
-    if (area !== '') {
+  asignarArea(area: number | undefined) {
+    if (area) {
       this.areaFiltro = area
     } else {
       this.areaFiltro = undefined
@@ -76,7 +68,9 @@ export class TableroHistorialComponent implements OnInit {
   async traerAreasTrabajo(){
     try {
       const response = await lastValueFrom(this.areaTrabajoService.traerAreasTrabajo())
-      this.areaTrabajoService.setareasTrabajo(response.areas)
+      console.log(response)
+      this.areasTrabajo = response
+      console.log(response)
     } catch (error: any) {
       console.error(error)
     }

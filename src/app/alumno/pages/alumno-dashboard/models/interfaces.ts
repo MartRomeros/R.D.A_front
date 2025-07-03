@@ -25,3 +25,8 @@ export interface HorasAreasMes {
     extension: number,
     desarrollo_laboral: number
 }
+
+export interface HorasArea{
+    nombre:string,
+    duracion_horas:number
+}

@@ -18,10 +18,10 @@
                         @for (actividad of actividades; track $index) {
                         @if (actividad.estado == true) {
                         <tr>
-                            <td scope="row">{{actividad.fecha_actividad}}</td>
-                            <td>{{actividad.hora_inic_activdad}}</td>
-                            <td>{{actividad.hora_term_actividad}}</td>
-                            <td>{{actividad.area_trabajo?.nombre}}</td>
+                            <td scope="row">{{actividad.fecha}}</td>
+                            <td>{{actividad.inicio}}</td>
+                            <td>{{actividad.fin}}</td>
+                            <td>{{actividad.area}}</td>
                             <td><span class="badge text-bg-success">Aprobado</span></td>
                         </tr>
                         }
@@ -47,10 +47,10 @@
                         @for (actividad of actividades; track $index) {
                         @if (actividad.estado == false) {
                         <tr>
-                            <td scope="row">{{actividad.fecha_actividad}}</td>
-                            <td>{{actividad.hora_inic_activdad}}</td>
-                            <td>{{actividad.hora_term_actividad}}</td>
-                            <td>{{actividad.area_trabajo?.nombre}}</td>
+                            <td scope="row">{{actividad.fecha}}</td>
+                            <td>{{actividad.inicio}}</td>
+                            <td>{{actividad.fin}}</td>
+                            <td>{{actividad.area}}</td>
                             <td><span class="badge text-bg-danger">No aprobado</span></td>
 
                         </tr>

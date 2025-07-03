@@ -1,0 +1,110 @@
+<app-header></app-header>
+
+<div class="profile-container">
+  <div class="profile-section">
+    <div class="section-header">
+      <h2>Información del Perfil</h2>
+    </div>
+
+    <form [formGroup]="profileForm" (ngSubmit)="updateProfile()">
+      <div class="form-grid">
+
+        <div class="form-group">
+          <label for="rut">RUT</label>
+          <input type="text" id="rut" formControlName="rut" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="nombre">Nombre</label>
+          <input type="text" id="nombre" formControlName="nombre" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="ubicacion">Ubicación</label>
+          <input type="text" id="ubicacion" formControlName="ubicacion" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input type="tel" id="telefono" formControlName="telefono" class="form-control" readonly />
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" formControlName="email" class="form-control" readonly />
+        </div>
+
+        <!-- Contraseña fija (solo visual) -->
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" class="form-control" [value]="'********'" disabled />
+        </div>
+
+        <!-- Mostrar campos de cambio de contraseña -->
+        <div *ngIf="isChangingPassword">
+
+          <!-- Contraseña actual -->
+          <div class="form-group">
+            <label for="currentPassword">Contraseña Actual</label>
+            <div class="password-wrapper">
+              <input [type]="showCurrentPassword ? 'text' : 'password'" id="currentPassword"
+                     formControlName="currentPassword" class="form-control"
+                     [class.error]="getFieldError('currentPassword')" />
+              <button type="button" class="toggle-password" (click)="togglePasswordVisibility('current')">
+                {{ showCurrentPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <div class="error-message" *ngIf="getFieldError('currentPassword')">
+              {{ getFieldError('currentPassword') }}
+            </div>
+          </div>
+
+          <!-- Nueva contraseña -->
+          <div class="form-group">
+            <label for="newPassword">Nueva Contraseña</label>
+            <div class="password-wrapper">
+              <input [type]="showNewPassword ? 'text' : 'password'" id="newPassword"
+                     formControlName="newPassword" class="form-control"
+                     [class.error]="getFieldError('newPassword')" />
+              <button type="button" class="toggle-password" (click)="togglePasswordVisibility('new')">
+                {{ showNewPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <div class="error-message" *ngIf="getFieldError('newPassword')">
+              {{ getFieldError('newPassword') }}
+            </div>
+          </div>
+
+          <!-- Confirmar contraseña -->
+          <div class="form-group">
+            <label for="confirmPassword">Confirmar Nueva Contraseña</label>
+            <div class="password-wrapper">
+              <input [type]="showConfirmPassword ? 'text' : 'password'" id="confirmPassword"
+                     formControlName="confirmPassword" class="form-control"
+                     [class.error]="getFieldError('confirmPassword')" />
+              <button type="button" class="toggle-password" (click)="togglePasswordVisibility('confirm')">
+                {{ showConfirmPassword ? '🙈' : '👁️' }}
+              </button>
+            </div>
+            <div class="error-message" *ngIf="getFieldError('confirmPassword')">
+              {{ getFieldError('confirmPassword') }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="botones">
+        <div class="form-actions">
+          <button type="submit" class="btn btn-primary" [disabled]="loading || profileForm.invalid">
+            {{ loading ? 'Procesando...' : 'Guardar Cambios' }}
+          </button>
+        </div>
+        <div class="form-actions">
+          <button type="button" class="btn btn-secondary" (click)="toggleChangePassword()">
+            {{ isChangingPassword ? 'Cancelar Cambio de Contraseña' : 'Cambiar Contraseña' }}
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

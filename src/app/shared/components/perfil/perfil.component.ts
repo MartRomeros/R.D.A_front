@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { HeaderComponent } from '../header/header.component';
 
 interface UserProfile {
@@ -19,6 +19,9 @@ interface UserProfile {
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit {
+
+  location = inject(Location)
+
   profileForm: FormGroup;
   loading = false;
   isChangingPassword = false;
@@ -50,6 +53,10 @@ export class PerfilComponent implements OnInit {
       },
       { validators: this.combinedPasswordValidator }
     );
+  }
+
+  goBack():void{
+    this.location.back()
   }
 
   ngOnInit(): void {

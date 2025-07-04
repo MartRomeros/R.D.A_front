@@ -6,67 +6,103 @@
 <section class="row summary">
 
     <div class="card col-5 col-lg">
+
         <div class="header">
             <h6>Horas trabajadas <img src="assets/iconos/horas.svg" alt=""></h6>
         </div>
 
         <div class="content">
             @if (cargando) {
-            <div class="spinner-border text-primary" role="status">
-                <span class="visually-hidden">Loading...</span>
-            </div>
+            <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+            </h5>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+            </p>
             }@else {
             <h4>{{horasTrabajadas}} Hrs</h4>
+            <div class="footer">
+                del mes de {{mesActual}}
+            </div>
             }
         </div>
 
-        <div class="footer">
-            del mes de {{mesActual}}
-        </div>
     </div>
 
     <div class="card col-5 col-lg">
+
         <div class="header">
             <h6>Monto Acumulado <img src="assets/iconos/monto_acumulado.svg" alt=""></h6>
         </div>
+
         <div class="content">
             @if (cargando) {
+            <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+            </h5>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+            </p>
             }@else {
             <h4> {{montoAcumulado}}</h4>
+            <div class="footer">
+                tarifa: 2450 CLP
+            </div>
             }
-        </div>
-        <div class="footer">
-            tarifa: 2450 CLP
         </div>
     </div>
 
     <div class="card col-5 col-lg">
+
         <div class="header">
             <h6>Proximo Pago <img src="assets/iconos/fecha.svg" alt=""></h6>
         </div>
+
         <div class="content">
             @if (cargando) {
+            <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+            </h5>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+            </p>
             }@else {
             <h4>{{fechaPago}}</h4>
+            <div class="footer">
+                en {{diasRestantes}} dias
+            </div>
             }
-        </div>
-        <div class="footer">
-            en {{diasRestantes}} dias
         </div>
     </div>
 
     <div class="card col-5 col-lg">
+
         <div class="header">
             <h6>Orden de compra <img src="assets/iconos/oc.svg" alt=""></h6>
         </div>
+
         <div class="content">
             @if (cargando) {
+            <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+            </h5>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-7"></span>
+                <span class="placeholder col-4"></span>
+                <span class="placeholder col-4"></span>
+            </p>
             }@else {
             <h4>No Disponible</h4>
+            <div class="footer">
+                Correspondiente del mes de {{mesActual}}
+            </div>
             }
-        </div>
-        <div class="footer">
-            Correspondiente del mes de {{mesActual}}
         </div>
     </div>
 </section>

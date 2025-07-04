@@ -7,12 +7,12 @@
             Alumnos
         </article>
         <article class="col card">
-            <h4>Horas totales</h4>
+            <h4>Registros Totales del mes</h4>
             <h6>{{horasResumenMes}} Hrs</h6>
 
         </article>
         <article class="col card">
-            <h4>Horas totales {{area}}</h4>
+            <h4>Registros totales {{area}}</h4>
             <h6>{{horaAreaMes}} Hrs</h6>
 
         </article>
@@ -70,15 +70,15 @@
                             </ul>
                         </article>
 
-                        <h4>Horas registradas</h4>
+                        <h4>Registros</h4>
                         <mat-card appearance="outlined" class="col">
-                            <h5>{{horasTotales}} HR</h5>
-                            Total
+                            <h5>{{horasTotales}}</h5>
+                            Total del mes
                         </mat-card>
 
                         <mat-card appearance="outlined" class="col">
-                            <h5>{{horasMes}} HR</h5>
-                            Este Mes
+                            <h5>{{horasMes}}</h5>
+                            Por Area
                         </mat-card>
 
                         <h4>Horas Aprobadas</h4>
@@ -128,7 +128,7 @@
                                         </tr>
 
                                         @for (item of actividades; track $index) {
-                                        @if (!item.estado) {
+                                        @if (item.estado == false) {
                                         <tr>
                                             <td scope="row">{{item.fecha}}</td>
                                             <td>{{item.inicio}}</td>

@@ -5,10 +5,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
+import { GeneralModule } from '../../modules/general/general.module';
 
 @Component({
   selector: 'app-header',
-  imports: [MatButtonModule,MatToolbarModule,MatIconModule],
+  imports: [MatButtonModule,MatToolbarModule,MatIconModule,GeneralModule],
   templateUrl: './header.component.html',
   styleUrl: './header.component.css'
 })
@@ -27,21 +28,4 @@ export class HeaderComponent {
       console.log(error)
     }
   }
-
-  isMobile(): boolean {
-    return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-  }
-
-  goToPerfil(){
-    this.router.navigate(['perfil'])
-  }
-
-  goHome(){
-    this.router.navigate(['alumno'])
-  }
-
-  goHistorial(){
-    this.router.navigate(['alumno-historial'])
-  }
-
 }

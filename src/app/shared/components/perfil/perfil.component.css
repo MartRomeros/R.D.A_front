@@ -242,3 +242,14 @@
     color: #667eea;
     padding: 4px;
 }
+
+
+.back-button{
+    padding: 2vh;
+}
+
+.back-button button{
+    border: none;
+    background-color: transparent;
+    outline: none;
+}

@@ -3,13 +3,13 @@
     <section class="row">
         <mat-card appearance="outlined" class="hour-registry col-lg">
             <mat-card-header>
-                <h4>Registro de horas</h4>
-                <h6 class="subtitle">Ingresa las
-                    horas trabajadas</h6>
+                <h4>Registrar Actividad</h4>
+                <h6 class="subtitle">Registra tu actividad segun con los siguientes datos</h6>
             </mat-card-header>
 
             <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
                 <mat-form-field>
+                    <mat-label>Fecha de actividad</mat-label>
                     <input matInput [matDatepicker]="picker" placeholder="dd-mm-yyyy" formControlName="fecha">
                     <mat-hint>MM/DD/YYYY</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -50,7 +50,7 @@
                 </mat-form-field>
 
                 <fieldset>
-                    <button type="submit">Registrar Hora</button>
+                    <button type="submit">Registrar Actividad</button>
                 </fieldset>
             </form>
         </mat-card>
@@ -58,7 +58,7 @@
         <mat-card appearance="outlined" class="col-lg">
             <mat-card-header>
                 <h4>Horas registradas este mes</h4>
-                <h6 class="subtitle">Segun por area de trabajo</h6>
+                <h6 class="subtitle">Segun por area de trabajo y que esten aprobadas</h6>
             </mat-card-header>
 
             <mat-card-content>

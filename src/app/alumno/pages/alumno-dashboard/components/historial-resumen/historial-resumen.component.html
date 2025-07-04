@@ -6,7 +6,7 @@
     <section class="row">
         <h6 class="col-lg-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
         <mat-form-field class="col-lg-3" appearance="outline">
-            <mat-label>Ingresa el mes</mat-label>
+            <mat-label>Selecciona el mes</mat-label>
             <mat-select>
                 <mat-option (click)="filtrarHorasMes()">Todas las actividades</mat-option>
                 @for (meses of mesesHastaAhora; track $index) {

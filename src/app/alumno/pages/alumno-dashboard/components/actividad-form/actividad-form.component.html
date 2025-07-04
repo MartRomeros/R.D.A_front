@@ -4,7 +4,7 @@
         <mat-card appearance="outlined" class="hour-registry col-lg">
             <mat-card-header>
                 <h4>Registrar Actividad</h4>
-                <h6 class="subtitle">Registra tu actividad segun con los siguientes datos</h6>
+                <h6 class="subtitle">Registra tu actividad según los siguientes datos</h6>
             </mat-card-header>
 
             <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
@@ -29,7 +29,7 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <mat-label>Hora de termino</mat-label>
+                    <mat-label>Hora de término</mat-label>
                     <mat-select matNativeControl formControlName="horaTerm">
                         @for (item of horasAM; track $index) {
                         <mat-option value="{{item}}">{{item}} AM</mat-option>
@@ -41,7 +41,7 @@
                 </mat-form-field>
 
                 <mat-form-field>
-                    <mat-label>Area de trabajo</mat-label>
+                    <mat-label>Área de trabajo</mat-label>
                     <mat-select matNativeControl formControlName="area">
                         @for (item of areasTrabajo; track $index) {
                         <mat-option value="{{item.id}}">{{item.nombre}}</mat-option>
@@ -58,7 +58,7 @@
         <mat-card appearance="outlined" class="col-lg">
             <mat-card-header>
                 <h4>Horas registradas este mes</h4>
-                <h6 class="subtitle">Segun por area de trabajo y que esten aprobadas</h6>
+                <h6 class="subtitle">Según el área de trabajo, y solo si están aprobadas</h6>
             </mat-card-header>
 
             <mat-card-content>

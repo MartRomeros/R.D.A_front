@@ -1,7 +1,7 @@
 <section class="row">
     <h6 class="col-lg-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
     <mat-form-field class="col-lg-2" appearance="outline">
-        <mat-label>Ingresa el mes</mat-label>
+        <mat-label>Selecciona el mes</mat-label>
         <mat-select>
             <mat-option (click)="asignarMes(undefined);filtrarActividades()">Todas las actividades</mat-option>
             @for (meses of mesesHastaAhora; track $index) {
@@ -9,9 +9,9 @@
             }
         </mat-select>
     </mat-form-field>
-    <h6 class="col-lg-2"><mat-icon>assignment</mat-icon>Filtrar por Area:</h6>
+    <h6 class="col-lg-2"><mat-icon>assignment</mat-icon>Filtrar por área:</h6>
     <mat-form-field class="col-lg" appearance="outline">
-        <mat-label>Ingresa el area de trabajo</mat-label>
+        <mat-label>Selecciona el área de trabajo</mat-label>
         <mat-select>
             <mat-option (click)="asignarArea(undefined);filtrarActividades()">Todas las actividades</mat-option>
             @for (area of areasTrabajo; track $index) {

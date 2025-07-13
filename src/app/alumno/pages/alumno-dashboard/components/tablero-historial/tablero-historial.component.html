@@ -1,25 +1,32 @@
 <section class="row">
-    <h6 class="col-lg-2"><mat-icon>calendar_month</mat-icon>Filtrar por mes:</h6>
-    <mat-form-field class="col-lg-2" appearance="outline">
-        <mat-label>Selecciona el mes</mat-label>
-        <mat-select>
-            <mat-option (click)="asignarMes(undefined);filtrarActividades()">Todas las actividades</mat-option>
-            @for (meses of mesesHastaAhora; track $index) {
-            <mat-option value="{{$index}}" (click)="asignarMes($index);filtrarActividades()">{{meses}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
-    <h6 class="col-lg-2"><mat-icon>assignment</mat-icon>Filtrar por área:</h6>
-    <mat-form-field class="col-lg" appearance="outline">
-        <mat-label>Selecciona el área de trabajo</mat-label>
-        <mat-select>
-            <mat-option (click)="asignarArea(undefined);filtrarActividades()">Todas las actividades</mat-option>
-            @for (area of areasTrabajo; track $index) {
-            <mat-option value="{{area.id}}" (click)="asignarArea(area.id);filtrarActividades()">{{area.nombre}}</mat-option>
-            }
-        </mat-select>
-    </mat-form-field>
+
+    <article class="col-lg">
+        <mat-form-field appearance="outline">
+            <mat-label>Filtrar por mes</mat-label>
+            <mat-select>
+                <mat-option (click)="asignarMes(undefined);filtrarActividades()">Todas las actividades</mat-option>
+                @for (meses of mesesHastaAhora; track $index) {
+                <mat-option value="{{$index}}" (click)="asignarMes($index);filtrarActividades()">{{meses}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </article>
+
+    <article class="col-lg">
+        <mat-form-field appearance="outline">
+            <mat-label>Filtrar por area de trabajo</mat-label>
+            <mat-select>
+                <mat-option (click)="asignarArea(undefined);filtrarActividades()">Todas las actividades</mat-option>
+                @for (area of areasTrabajo; track $index) {
+                <mat-option value="{{area.id}}"
+                    (click)="asignarArea(area.id);filtrarActividades()">{{area.nombre}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </article>
+
 </section>
+
 <section class="row">
     <article class="col-lg">
         <div class="table-responsive"> <!-- Esta clase hace la magia responsiva -->
@@ -36,7 +43,7 @@
                     @for (item of actividades; track $index) {
                     @if (item.estado === true) {
                     <tr>
-                        <th scope="row">{{item.fecha}}</th>
+                        <td scope="row">{{item.fecha}}</td>
                         <td>{{item.inicio}}</td>
                         <td>{{item.fin}}</td>
                         <td>{{item.area}}</td>

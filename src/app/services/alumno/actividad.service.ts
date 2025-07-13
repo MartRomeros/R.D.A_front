@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Actividad,DetallesAlumno } from '../../models/interfaces';
 import { FormGroup } from '@angular/forms';
 import { ruta } from '../rutas';
+import { MensajeriaService } from '../mensajeria.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +13,7 @@ export class ActividadService {
 
   private http = inject(HttpClient)
   private url = ruta
+  private mensajeriaService = inject(MensajeriaService)
 
   //variables como total del pago, total de horas trabajadas(año y mes) etc
   private horasTotalesSubject = new BehaviorSubject<number | null>(null);
@@ -69,19 +71,19 @@ export class ActividadService {
 
     //validar que no esten vacios
     if (actividadForm.get('fecha')?.hasError('required')) {
-      alert('fecha requerida!')
+      this.mensajeriaService.mostrarMensajeError('Fecha requerida!')
       return false
     }
     if (actividadForm.get('horaInic')?.hasError('required')) {
-      alert('hora de inicio requerida!')
+      this.mensajeriaService.mostrarMensajeError('Hora de inicio requerida!')
       return false
     }
     if (actividadForm.get('horaTerm')?.hasError('required')) {
-      alert('hora de termino requerida!')
+      this.mensajeriaService.mostrarMensajeError('Hora de termino requerida!')
       return false
     }
     if (actividadForm.get('area')?.hasError('required')) {
-      alert('area requerida!')
+      this.mensajeriaService.mostrarMensajeError('Area de trabajo requerida!')
       return false
     }
 
@@ -97,7 +99,7 @@ export class ActividadService {
     const minutosTerm: number = hora2 * 60 + minutos2
 
     if (minutosInic > minutosTerm) {
-      alert('la hora de inicio no puede ser mayor a la de termino!')
+      this.mensajeriaService.mostrarMensajeError('La hora de inicio no puede ser mayor a la de termino!')
       return false
     }
 
@@ -105,15 +107,14 @@ export class ActividadService {
     const inicioPermitido = 6 * 60
     const finPermitido = 23 * 60 + 30
     if (minutosInic < inicioPermitido || minutosInic > finPermitido) {
-      alert('hora de inicio fuera de rango permitido')
+      this.mensajeriaService.mostrarMensajeError('Hora de inicio fuera de rango permitido!')
       return false
     }
 
     if (minutosTerm < inicioPermitido || minutosTerm > finPermitido) {
-      alert('hora de termino no permitido!')
+      this.mensajeriaService.mostrarMensajeError('Hora de termino no permitida!')
       return false
     }
-
     return true
   }
 

@@ -8,15 +8,16 @@
             </mat-card-header>
 
             <form [formGroup]="actividadForm" (ngSubmit)="registrarHora()">
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Fecha de actividad</mat-label>
-                    <input matInput [matDatepicker]="picker" placeholder="dd-mm-yyyy" formControlName="fecha">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <input matInput [matDatepicker]="picker" placeholder="Dia-Mes-Año" formControlName="fecha">
+                    <mat-hint align="end">DD/MM/YYYY</mat-hint>
+                    <mat-hint align="start">Ingresa la fecha del registro</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Hora de inicio</mat-label>
                     <mat-select matNativeControl formControlName="horaInic">
                         @for (item of horasAM; track $index) {
@@ -26,9 +27,10 @@
                         <mat-option value="{{item}}">{{item}} PM</mat-option>
                         }
                     </mat-select>
+                    <mat-hint align="start">Ingresa la hora de inicio del registro</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Hora de término</mat-label>
                     <mat-select matNativeControl formControlName="horaTerm">
                         @for (item of horasAM; track $index) {
@@ -38,19 +40,21 @@
                         <mat-option value="{{item}}">{{item}} PM</mat-option>
                         }
                     </mat-select>
+                    <mat-hint align="start">Ingresa la hora de termino del registro</mat-hint>
                 </mat-form-field>
 
-                <mat-form-field>
+                <mat-form-field appearance="outline">
                     <mat-label>Área de trabajo</mat-label>
                     <mat-select matNativeControl formControlName="area">
                         @for (item of areasTrabajo; track $index) {
                         <mat-option value="{{item.id}}">{{item.nombre}}</mat-option>
                         }
                     </mat-select>
+                    <mat-hint align="start">Ingresa el area donde has prestado servicio</mat-hint>
                 </mat-form-field>
 
                 <fieldset>
-                    <button type="submit">Registrar Actividad</button>
+                    <button matButton="filled" type="submit">Registrar Horas</button>
                 </fieldset>
             </form>
         </mat-card>
@@ -58,7 +62,7 @@
         <mat-card appearance="outlined" class="col-lg">
             <mat-card-header>
                 <h4>Horas registradas este mes</h4>
-                <h6 class="subtitle">Según el área de trabajo, y solo si están aprobadas</h6>
+                <h6 class="subtitle">Según el área de trabajo, y solo si están aprobadas </h6>
             </mat-card-header>
 
             <mat-card-content>

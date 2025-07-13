@@ -7,7 +7,7 @@ import { AreaTrabajo } from '../../../../../models/interfaces';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
-import { HorasArea, HorasAreasMes } from '../../models/interfaces';
+import { HorasArea } from '../../models/interfaces';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 
@@ -134,7 +134,6 @@ export class ActividadFormComponent implements OnInit {
   private async traerHorasArea() {
     try {
       const response = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
-      console.log(response)
       this.alumnoService.setHorasAreaMes(response.horasArea)
     } catch (error) {
       console.error(error)

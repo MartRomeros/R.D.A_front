@@ -2,6 +2,10 @@ section {
     margin-bottom: 2vh;
 }
 
+h3,h6{
+    text-align: center;
+}
+
 main section:nth-child(2) {
     align-items: center;
 }

@@ -9,6 +9,32 @@
 }
 
 
+th {
+    text-align: center;
+    background-color: #012C56;
+    color: #fff;
+}
+
+td {
+
+    text-align: center;
+}
+
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.scroll-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+table {
+    border-radius: 0.375em;
+}
+
 
 .scroll-container {
     max-height: 300px;
@@ -47,6 +73,10 @@ td,th,h3,h4,h6{
 
 
 /* modal */
+.modal-body{
+    padding: 1vh;
+}
+
 .modal-body main {
     padding: 0;
 }

@@ -7,10 +7,6 @@ section {
   gap: 2vh;
 }
 
-.card {
-  padding: 1vh;
-}
-
 h3 {
   text-align: center;
 }
@@ -36,52 +32,30 @@ table tbody tr td button:hover {
   background-color: #012C56;
 }
 
-@media (max-width: 410px) {
-  main h2 {
-    font-size: 1.2rem;
-  }
-
-  main h3 {
-    font-size: 1rem;
-  }
-
-  main table {
-    font-size: 0.75rem;
-  }
-
-  main table tbody td,
-  main table thead th {
-    padding: 0.3rem;
-  }
-
-  main table tbody td button {
-    font-size: 0.65em;
-    padding: 0.3em 0.5em;
-  }
+th {
+    text-align: center;
+    background-color: #012C56;
+    color: #fff;
 }
 
-@media (max-width: 304px) {
-  main h2 {
-    font-size: 1rem;
-  }
+td {
 
-  main h3 {
-    font-size: 0.8rem;
-  }
+    text-align: center;
+}
 
-  main table {
-    font-size: 0.65rem;
-  }
+.scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+}
 
-  main table tbody td,
-  main table thead th {
-    padding: 0.2rem;
-  }
+.scroll-container thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
 
-  main table tbody td button {
-    font-size: 0.55em;
-    padding: 0.2em 0.4em;
-  }
+table {
+    border-radius: 0.375em;
 }
 
 

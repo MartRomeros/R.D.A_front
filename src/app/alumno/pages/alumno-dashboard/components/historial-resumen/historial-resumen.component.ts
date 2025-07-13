@@ -1,8 +1,7 @@
-import { Component, inject, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
 import { lastValueFrom } from 'rxjs';
-import { Actividad, User } from '../../../../../models/interfaces';
 import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { TableroHistorialComponent } from '../tablero-historial/tablero-historial.component';
 

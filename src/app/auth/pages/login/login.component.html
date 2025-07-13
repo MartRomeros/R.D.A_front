@@ -1,45 +1,34 @@
 <main class="container-fluid">
   <section class="row">
     <form class="col-lg-6" [formGroup]="loginForm" (ngSubmit)="login()">
-      <fieldset>
-        <h1>Inicio de sesión</h1>
-        <h3 class="subtitle">Completa los campos para ingresar</h3>
-      </fieldset>
-
+      <h2>Inicio de sesión</h2>
       <mat-form-field appearance="outline">
-        <mat-label class="text-general">Correo electronico</mat-label>
+        <mat-label>Correo electronico</mat-label>
         <input matInput placeholder="Ingresa tu correo electronico" formControlName="email" name="email"
-          autocomplete="email" class="text-general" />
-        <mat-hint class="text-general">{{showCounter("email")}}/100</mat-hint>
-      </mat-form-field>
-      <div>
+          autocomplete="email" (blur)="hasErrors('email','required')" required />
+        <mat-hint align="end">{{showCounter("email")}}/100</mat-hint>
+        <mat-hint align="start">Ingresa tu correo electronico institucional</mat-hint>
         @if (hasErrors('email','required')) {
-        <div class="text-danger text-general">Email es requerido!</div>
+        <mat-error>Correo electronico es requerido</mat-error>
+        }@else if (hasErrors('email','email')) {
+        <mat-error>Correo electronico no valido!</mat-error>
         }
-
-        @if (hasErrors('email','email')) {
-        <div class="text-danger text-general">Formato no valido!</div>
-        }
-      </div>
+      </mat-form-field>
 
       <mat-form-field appearance="outline">
-        <mat-label class="text-general">Ingresa tu contraseña</mat-label>
+        <mat-label>Contraseña</mat-label>
         <input matInput [type]="hide() ? 'password' : 'text'" formControlName="password" name="password"
-          autocomplete="current-password" class="text-general" />
-        <button type="button" class="text-general" mat-icon-button matSuffix (click)="clickEvent($event)"
-          [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide()">
+          autocomplete="current-password" placeholder="Ingresa tu contraseña" />
+        <button type="button" mat-icon-button matSuffix (click)="clickEvent($event)" [attr.aria-label]="'Hide password'"
+          [attr.aria-pressed]="hide()">
           <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-hint class="text-general">{{showCounter("password")}}/100</mat-hint>
+        <mat-hint align="end" >{{showCounter("password")}}/100</mat-hint>
+        <mat-hint align="start" >Ingresa tu contraseña de la aplicacion</mat-hint>
       </mat-form-field>
 
-      <div>
-        @if (hasErrors('password','required')) {
-        <div class="text-danger">Contraseña es obligatoria!</div>
-        }
-      </div>
       @if (!cargando) {
-      <button type="submit" id="button">Iniciar Sesión</button>
+      <button matButton="filled" type="submit">Iniciar sesión</button>
       }@else {
       <fieldset>
         <div class="spinner-border text-primary" role="status">
@@ -47,8 +36,7 @@
         </div>
       </fieldset>
       }
-      <a class="linkRegistro" [routerLink]="'/forgot-password'">¿Olvidaste tu contraseña?.</a>
-
+      <a matButton [routerLink]="'/forgot-password'">¿Olvidaste tu contraseña?</a>
     </form>
 
   </section>

@@ -2,17 +2,21 @@
     <section class="row">
         <h3>Gestor de Órdenes de Compra</h3>
         <p>Adjunta un archivo Excel para ver los alumnos y sus órdenes de compra</p>
+
         <article class="col-lg card">
+
             <h4>Cargar Archivo Excel</h4>
             <p>Haz clic para seleccionar para cargar tu archivo Excel</p>
             <form (ngSubmit)="mandarExcel()">
-                <img src="assets/iconos/upload.svg" alt="">
-                <input type="file" accept=".xlsx,.xls" (change)="onFileSelected($event)">
-                <button type="submit">Mostrar órdenes de compra</button>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupFile01">Debe ser un archivo ecxel</label>
+                    <input type="file" class="form-control" id="inputGroupFile01" accept=".xlsx,.xls" (change)="onFileSelected($event)">
+                </div>
+                <button matButton="outlined" type="submit">Mostrar órdenes de compra</button>
             </form>
         </article>
 
-        <article class="col-lg-12 card">
+        <article class="col-lg-12">
             <h3>Todas las órdenes de compra disponibles de alumnos ayudantes</h3>
             <div class="scroll-container">
                 <table class="table table-striped">
@@ -40,7 +44,7 @@
             </div>
         </article>
         <article class="col-lg-3">
-            <button>Enviar todas</button>
+            <button matButton="outlined">Enviar todas</button>
         </article>
     </section>
 

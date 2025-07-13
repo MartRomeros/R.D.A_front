@@ -32,7 +32,8 @@ export const routes: Routes = [
             { path: 'registro_horas', component: ActividadFormComponent },
             { path: 'historial', component: HistorialResumenComponent },
             { path: 'horas_mes', component: TablaHorasComponent },
-            { path: '', redirectTo: 'registro_horas', pathMatch: 'full' }
+            {path:'perfil',component:PerfilComponent},
+            { path: '', redirectTo: 'registro_horas', pathMatch: 'full' },            
         ]
     },
     {

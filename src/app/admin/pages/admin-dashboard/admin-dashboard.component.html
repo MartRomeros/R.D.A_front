@@ -1,4 +1,50 @@
-<app-header></app-header>
+<header>
+    <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="light">
+        <div class="container-fluid">
+            <img src="assets/logo-fondoazul-removebg-preview.png" alt="">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/alumno/perfil"> Mi perfil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact:true}">Solicitudes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" routerLink="/admin/alumnos" routerLinkActive="active"> Alumnos
+                            Ayudantes</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" routerLink="/admin/gestor_oc" routerLinkActive="active"> Ordenes de
+                            compra</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="exportar" (click)="downloadExcel()" role="button">Exportar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" (click)="logout()" role="button">Cerrar sesión</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                            aria-controls="offcanvasExample" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact:true}">
+                            Notificaciones @if (notificaciones.length !=0)
+                            {<span class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+
+
 <div class="container-fluid">
     <div class="row g-0 flex-column flex-md-row">
 
@@ -6,18 +52,27 @@
             <h4>Panel de Administración</h4>
             <nav
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
+
+                <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/solicitud.svg"> Solicitudes</a>
+
+                <a class="nav-link active" routerLink="/admin/alumnos" routerLinkActive="active"> <img
+                        src="assets/iconos/usuarios.svg" alt=""> Alumnos Ayudantes</a>
+
+                <a class="nav-link" routerLink="/admin/gestor_oc" routerLinkActive="active"> <img
+                        src="assets/iconos/orden_compra.svg"> Ordenes de compra</a>
+
+                <a class="nav-link" id="exportar" (click)="downloadExcel()"> <img src="assets/iconos/excel.svg">
+                    Exportar</a>
+
+                <a class="nav-link" (click)="logout()" role="button"> <img src="assets/iconos/logOut.svg"> Cerrar
+                    sesión</a>
+
                 <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
                     aria-controls="offcanvasExample" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
                     <img src="assets/iconos/notificacion.svg"> Notificaciones @if (notificaciones.length !=0) {<span
-                        class="badge text-bg-danger">{{notificaciones.length}}</span>}  </a>
+                        class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
 
-                <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/notificacion.svg"> Solicitudes</a>
-                <a class="nav-link active" routerLink="/admin/alumnos" routerLinkActive="active"> <img
-                        src="assets/iconos/usuarios.svg" alt=""> Alumnos Ayudantes</a>
-                <a class="nav-link" routerLink="/admin/gestor_oc" routerLinkActive="active"> <img
-                        src="assets/iconos/orden_compra.svg"> Ordenes de compra</a>
-                <a class="nav-link" id="exportar" (click)="downloadExcel()"> <img src="assets/iconos/excel.svg"> Exportar</a>
             </nav>
         </aside>
 
@@ -41,16 +96,4 @@
         </div>
         }
     </div>
-</div>
-
-<div class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-  <div class="toast-header">
-    <img src="..." class="rounded me-2" alt="...">
-    <strong class="me-auto">Bootstrap</strong>
-    <small>11 mins ago</small>
-    <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
-  </div>
-  <div class="toast-body">
-    Hello, world! This is a toast message.
-  </div>
 </div>

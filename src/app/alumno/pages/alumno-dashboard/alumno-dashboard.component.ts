@@ -1,22 +1,23 @@
 import { Component, inject, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../shared/components/header/header.component';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { Subscription } from 'rxjs';
+import { lastValueFrom, Subscription } from 'rxjs';
 import { SocketService } from '../../../services/socket.service';
+import { Router } from '@angular/router';
+import { AuthServicesService } from '../../../services/auth-services.service';
 
 @Component({
   selector: 'app-alumno-dashboard',
-  imports: [HeaderComponent, GeneralModule],
+  imports: [GeneralModule],
   templateUrl: './alumno-dashboard.component.html',
   styleUrl: './alumno-dashboard.component.css'
 })
 export class AlumnoDashboardComponent implements OnInit {
   private socketService = inject(SocketService)
-
-
-
+  private router = inject(Router)
+  private authService = inject(AuthServicesService)
   notificaciones: string[] = [];
   private notificationSub!: Subscription;
+
 
 
 
@@ -32,4 +33,16 @@ export class AlumnoDashboardComponent implements OnInit {
     this.notificationSub.unsubscribe();
     this.socketService.disconnect();
   }
+
+
+  async logout() {
+    try {
+      const response = await lastValueFrom(this.authService.logout())
+      this.router.navigate(['login'])
+      console.log(response)
+    } catch (error: any) {
+      console.log(error)
+    }
+  }
+
 }

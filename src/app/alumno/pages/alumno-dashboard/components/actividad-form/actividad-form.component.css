@@ -33,6 +33,7 @@ h4,.subtitle{
     text-align: center;
 }
 
+
 @media (max-width:768px) {
     main{
         padding: 2vh;

@@ -7,34 +7,13 @@ section{
     text-align: center;
 }
 
+
 .card{
     padding: 4vh;
 }
 
 .card p{
     text-align: start !important;
-}
-
-form{
-    padding: 2vh;
-    border: 1px lightgray dashed;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4vh;
-}
-
-form img{
-    width: 6%;
-}
-
-form button{
-    padding: 2vh;
-    background-color: blue;
-    border-radius: 2vh;
-    border: none;
-    outline: none;
-    color: #fff;
 }
 
 td button{
@@ -47,13 +26,4 @@ td button{
   outline: none;
   border: none;
   transition: 0.5s ease background-color !important;
-}
-
-article button{
-    padding: 2vh;
-    color: #fff;
-    background-color: blue;
-    border: none;
-    outline: none;
-    border-radius: 2vh;
 }

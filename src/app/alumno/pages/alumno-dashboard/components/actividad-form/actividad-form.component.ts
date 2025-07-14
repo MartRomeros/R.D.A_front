@@ -116,7 +116,7 @@ export class ActividadFormComponent implements OnInit {
       await this.traerHorasArea()
 
     } catch (error: any) {
-      this.mensajeService.mostrarMensajeError('error al registrar las horas');
+      this.mensajeService.mostrarMensajeError(error.error.message);
     }
   }
 
@@ -153,6 +153,13 @@ export class ActividadFormComponent implements OnInit {
         }
       ]
     };
+  }
+
+  hasErrors(campo: string): boolean {
+    if (this.actividadForm.get(campo)?.hasError('required') && this.actividadForm.get(campo)?.touched) {
+      return true
+    }
+    return false
   }
 
 }

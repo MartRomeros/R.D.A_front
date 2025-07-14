@@ -87,6 +87,14 @@ export class ActividadService {
       return false
     }
 
+    //validar año de actividad
+    const date = new Date(actividadForm.get('fecha')?.value)
+
+    if(date.getFullYear() < new Date().getFullYear() || date.getFullYear() > new Date().getFullYear() ){
+      this.mensajeriaService.mostrarMensajeError('El año del registro debe ser el actual')
+      return false
+    }
+
     //validar horas validas!
     const horaInic: string = actividadForm.get('horaInic')?.value
     const horaTerm: string = actividadForm.get('horaTerm')?.value

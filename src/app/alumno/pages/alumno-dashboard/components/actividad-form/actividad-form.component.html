@@ -15,6 +15,9 @@
                     <mat-hint align="start">Ingresa la fecha del registro</mat-hint>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-datepicker #picker></mat-datepicker>
+                    @if (hasErrors('fecha')) {
+                    <mat-error>Fecha es obligatoria</mat-error>
+                    }
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
@@ -28,6 +31,10 @@
                         }
                     </mat-select>
                     <mat-hint align="start">Ingresa la hora de inicio del registro</mat-hint>
+                    @if (hasErrors('horaInic')) {
+                    <mat-error>Hora de inicio es obligatoria</mat-error>
+                    }
+
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
@@ -41,6 +48,9 @@
                         }
                     </mat-select>
                     <mat-hint align="start">Ingresa la hora de termino del registro</mat-hint>
+                    @if (hasErrors('horaTerm')) {
+                    <mat-error>Hora de termino es obligatoria</mat-error>
+                    }
                 </mat-form-field>
 
                 <mat-form-field appearance="outline">
@@ -51,6 +61,9 @@
                         }
                     </mat-select>
                     <mat-hint align="start">Ingresa el area donde has prestado servicio</mat-hint>
+                    @if (hasErrors('area')) {
+                    <mat-error>Area de trabajo es obligatorio</mat-error>
+                    }
                 </mat-form-field>
 
                 <fieldset>

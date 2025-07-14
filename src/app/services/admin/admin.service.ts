@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { ruta } from '../rutas';
+import { ModeloOc } from '../../admin/pages/admin-dashboard/models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,14 @@ export class AdminService {
 
   traerActividadesAlumno(run:string):Observable<any>{
     return this.http.get(`${this.url}/admin/actividades_alumno/${run}`,{withCredentials:true})
+  }
+
+  registrarOC(run:string,oc:number):Observable<any>{
+    return this.http.post(`${this.url}/admin/registrar_oc`,{run,oc},{withCredentials:true})
+  }
+
+  registrarAllOC(dato:ModeloOc[]):Observable<any>{
+    return this.http.post(`${this.url}/admin/registrar_all_oc`,{dato},{withCredentials:true})
   }
 
 

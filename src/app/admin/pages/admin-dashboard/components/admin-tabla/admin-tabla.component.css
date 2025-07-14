@@ -16,7 +16,7 @@ main{
 
 th {
     text-align: center;
-    background-color: #012C56;
+    background-color: #0D6EFD;
     color: #fff;
 }
 
@@ -38,18 +38,6 @@ td {
 
 table {
     border-radius: 0.375em;
-}
-
-
-.scroll-container {
-    max-height: 300px;
-    overflow-y: auto;
-}
-
-.scroll-container thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
 }
 
 

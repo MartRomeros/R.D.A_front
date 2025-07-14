@@ -24,6 +24,7 @@ export class ResumenComponent implements OnInit {
   diasRestantes: any
   cargando: boolean = true
   mesActual = new Intl.DateTimeFormat('es-CL', { month: 'long' }).format(new Date()).toString()
+  ordenCompra:any
   //variables privadas
 
 
@@ -32,6 +33,7 @@ export class ResumenComponent implements OnInit {
     this.cargando = true
     await this.traerResumenMes()
     this.traerFechaAproxPago()
+    await this.traerOC()
     this.cargando = false
   }
 
@@ -76,7 +78,6 @@ export class ResumenComponent implements OnInit {
   private async traerResumenMes() {
     try {
       const response = await lastValueFrom(this.alumnoService.traerResumenMes());
-      console.log(response)
       this.montoAcumulado = this.formatearCLP(response.monto)
       this.horasTrabajadas = response.horas_totales_mes
     } catch (error: any) {
@@ -91,6 +92,16 @@ export class ResumenComponent implements OnInit {
       minimumFractionDigits: 0,
       maximumFractionDigits: 0
     }).format(valor)
+  }
+
+  private async traerOC(){
+    try {
+      const response = await lastValueFrom(this.alumnoService.obtenerOC())
+      console.log(response)
+      this.ordenCompra = response.oc.numero_oc
+    } catch (error:any) {
+      console.error(error)  
+    }
   }
 
 

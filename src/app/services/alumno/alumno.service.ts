@@ -36,6 +36,10 @@ export class AlumnoService {
     return this.http.get(`${this.url}/alumno/horas_area_actual`, { withCredentials: true })
   }
 
+  obtenerOC():Observable<any>{
+    return this.http.get(`${this.url}/alumno/traer_oc`,{withCredentials:true})
+  }
+
 
 
 }

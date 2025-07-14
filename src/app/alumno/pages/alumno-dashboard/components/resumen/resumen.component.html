@@ -98,7 +98,11 @@
                 <span class="placeholder col-4"></span>
             </p>
             }@else {
-            <h4>No Disponible</h4>
+            @if (!ordenCompra) {
+                <h4>No Disponible</h4>
+            }@else {
+                <h4>{{ordenCompra}}</h4>
+            }
             <div class="footer">
                 Correspondiente del mes de {{mesActual}}
             </div>

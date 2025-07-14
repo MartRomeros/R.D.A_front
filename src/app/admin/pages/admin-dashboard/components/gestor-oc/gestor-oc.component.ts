@@ -2,6 +2,9 @@ import { Component, inject } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { ReportesServicesService } from '../../../../../services/reportes-services.service';
 import { ModeloOc } from '../../models/interfaces';
+import { AdminService } from '../../../../../services/admin/admin.service';
+import { MensajeriaService } from '../../../../../services/mensajeria.service';
+import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-gestor-oc',
@@ -12,8 +15,10 @@ import { ModeloOc } from '../../models/interfaces';
 export class GestorOcComponent {
 
   file: File | null = null
-  reporteService = inject(ReportesServicesService)
   reporteOC!: ModeloOc[]
+  private reporteService = inject(ReportesServicesService)
+  private adminService = inject(AdminService)
+  private mensajeriaService = inject(MensajeriaService)
 
   onFileSelected(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -32,6 +37,25 @@ export class GestorOcComponent {
       error: (err: any) => console.log('error al mandar el archivo', err)
     })
 
+  }
+
+  async registrarOC(run:string,oc:number){
+    try {
+      await lastValueFrom(this.adminService.registrarOC(run,oc))
+      this.mensajeriaService.mostrarMensajeExito('Orden de compra registrada!')
+    } catch (error:any) {
+      console.error(error)
+    }
+
+  }
+
+  async registrarAllOC(){
+    try {
+      await lastValueFrom(this.adminService.registrarAllOC(this.reporteOC))
+      this.mensajeriaService.mostrarMensajeExito('Registros exitosos!')
+    } catch (error:any) {
+      console.error(error)
+    }
   }
 
 }

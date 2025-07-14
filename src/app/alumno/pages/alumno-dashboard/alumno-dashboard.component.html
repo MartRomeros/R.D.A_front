@@ -10,7 +10,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/alumno/perfil"> Mi perfil</a>
+                        <a class="nav-link" routerLink="/alumno/perfil" [routerLinkActiveOptions]="{exact:true}"
+                            routerLinkActive="active"> Mi perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/alumno/registro_horas" routerLinkActive="active"
@@ -48,7 +49,8 @@
             <nav
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
 
-                <a class="nav-link" routerLink="/alumno/perfil"> <img src="assets/iconos/perfil.svg"> Mi perfil</a>
+                <a class="nav-link" routerLink="/alumno/perfil" [routerLinkActiveOptions]="{exact:true}"
+                            routerLinkActive="active"> <img src="assets/iconos/perfil.svg"> Mi perfil</a>
 
                 <a class="nav-link" routerLink="/alumno/registro_horas" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/formulario.svg"> Registrar

@@ -32,8 +32,8 @@ export const routes: Routes = [
             { path: 'registro_horas', component: ActividadFormComponent },
             { path: 'historial', component: HistorialResumenComponent },
             { path: 'horas_mes', component: TablaHorasComponent },
-            {path:'perfil',component:PerfilComponent},
-            { path: '', redirectTo: 'registro_horas', pathMatch: 'full' },            
+            { path: 'perfil', component: PerfilComponent },
+            { path: '', redirectTo: 'registro_horas', pathMatch: 'full' },
         ]
     },
     {
@@ -45,13 +45,14 @@ export const routes: Routes = [
             { path: 'solicitudes', component: SolicitudesComponent },
             { path: 'alumnos', component: AdminTablaComponent },
             { path: 'gestor_oc', component: GestorOcComponent },
+            { path: 'perfil', component: PerfilComponent },
             { path: '', redirectTo: 'solicitudes', pathMatch: 'full' },
         ]
     },
     {
         path: 'perfil',
         component: PerfilComponent,
-        
+
     },
     //ruta login component
     {

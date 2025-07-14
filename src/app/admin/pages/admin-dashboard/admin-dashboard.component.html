@@ -10,7 +10,8 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" routerLink="/alumno/perfil"> Mi perfil</a>
+                        <a class="nav-link" routerLink="/admin/perfil" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact:true}"> Mi perfil</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
@@ -52,6 +53,8 @@
             <h4>Panel de Administración</h4>
             <nav
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
+                <a class="nav-link" routerLink="/admin/perfil" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact:true}"><img src="assets/iconos/perfil.svg"> Mi perfil</a>
 
                 <a class="nav-link" routerLink="/admin/solicitudes" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/solicitud.svg"> Solicitudes</a>

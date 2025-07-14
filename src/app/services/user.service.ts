@@ -3,6 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ruta } from './rutas';
+import { MensajeriaService } from './mensajeria.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +11,7 @@ import { ruta } from './rutas';
 export class UserService {
 
   private http = inject(HttpClient)
+  private mensajeriaService = inject(MensajeriaService)
   private localUrl = ruta
 
 
@@ -18,28 +20,24 @@ export class UserService {
   }
 
   actualizarDatos(valores: any): Observable<any> {
-    return this.http.put(`${this.localUrl}/user/update`, valores, { withCredentials: true })
+    return this.http.put(`${this.localUrl}/usuario/update`, {newPassword:valores}, { withCredentials: true })
   }
 
   validarPerfilForm(perfilForm: FormGroup): boolean {
 
     //validar campos vacios
-    if (perfilForm.get('fono')?.hasError('required')) {
-      alert('fono es requerido')
+    if (perfilForm.get('newPassword')?.hasError('required')) {
+      this.mensajeriaService.mostrarMensajeError('La contraseña es obligatoria')
       return false
     }
-    if (perfilForm.get('contrasenna1')?.hasError('required')) {
-      alert('contrasenna es requerida')
-      return false
-    }
-    if (perfilForm.get('contrasenna2')?.hasError('required')) {
-      alert('es necesario repetir la contrasenna')
+    if (perfilForm.get('newPassword2')?.hasError('required')) {
+      this.mensajeriaService.mostrarMensajeError('Es necesario repetir la contraseña')
       return false
     }
 
     //verificar que ambas contras sean iguales
-    if(perfilForm.get('contrasenna1')?.value !== perfilForm.get('contrasenna2')?.value){
-      alert('las contrasenas deben coincidir')
+    if(perfilForm.get('newPassword')?.value !== perfilForm.get('newPassword2')?.value){
+      this.mensajeriaService.mostrarMensajeError('Las contraseñas no coinciden')
       return false
     }
     return true

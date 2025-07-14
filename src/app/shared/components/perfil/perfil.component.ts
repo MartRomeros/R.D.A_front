@@ -1,168 +1,85 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { CommonModule, Location } from '@angular/common';
-import { HeaderComponent } from '../header/header.component';
-
-interface UserProfile {
-  rut: string;
-  nombre: string;
-  ubicacion: string;
-  telefono: string;
-  email: string;
-}
+import { CommonModule } from '@angular/common';
+import { GeneralModule } from '../../modules/general/general.module';
+import { UserService } from '../../../services/user.service';
+import { lastValueFrom } from 'rxjs';
+import { MensajeriaService } from '../../../services/mensajeria.service';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule, HeaderComponent],
+  imports: [ReactiveFormsModule, CommonModule, GeneralModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
 export class PerfilComponent implements OnInit {
 
-  location = inject(Location)
+  private fb = inject(FormBuilder)
+  private userService = inject(UserService)
+  private mensajeriaService = inject(MensajeriaService)
 
-  profileForm: FormGroup;
-  loading = false;
-  isChangingPassword = false;
+  profileForm: FormGroup = this.fb.group({
+    rut: [''],
+    nombre: [''],
+    fono: [''],
+    email: [''],
+    newPassword: ['', [Validators.required]],
+    newPassword2: ['', [Validators.required]]
+  })
+  changePassword: boolean = false
+  buttonText: string = 'Cambiar contraseña'
 
-  // Estado de visibilidad de contraseñas
-  showCurrentPassword = false;
-  showNewPassword = false;
-  showConfirmPassword = false;
-
-  userProfile: UserProfile = {
-    rut: '12.345.678-9',
-    nombre: 'Juan Carlos Pérez',
-    ubicacion: 'Santiago, Chile',
-    telefono: '+56 9 8765 4321',
-    email: 'juan.perez@email.com'
-  };
-
-  constructor(private fb: FormBuilder) {
-    this.profileForm = this.fb.group(
-      {
-        rut: [{ value: '', disabled: true }],
-        nombre: [{ value: '', disabled: true }],
-        ubicacion: [{ value: '', disabled: true }],
-        telefono: [{ value: '', disabled: true }],
-        email: [{ value: '', disabled: true }],
-        currentPassword: [''],
-        newPassword: [''],
-        confirmPassword: ['']
-      },
-      { validators: this.combinedPasswordValidator }
-    );
+  hide = signal(true);
+  clickEvent(event: MouseEvent) {
+    this.hide.set(!this.hide());
+    event.stopPropagation();
   }
 
-  goBack():void{
-    this.location.back()
+  async ngOnInit() {
+    await this.obtenerUsuario()
   }
 
-  ngOnInit(): void {
-    this.loadUserProfile();
-  }
-
-  loadUserProfile(): void {
-    this.profileForm.patchValue(this.userProfile);
-  }
-
-  toggleChangePassword(): void {
-    this.isChangingPassword = !this.isChangingPassword;
-
-    if (!this.isChangingPassword) {
-      this.profileForm.get('currentPassword')?.reset();
-      this.profileForm.get('newPassword')?.reset();
-      this.profileForm.get('confirmPassword')?.reset();
-
-      // También reseteamos visibilidad
-      this.showCurrentPassword = false;
-      this.showNewPassword = false;
-      this.showConfirmPassword = false;
+  private async obtenerUsuario() {
+    try {
+      const response = await lastValueFrom(this.userService.findUserbyEmail())
+      this.profileForm.get('rut')?.setValue(response.usuario.run)
+      this.profileForm.get('nombre')?.setValue(`${response.usuario.nombre} ${response.usuario.apellido_paterno} ${response.usuario.apellido_materno}`)
+      this.profileForm.get('fono')?.setValue(response.usuario.fono)
+      this.profileForm.get('email')?.setValue(response.usuario.email)
+    } catch (error: any) {
+      console.error(error)
     }
   }
 
-  togglePasswordVisibility(type: 'current' | 'new' | 'confirm'): void {
-    if (type === 'current') {
-      this.showCurrentPassword = !this.showCurrentPassword;
-    } else if (type === 'new') {
-      this.showNewPassword = !this.showNewPassword;
-    } else if (type === 'confirm') {
-      this.showConfirmPassword = !this.showConfirmPassword;
-    }
-  }
-
-  async updateProfile(): Promise<void> {
-    if (this.profileForm.valid) {
-      this.loading = true;
-      try {
-        const { currentPassword, newPassword } = this.profileForm.getRawValue();
-
-        if (this.isChangingPassword) {
-          if (currentPassword !== 'demo123') {
-            this.profileForm.get('currentPassword')?.setErrors({ incorrect: true });
-            this.loading = false;
-            return;
-          }
-
-          console.log('Cambio de contraseña:', { currentPassword, newPassword });
-          alert('Contraseña cambiada exitosamente');
-        }
-
-        alert('Cambios guardados correctamente');
-        this.toggleChangePassword();
-      } catch (error) {
-        console.error('Error:', error);
-        alert('Ocurrió un error al guardar los cambios');
-      } finally {
-        this.loading = false;
-      }
+  isChangePassword() {
+    if (!this.changePassword) {
+      this.changePassword = true
+      this.buttonText = 'Cancelar cambios'
     } else {
-      this.markFormGroupTouched(this.profileForm);
+      this.changePassword = false
+      this.buttonText = 'Cambiar contraseña'
     }
   }
 
-  combinedPasswordValidator(form: FormGroup) {
-    const currentPassword = form.get('currentPassword')!;
-    const newPassword = form.get('newPassword')!;
-    const confirmPassword = form.get('confirmPassword')!;
+  async updatePassword() {
+    try {
 
-    const hasNew = newPassword?.value?.length > 0;
+      if (!this.userService.validarPerfilForm(this.profileForm)) {
+        return
+      }
 
-    currentPassword?.setErrors(null);
-    newPassword?.setErrors(null);
-    confirmPassword?.setErrors(null);
+      const newPassword = this.profileForm.get('newPassword')?.value
 
-    if (hasNew) {
-      if (!currentPassword?.value) {
-        currentPassword.setErrors({ required: true });
-      }
-      if (newPassword.value.length < 8) {
-        newPassword.setErrors({ minlength: { requiredLength: 8 } });
-      }
-      if (newPassword.value !== confirmPassword.value) {
-        confirmPassword.setErrors({ passwordMismatch: true });
-      }
+      await lastValueFrom(this.userService.actualizarDatos(newPassword))
+
+      this.mensajeriaService.mostrarMensajeExito('Contraseña actualizada!')
+
+    } catch (error: any) {
+      console.error(error)
     }
-
-    return null;
   }
 
-  getFieldError(fieldName: string, form: FormGroup = this.profileForm): string {
-    const field = form.get(fieldName);
-    if (field?.errors && field.touched) {
-      if (field.errors['required']) return 'Este campo es requerido';
-      if (field.errors['minlength']) return `Debe tener al menos ${field.errors['minlength'].requiredLength} caracteres`;
-      if (field.errors['passwordMismatch']) return 'Las contraseñas no coinciden';
-      if (field.errors['incorrect']) return 'La contraseña actual es incorrecta';
-    }
-    return '';
-  }
 
-  private markFormGroupTouched(formGroup: FormGroup): void {
-    Object.keys(formGroup.controls).forEach(key => {
-      formGroup.get(key)?.markAsTouched();
-    });
-  }
 }
 

@@ -5,6 +5,7 @@ import { Actividad,DetallesAlumno } from '../../models/interfaces';
 import { FormGroup } from '@angular/forms';
 import { ruta } from '../rutas';
 import { MensajeriaService } from '../mensajeria.service';
+import { ResumenMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -15,34 +16,18 @@ export class ActividadService {
   private url = ruta
   private mensajeriaService = inject(MensajeriaService)
 
-  //variables como total del pago, total de horas trabajadas(año y mes) etc
-  private horasTotalesSubject = new BehaviorSubject<number | null>(null);
-  horasTotales$ = this.horasTotalesSubject.asObservable()
-  setHorasTotales(horasTotales: number) {
-    this.horasTotalesSubject.next(horasTotales)
-  }
-
-  private horasPorAreaSubject = new BehaviorSubject<DetallesAlumno>({ actividadesPorMes: [] })
-  horasPorArea$ = this.horasPorAreaSubject.asObservable()
-  setHorasPorAreaSubject(horasPorArea: DetallesAlumno) {
-    this.horasPorAreaSubject.next(horasPorArea)
-  }
-
   private actividadesSubject = new BehaviorSubject<Actividad[]>([])
   actividades$ = this.actividadesSubject.asObservable()
   setActvidades(nuevasActividades: Actividad[]) {
     this.actividadesSubject.next(nuevasActividades)
   }
 
-  private actividadesParaFiltrarSubject = new BehaviorSubject<Actividad[]>([])
-  actividadesParaFiltrar$ = this.actividadesParaFiltrarSubject.asObservable()
-  setActividadesParaFiltrar(actividades: Actividad[]) {
-    if (!actividades) {
-      this.actividadesParaFiltrarSubject.next([])
-      return
-    }
-    this.actividadesParaFiltrarSubject.next(actividades)
+  private resumenMesSubject = new BehaviorSubject<ResumenMes | null>(null)
+  resumenMes$ = this.resumenMesSubject.asObservable()
+  setResumenMes(resumenMes:ResumenMes){
+    this.resumenMesSubject.next(resumenMes)
   }
+
 
   registrarActividad(actividad: any): Observable<any> {
     return this.http.post(`${this.url}/alumno/registrar_actividad`, actividad, { withCredentials: true })

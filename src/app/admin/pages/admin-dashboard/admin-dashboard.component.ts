@@ -5,6 +5,9 @@ import { lastValueFrom, Subscription } from 'rxjs';
 import { SocketService } from '../../../services/socket.service';
 import { ReportesServicesService } from '../../../services/reportes-services.service';
 import { AuthServicesService } from '../../../services/auth-services.service';
+import { SolicitudService } from '../../../services/admin/solicitud.service';
+import { Solicitud } from '../../../models/interfaces';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -18,18 +21,28 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   private reporteService = inject(ReportesServicesService)
   private router: Router = inject(Router)
   private authService = inject(AuthServicesService)
+  private solicitudService = inject(SolicitudService)
+  private snackBar = inject(MatSnackBar)
 
   notificaciones: string[] = [];
   private notificationSub!: Subscription;
 
 
 
-  ngOnInit(): void {
+  async ngOnInit() {
     this.socketService.registerAsAdmin()
     this.notificationSub = this.socketService.listenNotification('admin')
       .subscribe((msg) => {
-        this.notificaciones.push(msg);
-        console.log(this.notificaciones)
+        this.openSnackBar()
+        this.notificaciones.push(msg)
+        this.solicitudService.traerSolicitudesMes()
+        .subscribe({
+          next:(response)=>{
+            this.solicitudService.setSolicitud(response.solicitudes)
+            this.solicitudService.setAllSolicitudes(response.solicitudes)
+          }
+        })
+        
       });
   }
 
@@ -38,12 +51,9 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.socketService.disconnect();
   }
 
-
   goTo(ruta: string) {
     this.router.navigate([ruta])
   }
-
-
 
   async downloadExcel() {
     try {
@@ -74,6 +84,14 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
       console.log(error)
     }
   }
+
+  openSnackBar(){
+    this.snackBar.open('Nueva actividad registrada!','deshacer',{
+      duration:3000
+    })
+  }
+
+
 
 
 }

@@ -42,7 +42,6 @@ export class TableroHistorialComponent implements OnInit {
     try {
       const response = await lastValueFrom(this.actividadService.traerActividadesFiltradas(this.mesFiltro,this.areaFiltro))
       this.actividades = response.actividades
-      console.log(this.actividades)
     } catch (error: any) {
       console.error(error)
     }

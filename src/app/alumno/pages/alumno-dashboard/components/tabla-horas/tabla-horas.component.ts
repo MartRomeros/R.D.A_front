@@ -1,9 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { Actividad, DetallesAlumno, User } from '../../../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { ResumenComponent } from '../resumen/resumen.component';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
+import { Registro, ResumenMes } from '../../models/interfaces';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
 
 @Component({
   selector: 'app-tabla-horas',
@@ -15,15 +16,19 @@ export class TablaHorasComponent implements OnInit {
 
   //servicios
   private alumnoService = inject(AlumnoService)
+  private actividadService = inject(ActividadService)
 
   //variables publicas
-  actividades: any
+  actividades!: Registro[] | undefined
   cargando: boolean = true
 
   //ngOnInit(antes de cargar el componente)
   async ngOnInit() {
     this.cargando = true
-    this.cargarActvidades()
+    await this.cargarActvidades()
+    this.actividadService.resumenMes$.subscribe((resumenMes) => {
+      this.actividades = resumenMes?.actividades
+    })
 
     this.cargando = false
   }
@@ -34,11 +39,9 @@ export class TablaHorasComponent implements OnInit {
     try {
       this.cargando = true
       const response = await lastValueFrom(this.alumnoService.traerResumenMes());
-      console.log(response)
-      const actividades = response.actividades
-      this.actividades = actividades
+      const resumenMes: ResumenMes = response
+      this.actividadService.setResumenMes(resumenMes)
     } catch (error: any) {
-      alert('Error al cargar actividades');
       console.error(error)
     } finally {
       this.cargando = false

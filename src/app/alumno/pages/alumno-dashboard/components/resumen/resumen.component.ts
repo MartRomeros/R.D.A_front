@@ -5,6 +5,8 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
+import { ActividadService } from '../../../../../services/alumno/actividad.service';
+import { ResumenMes } from '../../models/interfaces';
 
 
 @Component({
@@ -16,6 +18,7 @@ import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 export class ResumenComponent implements OnInit {
   //servicios
   private alumnoService = inject(AlumnoService)
+  private actividadService = inject(ActividadService)
 
   //variables publicas
   montoAcumulado?: string
@@ -24,7 +27,7 @@ export class ResumenComponent implements OnInit {
   diasRestantes: any
   cargando: boolean = true
   mesActual = new Intl.DateTimeFormat('es-CL', { month: 'long' }).format(new Date()).toString()
-  ordenCompra:any
+  ordenCompra: any
   //variables privadas
 
 
@@ -32,6 +35,11 @@ export class ResumenComponent implements OnInit {
   async ngOnInit() {
     this.cargando = true
     await this.traerResumenMes()
+    this.actividadService.resumenMes$.subscribe((resumenMes) => {
+      const monto = resumenMes?.monto || 0
+      this.montoAcumulado = this.formatearCLP(monto)
+      this.horasTrabajadas = resumenMes?.horas_totales_mes
+    })
     this.traerFechaAproxPago()
     await this.traerOC()
     this.cargando = false
@@ -78,8 +86,8 @@ export class ResumenComponent implements OnInit {
   private async traerResumenMes() {
     try {
       const response = await lastValueFrom(this.alumnoService.traerResumenMes());
-      this.montoAcumulado = this.formatearCLP(response.monto)
-      this.horasTrabajadas = response.horas_totales_mes
+      const resumenMes: ResumenMes = response
+      this.actividadService.setResumenMes(resumenMes)
     } catch (error: any) {
       console.log(error);
     }
@@ -94,13 +102,12 @@ export class ResumenComponent implements OnInit {
     }).format(valor)
   }
 
-  private async traerOC(){
+  private async traerOC() {
     try {
       const response = await lastValueFrom(this.alumnoService.obtenerOC())
-      console.log(response)
       this.ordenCompra = response.oc.numero_oc
-    } catch (error:any) {
-      console.error(error)  
+    } catch (error: any) {
+      console.error(error)
     }
   }
 

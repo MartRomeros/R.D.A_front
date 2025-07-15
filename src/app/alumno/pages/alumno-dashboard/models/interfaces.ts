@@ -1,8 +1,3 @@
-export interface ResumenMes {
-    montoFormateado: string,
-    horasMes: number
-}
-
 export interface Area_Trabajo {
     id: number,
     nombre: string
@@ -29,4 +24,18 @@ export interface HorasAreasMes {
 export interface HorasArea{
     nombre:string,
     duracion_horas:number
+}
+
+export interface Registro{
+    area:string,
+    estado:boolean,
+    fecha:string,
+    fin:string,
+    inicio:string
+}
+
+export interface ResumenMes{
+    actividades:Registro[],
+    horas_totales_mes:number,
+    monto:number
 }

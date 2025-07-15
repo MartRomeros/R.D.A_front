@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { LoginResponse } from '../../../models/interfaces';
 import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';

@@ -50,7 +50,7 @@
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
 
                 <a class="nav-link" routerLink="/alumno/perfil" [routerLinkActiveOptions]="{exact:true}"
-                            routerLinkActive="active"> <img src="assets/iconos/perfil.svg"> Mi perfil</a>
+                    routerLinkActive="active"> <img src="assets/iconos/perfil.svg"> Mi perfil</a>
 
                 <a class="nav-link" routerLink="/alumno/registro_horas" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact:true}"> <img src="assets/iconos/formulario.svg"> Registrar
@@ -74,7 +74,11 @@
         </aside>
 
         <main class="col-12 col-md-9 col-lg-10 px-1 py-1">
-            <router-outlet></router-outlet>
+            @if (loading) {
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }@else {
+                <router-outlet></router-outlet>
+            }            
         </main>
     </div>
 </div>

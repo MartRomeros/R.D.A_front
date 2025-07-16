@@ -3,7 +3,7 @@ header {
   background-color: #012C56;
 }
 
-header nav img {
+header nav div img {
   width: 5%;
 }
 
@@ -82,8 +82,11 @@ aside .nav-link img {
 
 /* movil */
 @media (max-width:767px) {
+  header nav div img {
+    width: 10%;
+  }
 
-  aside{
+  aside {
     display: none;
   }
 

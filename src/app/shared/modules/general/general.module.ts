@@ -16,6 +16,7 @@ import {MatRadioModule} from '@angular/material/radio'
 import {MatListModule} from '@angular/material/list'
 import { MatSelectModule } from '@angular/material/select';
 import {MatSnackBar} from '@angular/material/snack-bar'
+import {MatProgressBarModule} from '@angular/material/progress-bar'
 
 
 
@@ -38,6 +39,7 @@ import {MatSnackBar} from '@angular/material/snack-bar'
     MatRadioModule,
     MatListModule,
     MatSelectModule,
+    MatProgressBarModule
     
   ],
   providers: [],
@@ -57,7 +59,8 @@ import {MatSnackBar} from '@angular/material/snack-bar'
     MatChipsModule,
     MatRadioModule,
     MatListModule,
-    MatSelectModule
+    MatSelectModule,
+    MatProgressBarModule
   ],
 })
 export class GeneralModule { }

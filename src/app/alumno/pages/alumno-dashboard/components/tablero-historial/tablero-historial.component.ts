@@ -67,9 +67,7 @@ export class TableroHistorialComponent implements OnInit {
   async traerAreasTrabajo(){
     try {
       const response = await lastValueFrom(this.areaTrabajoService.traerAreasTrabajo())
-      console.log(response)
       this.areasTrabajo = response
-      console.log(response)
     } catch (error: any) {
       console.error(error)
     }

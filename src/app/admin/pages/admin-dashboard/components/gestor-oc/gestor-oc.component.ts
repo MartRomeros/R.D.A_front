@@ -29,7 +29,10 @@ export class GestorOcComponent {
 
   mandarExcel() {
     const data = new FormData()
-    if (!this.file) return
+    if (!this.file) {
+      this.mensajeriaService.mostrarMensajeError('No hay archivo seleccionado!')
+      return
+    }
     data.append('file', this.file)
 
     this.reporteService.mostrarOrdenesCompras(data).subscribe({
@@ -39,21 +42,28 @@ export class GestorOcComponent {
 
   }
 
-  async registrarOC(run:string,oc:number){
+  async registrarOC(run: string, oc: number) {
     try {
-      await lastValueFrom(this.adminService.registrarOC(run,oc))
+      await lastValueFrom(this.adminService.registrarOC(run, oc))
       this.mensajeriaService.mostrarMensajeExito('Orden de compra registrada!')
-    } catch (error:any) {
+    } catch (error: any) {
       console.error(error)
     }
 
   }
 
-  async registrarAllOC(){
+  registrarAllOC() {
+    if (!this.reporteOC) {
+      this.mensajeriaService.mostrarMensajeError('No hay ordenes de compras disponibles!')
+      return
+    }
     try {
-      await lastValueFrom(this.adminService.registrarAllOC(this.reporteOC))
-      this.mensajeriaService.mostrarMensajeExito('Registros exitosos!')
-    } catch (error:any) {
+      this.adminService.registrarAllOC(this.reporteOC).subscribe({
+        next: () => {
+          this.mensajeriaService.mostrarMensajeExito('Registros exitosos!')
+        }
+      })
+    } catch (error: any) {
       console.error(error)
     }
   }

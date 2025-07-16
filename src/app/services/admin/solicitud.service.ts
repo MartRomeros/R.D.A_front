@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Solicitud } from '../../models/interfaces';
 import { ruta } from '../rutas';
+import { Solicitud } from '../../admin/pages/admin-dashboard/models/interfaces';
 
 @Injectable({
   providedIn: 'root'

@@ -1,8 +1,8 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { lastValueFrom } from 'rxjs';
 import { AdminService } from '../../../../../services/admin/admin.service';
-import { Actividad, Administrador, Alumno, Detalles, TotalesMes } from '../../models/interfaces';
+import { ActividadAlumno, Alumno, InfoAlumno, Resumen } from '../../models/interfaces';
+import { MensajeriaService } from '../../../../../services/mensajeria.service';
 
 @Component({
   selector: 'app-admin-tabla',
@@ -13,73 +13,84 @@ import { Actividad, Administrador, Alumno, Detalles, TotalesMes } from '../../mo
 export class AdminTablaComponent implements OnInit {
   //servicios
   private adminService: AdminService = inject(AdminService)
+  private mensajeriaService = inject(MensajeriaService)
 
   //variables publicas
-  horaAreaMes!: number
-  horasResumenMes!: number
-  alumnos!: number
+  horaAreaMes: number = 0
+  horasResumenMes: number = 0
+  alumnos: number = 0
 
-  area!: string
+  area: string = ''
   horasTotales: number = 0
   horasMes: number = 0
-  run?: string
-  nombre?: string
-  email?: string
-  fono?: number
-  actividades: any
-  alumnosAyudantes: any
+  run: string = ''
+  nombre: string = ''
+  email: string = ''
+  fono: number = 0
+  actividades: ActividadAlumno[] = []
+  alumnosAyudantes: Alumno[] = []
 
-  async ngOnInit() {
-    await this.traerResumenMes()
-    await this.traerAlumnosAyudantes()
+  ngOnInit() {
+    this.traerResumenMes()
+    this.traerAlumnosAyudantes()
   }
 
   //traer alumnos ayudantes
-  private async traerAlumnosAyudantes() {
-    try {
-      const response = await lastValueFrom(this.adminService.traerAlumnos())
-      console.log(response)
-      this.alumnosAyudantes = response.alumnos
+  private traerAlumnosAyudantes() {
 
-    } catch (error: any) {
-      console.log(error)
+    this.adminService.traerAlumnos().subscribe({
+      next: (response:{alumnos:Alumno[]}) => {
+        const alumnos:Alumno[] = response.alumnos
+        this.alumnosAyudantes = alumnos
+      },
+      error: (error) => {
+        this.mensajeriaService.mostrarMensajeError('Error al cargar los alumnos ayudantes')
+      }
+    })
 
-    }
   }
 
-  private async traerResumenMes() {
-    try {
-      const response = await lastValueFrom(this.adminService.traerResumenMes())
-      console.log(response)
-      this.alumnos = response.resumen.alumnos
-      this.horasResumenMes = response.resumen.actividades
-      this.horaAreaMes = response.resumen.actividades_area
-      this.area = response.resumen.area
-
-    } catch (error) {
-      console.error(error)
-    }
+  private traerResumenMes() {
+    this.adminService.traerResumenMes().subscribe({
+      next: (response:{resumen:Resumen}) => {
+        const resumen: Resumen = response.resumen
+        this.alumnos = resumen.alumnos
+        this.horasResumenMes = resumen.actividades
+        this.horaAreaMes = resumen.actividades_area
+        this.area = resumen.area
+      },
+      error: (error) => {
+        this.mensajeriaService.mostrarMensajeError('Error al cargar el resumen del mes')
+      }
+    })
   }
 
   async mostrarDetalles(run: string) {
-    try {
-      const response = await lastValueFrom(this.adminService.traerDetalleAlumno(run))
-      console.log(response)
-      this.nombre = response.infoAlumno.alumno.nombre
-      this.run = response.infoAlumno.alumno.run
-      this.email = response.infoAlumno.alumno.email
-      this.fono = response.infoAlumno.alumno.fono
-      this.horasTotales = response.infoAlumno.actividades_mes
-      this.horasMes = response.infoAlumno.actividades_area
+    this.adminService.traerDetalleAlumno(run).subscribe({
+      next: (response:{infoAlumno:InfoAlumno}) => {
+        const infoAlumno:InfoAlumno = response.infoAlumno
+        this.nombre = infoAlumno.alumno.nombre
+        this.run = infoAlumno.alumno.run
+        this.email = infoAlumno.alumno.email
+        this.fono = infoAlumno.alumno.fono
+        this.horasTotales = infoAlumno.actividades_mes
+        this.horasMes = infoAlumno.actividades_area 
+      },
+      error:(err:any)=>{
+        this.mensajeriaService.mostrarMensajeError('Error al cargar los detalles del alumno')
+      }
+    })
 
-      const response2 = await lastValueFrom(this.adminService.traerActividadesAlumno(run))
-      console.log(response2)
-      this.actividades = response2.actividades
-
-
-    } catch (error: any) {
-      console.error(error)
-    }
+    this.adminService.traerActividadesAlumno(run).subscribe({
+      next: (response:{actividades:ActividadAlumno[]}) => {
+        console.log(response)
+        const actividades: ActividadAlumno[] = response.actividades
+        this.actividades = actividades
+      },
+      error: (error) => {
+        this.mensajeriaService.mostrarMensajeError('Error al cargar las actividades del alumno')
+      }
+    })
   }
 
 

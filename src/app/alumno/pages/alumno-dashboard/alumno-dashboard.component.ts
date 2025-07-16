@@ -7,6 +7,7 @@ import { AuthServicesService } from '../../../services/auth-services.service';
 import { ActividadService } from '../../../services/alumno/actividad.service';
 import { AlumnoService } from '../../../services/alumno/alumno.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { ActividadFormComponent } from './components/actividad-form/actividad-form.component';
 
 @Component({
   selector: 'app-alumno-dashboard',
@@ -23,6 +24,7 @@ export class AlumnoDashboardComponent implements OnInit {
   notificaciones: string[] = [];
   loading: boolean = false
   private notificationSub!: Subscription;
+  private registroForm = new ActividadFormComponent
 
   constructor(private router: Router) {
     this.router.events.subscribe((event: Event) => {
@@ -48,11 +50,25 @@ export class AlumnoDashboardComponent implements OnInit {
       .subscribe((msg) => {
         this.openSnackBar()
         this.notificaciones.push(msg);
+
         this.alumnoService.traerResumenMes().subscribe({
           next: (response) => {
             this.actividadService.setResumenMes(response)
           }
         })
+        this.alumnoService.traerHorasAreasMes().subscribe({
+          next: (response) => {
+            this.alumnoService.setHorasAreaMes(response.horasArea)
+            this.registroForm.actualizarGrafico()
+          }
+        })
+        this.alumnoService.traerResumenMes().subscribe({
+          next:(response)=>{
+            this.actividadService.setResumenMes(response)
+          }
+        })
+
+
 
       });
   }

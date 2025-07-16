@@ -6,7 +6,6 @@ import { SocketService } from '../../../services/socket.service';
 import { ReportesServicesService } from '../../../services/reportes-services.service';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { SolicitudService } from '../../../services/admin/solicitud.service';
-import { Solicitud } from '../../../models/interfaces';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({

@@ -140,7 +140,7 @@ export class ActividadFormComponent implements OnInit {
     }
   }
 
-  private actualizarGrafico() {
+  actualizarGrafico() {
     this.chartOptions = {
       ...this.chartOptions,
       series: [

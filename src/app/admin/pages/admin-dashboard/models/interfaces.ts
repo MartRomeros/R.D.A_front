@@ -3,6 +3,26 @@ interface Area_trabajo {
     nombre: string
 }
 
+export interface Alumno {
+    fono: number,
+    run: string,
+    nombre: string,
+    email: string
+}
+
+export interface Resumen {
+    actividades: number,
+    actividades_area: number,
+    area: string,
+    alumnos: number
+}
+
+export interface InfoAlumno {
+    actividades_area: number,
+    actividades_mes: number,
+    alumno: Alumno
+}
+
 export interface Actividad {
     area_trabajo: Area_trabajo
     area_trabajo_id: number,
@@ -11,26 +31,30 @@ export interface Actividad {
     hora_inic_activdad: Date,
     hora_term_actividad: Date,
     id_actividad: number,
-    run_alumno: string
+    run_alumno: string,
 }
 
-export interface Alumno {
-    actividades: Actividad[],
-    apellido_materno: string,
-    apellido_paterno: string,
-    area_trabajo_id?: number,
-    email: string,
-    fono: number,
-    nombre: string,
-    password: string,
-    run: string,
-    tipo_usuario: number
+export interface ActividadAlumno {
+    area: string,
+    fecha: string,
+    fin: string,
+    inicio: string,
+    estado:boolean
 }
 
-export interface TotalesMes {
-    alumnosAyudantes: number,
-    totales: number,
-    totalesArea: number
+export interface SolicitudAlumno{
+    area:string,
+    fecha: string,
+    fin:string,
+    inicio:string,
+    nombre: string
+}
+
+export interface Solicitud {
+    id:number,
+    fecha:string,
+    alumno:string,
+    estado:boolean
 }
 
 export interface Administrador {
@@ -64,9 +88,9 @@ export interface Detalles {
     actividadesMes: Actividad[]
 }
 
-export interface ModeloOc{
-    "N° OC":number,
-    ALUMNO:string,
-    "RUT Alumno":string,
-    "Total BH OC":Number
+export interface ModeloOc {
+    "N° OC": number,
+    ALUMNO: string,
+    "RUT Alumno": string,
+    "Total BH OC": Number
 }

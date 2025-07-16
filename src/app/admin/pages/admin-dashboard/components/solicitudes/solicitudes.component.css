@@ -2,17 +2,13 @@ main{
   height: 100vh;
 }
 
-h2 {
+h3,h5 {
   text-align: center;
 }
 
 section {
   margin-top: 2vh;
   gap: 2vh;
-}
-
-h3 {
-  text-align: center;
 }
 
 table tbody tr td button {

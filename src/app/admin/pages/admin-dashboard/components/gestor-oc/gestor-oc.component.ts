@@ -4,7 +4,6 @@ import { ReportesServicesService } from '../../../../../services/reportes-servic
 import { ModeloOc } from '../../models/interfaces';
 import { AdminService } from '../../../../../services/admin/admin.service';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';
-import { lastValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-gestor-oc',
@@ -37,19 +36,23 @@ export class GestorOcComponent {
 
     this.reporteService.mostrarOrdenesCompras(data).subscribe({
       next: (res: any) => this.reporteOC = res.datos_filtrados,
-      error: (err: any) => console.log('error al mandar el archivo', err)
+      error: (err: any) => {
+        this.mensajeriaService.mostrarMensajeError('Error al subir archivo. Por favor, vuelve a seleccionarlo.');
+        this.file = null;
+      }
     })
 
   }
 
-  async registrarOC(run: string, oc: number) {
-    try {
-      await lastValueFrom(this.adminService.registrarOC(run, oc))
-      this.mensajeriaService.mostrarMensajeExito('Orden de compra registrada!')
-    } catch (error: any) {
-      console.error(error)
-    }
-
+  registrarOC(run: string, oc: number) {
+    this.adminService.registrarOC(run, oc).subscribe({
+      next: () => {
+        this.mensajeriaService.mostrarMensajeExito('Orden de compra registrada!')
+      },
+      error: (err: any) => {
+        this.mensajeriaService.mostrarMensajeError('Error al registrar la orden de compra. Por favor, verifica los datos ingresados.')
+      }
+    })
   }
 
   registrarAllOC() {

@@ -45,10 +45,3 @@ export interface AreaTrabajo {
     nombre: string
 }
 
-export interface Solicitud {
-    id:number,
-    fecha:string,
-    alumno:string,
-    estado:boolean
-}
-

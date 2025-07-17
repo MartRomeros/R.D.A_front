@@ -56,8 +56,10 @@ export class LoginComponent {
       return
     }
 
+    const email = this.loginForm.get('email')?.value.toLowerCase();
+
     const valores = {
-      email: this.loginForm.get('email')?.value,
+      email: email,
       password: this.loginForm.get('password')?.value
     }
 

@@ -17,7 +17,7 @@ export class ForgotPasswordComponent {
   private mensajeService = inject(MensajeriaService)
 
   forgotForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]]
+    email: ['', [Validators.required, Validators.email,Validators.minLength(5), Validators.maxLength(50),Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|duoc\.cl)$/)]]
   })
   cargando: boolean = false
 
@@ -43,7 +43,8 @@ export class ForgotPasswordComponent {
       return
     }
 
-    const valores = this.forgotForm.get('email')?.value
+    const email:string = this.forgotForm.get('email')?.value
+    const valores = email.toLocaleLowerCase()
 
     try {
       await lastValueFrom(this.authService.recuperarClave(valores))

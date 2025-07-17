@@ -17,21 +17,16 @@ export class LoginComponent {
   private authService = inject(AuthServicesService)
   private fb = inject(FormBuilder)
   private mensajeriaService: MensajeriaService = inject(MensajeriaService)
+  private router: Router = inject(Router)
 
 
   //variables publicas
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email,Validators.minLength(5),Validators.maxLength(50),Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|duoc\.cl)$/)]],
-    password: ['', Validators.required,Validators.minLength(5),Validators.maxLength(50),]
+    email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|duoc\.cl)$/)]],
+    password: ['', Validators.required, Validators.minLength(5), Validators.maxLength(50),]
   })
 
   cargando: boolean = false
-
-
-
-  //variables privadas
-  private router = new Router()
-
 
 
   //visibilidad para el campo de contraseña
@@ -67,23 +62,35 @@ export class LoginComponent {
     }
 
     this.authService.login(valores).subscribe({
-      next:(response)=>{
+      next: (response) => {
         if (response.tipo_usuario_id === 1) {
-          this.router.navigate(['alumno']);
+          const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
+
+          if (isIphone) {
+            window.location.href = 'https://rda-registro.cl/alumno'; // o la ruta que corresponda
+          } else {
+            this.router.navigate(['/alumno']);
+          }
         } else {
-          this.router.navigate(['admin']);
+          const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
+          if (isIphone) {
+            window.location.href = 'https://rda-registro.cl/admin'; // o la ruta que corresponda
+          } else {
+            this.router.navigate(['/admin']);
+          }
         }
       },
-      error:(err:any)=>{
+      error: (err: any) => {
+        alert(`Error al iniciar sesión: `);
         this.mensajeriaService.mostrarMensajeError('No se ha podido iniciar sesión, verifica tus credenciales o intenta más tarde.');
         this.cargando = false;
       },
-      complete:()=>{
+      complete: () => {
+        alert(`Sesión iniciada correctamente`);
         this.cargando = false;
         this.loginForm.reset();
       }
     })
-
   }
 
 
@@ -96,13 +103,13 @@ export class LoginComponent {
     if (this.loginForm.get('password')?.hasError('required')) {
       return false
     }
-    if(this.loginForm.get('password')?.hasError('minlength') || this.loginForm.get('password')?.hasError('maxlength')) {
+    if (this.loginForm.get('password')?.hasError('minlength') || this.loginForm.get('password')?.hasError('maxlength')) {
       return false
     }
-    if(this.loginForm.get('email')?.hasError('minlength') || this.loginForm.get('email')?.hasError('maxlength')) {
+    if (this.loginForm.get('email')?.hasError('minlength') || this.loginForm.get('email')?.hasError('maxlength')) {
       return false
     }
-    if(this.loginForm.get('email')?.hasError('pattern')) {
+    if (this.loginForm.get('email')?.hasError('pattern')) {
       return false
     }
 

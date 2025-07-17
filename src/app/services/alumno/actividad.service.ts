@@ -5,7 +5,7 @@ import { Actividad,DetallesAlumno } from '../../models/interfaces';
 import { FormGroup } from '@angular/forms';
 import { ruta } from '../rutas';
 import { MensajeriaService } from '../mensajeria.service';
-import { ResumenMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
+import { HorasArea, ResumenMes } from '../../alumno/pages/alumno-dashboard/models/interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +26,12 @@ export class ActividadService {
   resumenMes$ = this.resumenMesSubject.asObservable()
   setResumenMes(resumenMes:ResumenMes){
     this.resumenMesSubject.next(resumenMes)
+  }
+
+  private HorasFiltradasSubject = new BehaviorSubject<HorasArea[]>([])
+  horasFiltradas$ = this.HorasFiltradasSubject.asObservable()
+  setHorasFiltradas(horasFiltradas: HorasArea[]) {
+    this.HorasFiltradasSubject.next(horasFiltradas)
   }
 
 

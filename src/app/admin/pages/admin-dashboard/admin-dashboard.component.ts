@@ -7,6 +7,8 @@ import { ReportesServicesService } from '../../../services/reportes-services.ser
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { SolicitudService } from '../../../services/admin/solicitud.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { AdminService } from '../../../services/admin/admin.service';
+import { Resumen } from './models/interfaces';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -21,6 +23,7 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
   private router: Router = inject(Router)
   private authService = inject(AuthServicesService)
   private solicitudService = inject(SolicitudService)
+  private adminService = inject(AdminService)
   private snackBar = inject(MatSnackBar)
 
   notificaciones: string[] = [];
@@ -32,16 +35,22 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.socketService.registerAsAdmin()
     this.notificationSub = this.socketService.listenNotification('admin')
       .subscribe((msg) => {
-        this.openSnackBar()
         this.notificaciones.push(msg)
+        this.openSnackBar(msg)
         this.solicitudService.traerSolicitudesMes()
-        .subscribe({
-          next:(response)=>{
-            this.solicitudService.setSolicitud(response.solicitudes)
-            this.solicitudService.setAllSolicitudes(response.solicitudes)
+          .subscribe({
+            next: (response) => {
+              this.solicitudService.setSolicitud(response.solicitudes)
+              this.solicitudService.setAllSolicitudes(response.solicitudes)
+            }
+          })
+
+        this.adminService.traerResumenMes().subscribe({
+          next: (response: { resumen: Resumen }) => {
+            this.adminService.setResumenMes(response.resumen)
           }
         })
-        
+
       });
   }
 
@@ -84,9 +93,9 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     }
   }
 
-  openSnackBar(){
-    this.snackBar.open('Nueva actividad registrada!','deshacer',{
-      duration:3000
+  openSnackBar(msg:string) {
+    this.snackBar.open(msg, 'deshacer', {
+      duration: 3000
     })
   }
 

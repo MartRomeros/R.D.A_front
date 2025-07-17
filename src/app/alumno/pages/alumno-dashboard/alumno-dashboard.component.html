@@ -28,13 +28,6 @@
                     <li class="nav-item">
                         <a class="nav-link" (click)="logout()" role="button">Cerrar sesión</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                            aria-controls="offcanvasExample" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact:true}">
-                            Notificaciones @if (notificaciones.length !=0)
-                            {<span class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -64,12 +57,6 @@
 
                 <a class="nav-link" (click)="logout()" role="button"> <img src="assets/iconos/logOut.svg"> Cerrar
                     sesión</a>
-
-                <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                    aria-controls="offcanvasExample" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                    <img src="assets/iconos/notificacion.svg" alt="">
-                    Notificaciones @if (notificaciones.length !=0)
-                    {<span class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
             </nav>
         </aside>
 
@@ -80,21 +67,5 @@
                 <router-outlet></router-outlet>
             }            
         </main>
-    </div>
-</div>
-
-
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificaciones Recientes</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        @for (item of notificaciones; track $index) {
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{item}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-        }
     </div>
 </div>

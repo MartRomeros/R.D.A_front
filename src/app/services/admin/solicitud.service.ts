@@ -42,6 +42,10 @@ export class SolicitudService {
     return this.http.get(`${this.url}/admin/solicitud/${id}`, { withCredentials: true })
   }
 
+  notificarRechazoSolicitud():Observable<any> {
+    return this.http.get(`${this.url}/admin/notificar_rechazo`, { withCredentials: true })
+  }
+
 
 
 }

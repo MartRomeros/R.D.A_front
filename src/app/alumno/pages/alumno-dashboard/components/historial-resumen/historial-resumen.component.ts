@@ -1,14 +1,14 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { NgxEchartsModule } from 'ngx-echarts';
-import { lastValueFrom } from 'rxjs';
 import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { TableroHistorialComponent } from '../tablero-historial/tablero-historial.component';
+import { HorasArea } from '../../models/interfaces';
 
 
 @Component({
   selector: 'app-historial-resumen',
-  imports: [GeneralModule, NgxEchartsModule,TableroHistorialComponent],
+  imports: [GeneralModule, NgxEchartsModule, TableroHistorialComponent],
   templateUrl: './historial-resumen.component.html',
   styleUrl: './historial-resumen.component.css'
 })
@@ -62,8 +62,8 @@ export class HistorialResumenComponent implements OnInit {
     ]
   };
 
-  async ngOnInit() {
-    await this.filtrarHorasMes()
+  ngOnInit() {
+    this.filtrarHorasMes()
     this.actividadService.actividades$.subscribe(() => {
       this.barChartOptions = {
         ...this.barChartOptions,
@@ -79,87 +79,64 @@ export class HistorialResumenComponent implements OnInit {
           }
         ]
       }
+    })
+
+    this.actividadService.horasFiltradas$.subscribe((horasFiltradas) => {
+      if (horasFiltradas) {
+        horasFiltradas.forEach((area: any) => {
+          switch (area.nombre) {
+            case 'Difusión':
+              this.horasDifusion = area.duracion_horas
+              break;
+            case 'Desarrollo Laboral':
+              this.horasDesarrolloLaboral = area.duracion_horas
+              break;
+            case 'Extensión':
+              this.horasExtension = area.duracion_horas
+              break;
+            case 'Comunicación':
+              this.horasComunicacion = area.duracion_horas
+              break;
+
+            default:
+              break;
+          }
+        });
+
+        this.barChartOptions = {
+          ...this.barChartOptions,
+          series: [
+            {
+              ...this.barChartOptions.series[0],
+              data: [
+                this.horasDifusion,
+                this.horasExtension,
+                this.horasComunicacion,
+                this.horasDesarrolloLaboral
+              ]
+            }
+          ]
+        }
+
+
+      }
 
     })
 
+
+
   }
 
-  async detallesInicialesAlumno() {
-    try {
-      const responseHoras = await lastValueFrom(this.actividadService.traerTotalesAlumno())
-      this.horasDesarrolloLaboral = responseHoras.horasArea.desarrolloLaboral
-      this.horasComunicacion = responseHoras.horasArea.comunicacion
-      this.horasDifusion = responseHoras.horasArea.difusion
-      this.horasExtension = responseHoras.horasArea.extension
-
-      this.barChartOptions = {
-        ...this.barChartOptions,
-        series: [
-          {
-            ...this.barChartOptions.series[0],
-            data: [
-              this.horasDifusion,
-              this.horasExtension,
-              this.horasComunicacion,
-              this.horasDesarrolloLaboral
-            ]
-          }
-        ]
-      }
-
-    } catch (error: any) {
-      console.error(error)
-    }
-  }
-
-  async filtrarHorasMes(mes:number | null = null){
+  filtrarHorasMes(mes: number | null = null) {
     let mesFiltro
-    if(mes || mes === 0){
+    if (mes || mes === 0) {
       mesFiltro = mes + 1
     }
-
-    try {
-      const responseHoras:any = await lastValueFrom(this.actividadService.traerHorasFiltradas(mesFiltro))
-
-      responseHoras.horasArea.forEach((area:any) => {
-        switch (area.nombre) {
-          case 'Difusión':
-            this.horasDifusion = area.duracion_horas
-            break;
-          case 'Desarrollo Laboral':
-            this.horasDesarrolloLaboral = area.duracion_horas
-            break;
-          case 'Extensión':
-            this.horasExtension = area.duracion_horas
-            break;
-          case 'Comunicación':
-            this.horasComunicacion = area.duracion_horas
-            break;
-        
-          default:
-            break;
-        }  
-      });
-
-      this.barChartOptions = {
-        ...this.barChartOptions,
-        series: [
-          {
-            ...this.barChartOptions.series[0],
-            data: [
-              this.horasDifusion,
-              this.horasExtension,
-              this.horasComunicacion,
-              this.horasDesarrolloLaboral
-            ]
-          }
-        ]
+    this.actividadService.traerHorasFiltradas(mesFiltro).subscribe({
+      next: (response: { horasArea: HorasArea[] }) => {
+        this.actividadService.setHorasFiltradas(response.horasArea)
       }
-
-    } catch (error:any) {
-      console.error(error)
-      
-    }
+    })
 
   }
 

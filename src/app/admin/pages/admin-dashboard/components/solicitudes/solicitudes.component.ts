@@ -82,7 +82,7 @@ export class SolicitudesComponent implements OnInit {
             Swal.fire("Error", error || "", "error");
           }
         } else if (result.isDenied) {
-          Swal.fire("Cambios no guardados", "", "info");
+          this.notificarRechazo();
         }
       }
     })
@@ -108,6 +108,16 @@ export class SolicitudesComponent implements OnInit {
       },
       error: (err: any) => {
         this.mensajeriaService.mostrarMensajeError('Error al cargar todas las solicitudes')
+      }
+    })
+  }
+  
+  private notificarRechazo() {
+    this.solicitudService.notificarRechazoSolicitud().subscribe({
+      next: () => {        
+      },
+      error: (err: any) => {
+        this.mensajeriaService.mostrarMensajeExito('Notificación de rechazo enviada correctamente')
       }
     })
   }

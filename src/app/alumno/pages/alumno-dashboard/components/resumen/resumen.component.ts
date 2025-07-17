@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 import { ActividadService } from '../../../../../services/alumno/actividad.service';
 import { ResumenMes } from '../../models/interfaces';
+import { MensajeriaService } from '../../../../../services/mensajeria.service';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class ResumenComponent implements OnInit {
   //servicios
   private alumnoService = inject(AlumnoService)
   private actividadService = inject(ActividadService)
+  private mensajeriaService = inject(MensajeriaService)
 
   //variables publicas
   montoAcumulado?: string
@@ -27,21 +29,24 @@ export class ResumenComponent implements OnInit {
   diasRestantes: any
   cargando: boolean = true
   mesActual = new Intl.DateTimeFormat('es-CL', { month: 'long' }).format(new Date()).toString()
-  ordenCompra: any
+  ordenCompra: number = 0
   //variables privadas
 
 
   //ngOnInit(antes de cargar el componente)
-  async ngOnInit() {
+  ngOnInit() {
     this.cargando = true
-    await this.traerResumenMes()
+    this.traerResumenMes()
     this.actividadService.resumenMes$.subscribe((resumenMes) => {
       const monto = resumenMes?.monto || 0
       this.montoAcumulado = this.formatearCLP(monto)
       this.horasTrabajadas = resumenMes?.horas_totales_mes
     })
+    this.alumnoService.OC$.subscribe((oc) => {
+      this.ordenCompra = oc || 0
+    })
     this.traerFechaAproxPago()
-    await this.traerOC()
+    this.traerOC()
     this.cargando = false
   }
 
@@ -83,14 +88,15 @@ export class ResumenComponent implements OnInit {
     }
   }
 
-  private async traerResumenMes() {
-    try {
-      const response = await lastValueFrom(this.alumnoService.traerResumenMes());
-      const resumenMes: ResumenMes = response
-      this.actividadService.setResumenMes(resumenMes)
-    } catch (error: any) {
-      console.log(error);
-    }
+  private traerResumenMes() {
+    this.alumnoService.traerResumenMes().subscribe({
+      next: (resumenMes: ResumenMes) => {
+        this.actividadService.setResumenMes(resumenMes);
+      },
+      error: (error) => {
+        this.mensajeriaService.mostrarMensajeError('Error al cargar el resumen del mes');
+      }
+    })
   }
 
   formatearCLP(valor: number): string {
@@ -102,13 +108,15 @@ export class ResumenComponent implements OnInit {
     }).format(valor)
   }
 
-  private async traerOC() {
-    try {
-      const response = await lastValueFrom(this.alumnoService.obtenerOC())
-      this.ordenCompra = response.oc.numero_oc
-    } catch (error: any) {
-      console.error(error)
-    }
+  private traerOC() {
+    this.alumnoService.obtenerOC().subscribe({
+      next:(response:{oc:{numero_oc:number}})=>{
+        this.alumnoService.setOC(response.oc.numero_oc)
+      },
+      error: (error) => {
+        this.mensajeriaService.mostrarMensajeError('Error al cargar la orden de compra');
+      }
+    })
   }
 
 

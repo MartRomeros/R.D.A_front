@@ -39,3 +39,12 @@ export interface ResumenMes{
     horas_totales_mes:number,
     monto:number
 }
+
+export interface HorasArea{
+    nombre:string,
+    duracion_horas:number
+}
+
+export interface OC{
+    numero_oc: number
+}

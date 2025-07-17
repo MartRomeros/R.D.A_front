@@ -33,14 +33,36 @@ export class AdminTablaComponent implements OnInit {
   ngOnInit() {
     this.traerResumenMes()
     this.traerAlumnosAyudantes()
+    this.adminService.resumenMes$.subscribe((resumen) => {
+      if (resumen) {
+        this.horasResumenMes = resumen.actividades
+        this.horaAreaMes = resumen.actividades_area
+        this.area = resumen.area
+        this.alumnos = resumen.alumnos
+      }
+    })
+    this.adminService.actividades$.subscribe((actividades) => {
+      this.actividades = actividades
+    })
+    this.adminService.infoAlumno$.subscribe((infoAlumno) => {
+      if (infoAlumno) {
+        this.nombre = infoAlumno.alumno.nombre
+        this.run = infoAlumno.alumno.run
+        this.email = infoAlumno.alumno.email
+        this.fono = infoAlumno.alumno.fono
+        this.horasTotales = infoAlumno.actividades_mes
+        this.horasMes = infoAlumno.actividades_area
+      }
+    })
+
   }
 
   //traer alumnos ayudantes
   private traerAlumnosAyudantes() {
 
     this.adminService.traerAlumnos().subscribe({
-      next: (response:{alumnos:Alumno[]}) => {
-        const alumnos:Alumno[] = response.alumnos
+      next: (response: { alumnos: Alumno[] }) => {
+        const alumnos: Alumno[] = response.alumnos
         this.alumnosAyudantes = alumnos
       },
       error: (error) => {
@@ -52,12 +74,9 @@ export class AdminTablaComponent implements OnInit {
 
   private traerResumenMes() {
     this.adminService.traerResumenMes().subscribe({
-      next: (response:{resumen:Resumen}) => {
+      next: (response: { resumen: Resumen }) => {
         const resumen: Resumen = response.resumen
-        this.alumnos = resumen.alumnos
-        this.horasResumenMes = resumen.actividades
-        this.horaAreaMes = resumen.actividades_area
-        this.area = resumen.area
+        this.adminService.setResumenMes(resumen)
       },
       error: (error) => {
         this.mensajeriaService.mostrarMensajeError('Error al cargar el resumen del mes')
@@ -65,27 +84,21 @@ export class AdminTablaComponent implements OnInit {
     })
   }
 
-  async mostrarDetalles(run: string) {
+  mostrarDetalles(run: string) {
     this.adminService.traerDetalleAlumno(run).subscribe({
-      next: (response:{infoAlumno:InfoAlumno}) => {
-        const infoAlumno:InfoAlumno = response.infoAlumno
-        this.nombre = infoAlumno.alumno.nombre
-        this.run = infoAlumno.alumno.run
-        this.email = infoAlumno.alumno.email
-        this.fono = infoAlumno.alumno.fono
-        this.horasTotales = infoAlumno.actividades_mes
-        this.horasMes = infoAlumno.actividades_area 
+      next: (response: { infoAlumno: InfoAlumno }) => {
+        const infoAlumno: InfoAlumno = response.infoAlumno
+        this.adminService.setInfoAlumno(infoAlumno)
       },
-      error:(err:any)=>{
+      error: (err: any) => {
         this.mensajeriaService.mostrarMensajeError('Error al cargar los detalles del alumno')
       }
     })
 
     this.adminService.traerActividadesAlumno(run).subscribe({
-      next: (response:{actividades:ActividadAlumno[]}) => {
-        console.log(response)
+      next: (response: { actividades: ActividadAlumno[] }) => {
         const actividades: ActividadAlumno[] = response.actividades
-        this.actividades = actividades
+        this.adminService.setActividades(actividades)
       },
       error: (error) => {
         this.mensajeriaService.mostrarMensajeError('Error al cargar las actividades del alumno')

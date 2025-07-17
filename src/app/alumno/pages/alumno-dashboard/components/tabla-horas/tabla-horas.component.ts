@@ -1,10 +1,10 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
-import { lastValueFrom } from 'rxjs';
 import { ResumenComponent } from '../resumen/resumen.component';
 import { AlumnoService } from '../../../../../services/alumno/alumno.service';
 import { Registro, ResumenMes } from '../../models/interfaces';
 import { ActividadService } from '../../../../../services/alumno/actividad.service';
+import { MensajeriaService } from '../../../../../services/mensajeria.service';
 
 @Component({
   selector: 'app-tabla-horas',
@@ -17,6 +17,7 @@ export class TablaHorasComponent implements OnInit {
   //servicios
   private alumnoService = inject(AlumnoService)
   private actividadService = inject(ActividadService)
+  private mensajeriaService = inject(MensajeriaService)
 
   //variables publicas
   actividades!: Registro[] | undefined
@@ -36,16 +37,19 @@ export class TablaHorasComponent implements OnInit {
 
   //carga las actividades del backend
   private async cargarActvidades() {
-    try {
-      this.cargando = true
-      const response = await lastValueFrom(this.alumnoService.traerResumenMes());
-      const resumenMes: ResumenMes = response
-      this.actividadService.setResumenMes(resumenMes)
-    } catch (error: any) {
-      console.error(error)
-    } finally {
-      this.cargando = false
-    }
+    this.cargando = true
+    this.alumnoService.traerResumenMes().subscribe({
+      next:(response:ResumenMes)=>{
+        this.actividadService.setResumenMes(response)
+      },
+      error:(err:any)=>{
+        this.mensajeriaService.mostrarMensajeError('Error al cargar las actividades del mes');
+      },
+      complete:()=>{
+        this.cargando = false
+      }
+    })
+
   }
 
 

@@ -79,8 +79,8 @@ export class ActividadFormComponent implements OnInit {
 
 
   async ngOnInit() {
-    await this.traerAreas()//check
-    await this.traerHorasArea()
+    this.traerAreas()//check
+    this.traerHorasArea()
     this.alumnoService.horasAreaMes$.subscribe((horasArea) => {
       this.horasAreaMes = horasArea
       this.actualizarGrafico()
@@ -101,43 +101,48 @@ export class ActividadFormComponent implements OnInit {
     //formateo de horas
     const horaInic = this.actividadForm.get('horaInic')?.value;
     const horaTerm = this.actividadForm.get('horaTerm')?.value;
+    //valores a mandar en el backend
+    const body = {
+      fecha_actividad: fecha,
+      hora_inic_activdad: horaInic,
+      hora_term_actividad: horaTerm,
+      area_trabajo: this.actividadForm.get('area')?.value
+    }
 
-
-    try {
-      //valores a mandar en el backend
-      const body = {
-        fecha_actividad: fecha,
-        hora_inic_activdad: horaInic,
-        hora_term_actividad: horaTerm,
-        area_trabajo: this.actividadForm.get('area')?.value
+    this.actividadService.registrarActividad(body).subscribe({
+      next: (response) => {
+        this.mensajeService.mostrarMensajeExito(`${response.message} Tus horas seran validadas pronto!`);
+        this.traerHorasArea();
+      },
+      error: (error) => {
+        this.mensajeService.mostrarMensajeError(error.error.message);
       }
-      const response = await lastValueFrom(this.actividadService.registrarActividad(body))
-      this.mensajeService.mostrarMensajeExito(`${response.message} Tus horas seran validadas pronto!`)
-      await this.traerHorasArea()
-
-    } catch (error: any) {
-      this.mensajeService.mostrarMensajeError(error.error.message);
-    }
+    })
   }
 
-  private async traerAreas() {
-    try {
-      const response = await lastValueFrom(this.alumnoService.traerAreas())
-      const areasTrabajo: AreaTrabajo[] = response
-      this.areasTrabajo = areasTrabajo
-
-    } catch (error) {
-      console.error(error)
-    }
+  private traerAreas() {
+    this.alumnoService.traerAreas().subscribe({
+      next: (response) => {
+        this.areasTrabajo = response;
+      },
+      error: (error) => {
+        console.error(error);
+        this.mensajeService.mostrarMensajeError('Error al cargar las áreas de trabajo.');
+      }
+    })
   }
 
-  private async traerHorasArea() {
-    try {
-      const response = await lastValueFrom(this.alumnoService.traerHorasAreasMes())
-      this.alumnoService.setHorasAreaMes(response.horasArea)
-    } catch (error) {
-      console.error(error)
-    }
+  private traerHorasArea() {
+    this.alumnoService.traerHorasAreasMes().subscribe({
+      next: (response) => {
+        const horasArea = response.horasArea;
+        this.alumnoService.setHorasAreaMes(horasArea);
+        this.actualizarGrafico()
+      },
+      error: (err: any) => {
+        this.mensajeService.mostrarMensajeError('Error al cargar las horas de área del mes.');
+      }
+    })
   }
 
   actualizarGrafico() {

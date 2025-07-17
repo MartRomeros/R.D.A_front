@@ -48,8 +48,8 @@ export class AlumnoDashboardComponent implements OnInit {
     this.socketService.registerAsStudent()
     this.notificationSub = this.socketService.listenNotification('student')
       .subscribe((msg) => {
-        this.openSnackBar()
         this.notificaciones.push(msg);
+        this.openSnackBar(msg)
 
         this.alumnoService.traerResumenMes().subscribe({
           next: (response) => {
@@ -62,13 +62,6 @@ export class AlumnoDashboardComponent implements OnInit {
             this.registroForm.actualizarGrafico()
           }
         })
-        this.alumnoService.traerResumenMes().subscribe({
-          next:(response)=>{
-            this.actividadService.setResumenMes(response)
-          }
-        })
-
-
 
       });
   }
@@ -89,8 +82,8 @@ export class AlumnoDashboardComponent implements OnInit {
     }
   }
 
-  openSnackBar() {
-    this.snackBar.open('Nueva se ha aprobado tu actividad', 'deshacer', {
+  openSnackBar(msg:string) {
+    this.snackBar.open(msg, 'deshacer', {
       duration: 3000
     })
   }

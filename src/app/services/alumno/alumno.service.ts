@@ -18,6 +18,12 @@ export class AlumnoService {
     this.horasAreaMesSubject.next(horasAreaMes)
   }
 
+  private OCSubject = new BehaviorSubject<number>(0)
+  OC$ = this.OCSubject.asObservable()
+  setOC(oc: number) {
+    this.OCSubject.next(oc)
+  }
+
 
 
   traerResumenMes(): Observable<any> {

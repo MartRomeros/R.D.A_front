@@ -3,7 +3,7 @@ header {
   background-color: #012C56;
 }
 
-header nav img {
+header nav div img {
   width: 5%;
 }
 
@@ -84,7 +84,7 @@ aside .nav-link img {
   }
 
   header nav img {
-    width: 20%;
+    width: 10%;
   }
 
   .nav {

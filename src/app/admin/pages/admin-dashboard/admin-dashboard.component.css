@@ -34,6 +34,10 @@ header .nav-link {
   }
 }
 
+main{
+  height: 100vh;
+}
+
 
 
 div.container-fluid:nth-child(2) {

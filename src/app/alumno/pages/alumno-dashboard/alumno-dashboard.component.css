@@ -34,6 +34,10 @@ header .nav-link {
   }
 }
 
+main{
+  height: 100vh;
+}
+
 
 
 /* main content */

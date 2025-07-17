@@ -63,32 +63,20 @@ export class LoginComponent {
 
     this.authService.login(valores).subscribe({
       next: (response) => {
+        console.log(response)
+        sessionStorage.setItem('token', response.token);
         if (response.tipo_usuario_id === 1) {
-          const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
-
-          if (isIphone) {
-            window.location.href = 'https://rda-registro.cl/alumno'; // o la ruta que corresponda
-          } else {
-            this.router.navigate(['/alumno']);
-          }
+          this.router.navigate(['/alumno']);
         } else {
-          const isIphone = /iPhone|iPad|iPod/.test(navigator.userAgent);
-          if (isIphone) {
-            window.location.href = 'https://rda-registro.cl/admin'; // o la ruta que corresponda
-          } else {
-            this.router.navigate(['/admin']);
-          }
+          this.router.navigate(['/admin']);
         }
       },
       error: (err: any) => {
-        alert(`Error al iniciar sesión: `);
         this.mensajeriaService.mostrarMensajeError('No se ha podido iniciar sesión, verifica tus credenciales o intenta más tarde.');
         this.cargando = false;
       },
       complete: () => {
-        alert(`Sesión iniciada correctamente`);
         this.cargando = false;
-        this.loginForm.reset();
       }
     })
   }

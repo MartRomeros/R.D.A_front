@@ -2,7 +2,6 @@ import { Component, inject, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../../../shared/modules/general/general.module';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActividadService } from '../../../../../services/alumno/actividad.service';
-import { lastValueFrom } from 'rxjs';
 import { AreaTrabajo } from '../../../../../models/interfaces';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { MensajeriaService } from '../../../../../services/mensajeria.service';

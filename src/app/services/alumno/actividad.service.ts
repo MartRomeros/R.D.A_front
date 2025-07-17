@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Actividad,DetallesAlumno } from '../../models/interfaces';
@@ -36,14 +36,41 @@ export class ActividadService {
 
 
   registrarActividad(actividad: any): Observable<any> {
+    if (this.isAppleDevice()) {
+      const token = sessionStorage.getItem('token');
+      
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      return this.http.post(`${this.url}/alumno/registrar_actividad`,actividad ,{ headers })
+    }
     return this.http.post(`${this.url}/alumno/registrar_actividad`, actividad, { withCredentials: true })
   }
 
   traerTotalesAlumno(): Observable<any> {
+    if (this.isAppleDevice()) {
+      const token = sessionStorage.getItem('token');
+      
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      return this.http.get(`${this.url}/actividad/totales_alumno`, { headers })
+    }
     return this.http.get(`${this.url}/actividad/totales_alumno`, { withCredentials: true })
   }
 
   traerHorasFiltradas(mesYanio: number | null = null): Observable<any> {
+     if (this.isAppleDevice()) {
+      const token = sessionStorage.getItem('token');
+      
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+      return this.http.get(`${this.url}/alumno/horas_area_mes/${mesYanio}`, { headers })
+    }
     return this.http.get(`${this.url}/alumno/horas_area_mes/${mesYanio}`, { withCredentials: true })
   }
 
@@ -54,6 +81,16 @@ export class ActividadService {
     }
     if (area) {
       params.area = area
+    }
+    if (this.isAppleDevice()) {
+      const token = sessionStorage.getItem('token');
+      
+
+      const headers = new HttpHeaders({
+        'Authorization': `Bearer ${token}`
+      });
+
+      return this.http.get(`${this.url}/alumno/actividades_area_mes`,{params, headers })
     }
     return this.http.get(`${this.url}/alumno/actividades_area_mes`, { params, withCredentials: true })
   }
@@ -115,6 +152,22 @@ export class ActividadService {
       return false
     }
     return true
+  }
+
+    isAppleDevice(): boolean {
+    const userAgent = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const platform = navigator.platform;
+
+    // iPhone, iPad, iPod
+    const isIOS = /iPhone|iPad|iPod/.test(userAgent);
+
+    // iPadOS 13+ en modo escritorio (se identifica como Mac)
+    const isIPadOS13Plus = platform === 'MacIntel' && navigator.maxTouchPoints > 1;
+
+    // Macs reales (MacBook, iMac, etc.)
+    const isMac = /Macintosh/.test(platform || userAgent);
+
+    return isIOS || isIPadOS13Plus || isMac;
   }
 
 

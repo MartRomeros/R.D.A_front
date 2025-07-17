@@ -1,6 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { Router } from '@angular/router';
+import { Event, NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router } from '@angular/router';
 import { lastValueFrom, Subscription } from 'rxjs';
 import { SocketService } from '../../../services/socket.service';
 import { ReportesServicesService } from '../../../services/reportes-services.service';
@@ -20,14 +20,29 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
 
   private socketService = inject(SocketService)
   private reporteService = inject(ReportesServicesService)
-  private router: Router = inject(Router)
   private authService = inject(AuthServicesService)
   private solicitudService = inject(SolicitudService)
   private adminService = inject(AdminService)
   private snackBar = inject(MatSnackBar)
 
+
+  loading: boolean = false;
   notificaciones: string[] = [];
   private notificationSub!: Subscription;
+
+  constructor(private router:Router) {
+        this.router.events.subscribe((event: Event) => {
+      if (event instanceof NavigationStart) {
+        this.loading = true;
+      } else if (
+        event instanceof NavigationEnd ||
+        event instanceof NavigationCancel ||
+        event instanceof NavigationError
+      ) {
+        this.loading = false;
+      }
+    });
+  }
 
 
 

@@ -42,6 +42,19 @@
               [attr.aria-pressed]="hide()">
               <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <mat-hint align="start">Debe incluir mayúscula, minúscula, número y símbolo.</mat-hint>
+            @if (hasErrors('newPassword','minlength')) {
+            <mat-error>Debe tener mas de 5 caracteres</mat-error>
+            }
+            @else if (hasErrors('newPassword','maxlength')) {
+            <mat-error>Debe tener menos de 50 caracteres</mat-error>
+            }
+            @else if (hasErrors('newPassword','pattern')) {
+            <mat-error>Debe incluir mayúscula, minúscula, número y símbolo.</mat-error>
+            }
+            @else if (hasErrors('newPassword','required')) {
+            <mat-error>Es obligatoria!</mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field>
@@ -52,8 +65,21 @@
               [attr.aria-pressed]="hide()">
               <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
             </button>
+            <mat-hint align="start">Debe ser identica a la contraseña ingresada</mat-hint>
+            @if (hasErrors('newPassword2','minlength')) {
+            <mat-error>Debe tener mas de 5 caracteres</mat-error>
+            }
+            @else if (hasErrors('newPassword2','maxlength')) {
+            <mat-error>Debe tener menos de 50 caracteres</mat-error>
+            }
+            @else if (hasErrors('newPassword2','pattern')) {
+            <mat-error>Debe incluir mayúscula, minúscula, número y símbolo.</mat-error>
+            }
+            @else if (hasErrors('newPassword2','required')) {
+            <mat-error>Es obligatoria!</mat-error>
+            }
           </mat-form-field>
-          
+
           <fieldset>
             <button matButton="filled" type="submit">Guardar cambios</button>
           </fieldset>

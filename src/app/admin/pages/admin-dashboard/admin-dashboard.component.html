@@ -31,13 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link" (click)="logout()" role="button">Cerrar sesión</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                            aria-controls="offcanvasExample" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact:true}">
-                            Notificaciones @if (notificaciones.length !=0)
-                            {<span class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
-                    </li>
                 </ul>
             </div>
         </div>
@@ -50,7 +43,7 @@
     <div class="row g-0 flex-column flex-md-row">
 
         <aside class="col-12 col-md-3 col-lg-2 bg-light sidebar py-3 mb-2 mb-md-0">
-            <h4>Panel de Administración</h4>
+            <h4>Administración</h4>
             <nav
                 class="nav flex-row flex-md-column justify-content-center justify-content-md-start text-center text-md-start">
                 <a class="nav-link" routerLink="/admin/perfil" routerLinkActive="active"
@@ -70,33 +63,16 @@
 
                 <a class="nav-link" (click)="logout()" role="button"> <img src="assets/iconos/logOut.svg"> Cerrar
                     sesión</a>
-
-                <a class="nav-link" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                    aria-controls="offcanvasExample" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}">
-                    <img src="assets/iconos/notificacion.svg"> Notificaciones @if (notificaciones.length !=0) {<span
-                        class="badge text-bg-danger">{{notificaciones.length}}</span>} </a>
-
             </nav>
         </aside>
 
         <main class="col-12 col-md-9 col-lg-10 px-1 py-1">
+            @if(loading) {
+                <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+            }@else {
+                <router-outlet></router-outlet>
+            }
             <router-outlet></router-outlet>
         </main>
-    </div>
-</div>
-
-
-<div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Notificaciones Recientes</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-        @for (item of notificaciones; track $index) {
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-            {{item}}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
-        </div>
-        }
     </div>
 </div>

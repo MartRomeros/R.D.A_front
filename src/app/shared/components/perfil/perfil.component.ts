@@ -24,8 +24,8 @@ export class PerfilComponent implements OnInit {
     nombre: [''],
     fono: [''],
     email: [''],
-    newPassword: ['', [Validators.required]],
-    newPassword2: ['', [Validators.required]]
+    newPassword: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)], Validators.minLength(8), Validators.maxLength(50)],
+    newPassword2: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)], , Validators.minLength(8), Validators.maxLength(50)]
   })
   changePassword: boolean = false
   buttonText: string = 'Cambiar contraseña'
@@ -78,6 +78,10 @@ export class PerfilComponent implements OnInit {
     } catch (error: any) {
       console.error(error)
     }
+  }
+
+  hasErrors(campo: string, typeError: string) {
+    return this.profileForm.get(campo)?.touched && this.profileForm.get(campo)?.hasError(typeError)
   }
 
 

@@ -6,12 +6,18 @@
         <mat-label>Correo electronico</mat-label>
         <input matInput placeholder="Ingresa tu correo electronico" formControlName="email" name="email"
           autocomplete="email" (blur)="hasErrors('email','required')" required />
-        <mat-hint align="end">{{showCounter("email")}}/100</mat-hint>
+        <mat-hint align="end">{{showCounter("email")}}/50</mat-hint>
         <mat-hint align="start">Ingresa tu correo electronico institucional</mat-hint>
         @if (hasErrors('email','required')) {
         <mat-error>Correo electronico es requerido</mat-error>
         }@else if (hasErrors('email','email')) {
         <mat-error>Correo electronico no valido!</mat-error>
+        }
+        @else if (hasErrors('email','minlength')) {
+        <mat-error>Debe tener mas de 5 caracteres</mat-error>
+        }
+        @else if (hasErrors('email','maxlength')) {
+        <mat-error>Debe tener menos de 50 caracteres</mat-error>
         }
       </mat-form-field>
 
@@ -23,8 +29,17 @@
           [attr.aria-pressed]="hide()">
           <mat-icon>{{hide() ? 'visibility_off' : 'visibility'}}</mat-icon>
         </button>
-        <mat-hint align="end" >{{showCounter("password")}}/100</mat-hint>
-        <mat-hint align="start" >Ingresa tu contraseña de la aplicacion</mat-hint>
+        <mat-hint align="end">{{showCounter("password")}}/50</mat-hint>
+        <mat-hint align="start">Ingresa tu contraseña de la aplicacion</mat-hint>
+        @if (hasErrors('password','minlength')) {
+        <mat-error>Debe tener mas de 5 caracteres</mat-error>
+        }
+        @else if (hasErrors('password','maxlength')) {
+        <mat-error>Debe tener menos de 50 caracteres</mat-error>
+        }
+        @else if (hasErrors('password','required')) {
+        <mat-error>Contraseña requerida</mat-error>
+        }
       </mat-form-field>
 
       @if (!cargando) {

@@ -34,6 +34,30 @@ export class UserService {
       this.mensajeriaService.mostrarMensajeError('Es necesario repetir la contraseña')
       return false
     }
+    if(perfilForm.get('newPassword')?.hasError('minlength')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña debe tener al menos 8 caracteres')
+      return false
+    }
+    if(perfilForm.get('newPassword')?.hasError('maxlength')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña no puede tener mas de 50 caracteres')
+      return false
+    }
+    if(perfilForm.get('newPassword2')?.hasError('minlength')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña debe tener al menos 8 caracteres')
+      return false
+    }
+    if(perfilForm.get('newPassword2')?.hasError('maxlength')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña no puede tener mas de 50 caracteres')
+      return false
+    }
+    if(perfilForm.get('newPassword')?.hasError('pattern')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial')
+      return false
+    }
+    if(perfilForm.get('newPassword2')?.hasError('pattern')){
+      this.mensajeriaService.mostrarMensajeError('La contraseña debe tener al menos una mayúscula, una minúscula, un número y un carácter especial')
+      return false
+    }
 
     //verificar que ambas contras sean iguales
     if(perfilForm.get('newPassword')?.value !== perfilForm.get('newPassword2')?.value){

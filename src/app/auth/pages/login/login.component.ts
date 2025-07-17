@@ -1,6 +1,5 @@
 import { Component, inject, signal } from '@angular/core';
 import { GeneralModule } from '../../../shared/modules/general/general.module';
-import { lastValueFrom } from 'rxjs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthServicesService } from '../../../services/auth-services.service';
 import { Router } from '@angular/router';
@@ -22,8 +21,8 @@ export class LoginComponent {
 
   //variables publicas
   loginForm: FormGroup = this.fb.group({
-    email: ['', [Validators.required, Validators.email]],
-    password: ['', Validators.required]
+    email: ['', [Validators.required, Validators.email,Validators.minLength(5),Validators.maxLength(50),Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|duoc\.cl)$/)]],
+    password: ['', Validators.required,Validators.minLength(5),Validators.maxLength(50),]
   })
 
   cargando: boolean = false
@@ -53,7 +52,7 @@ export class LoginComponent {
     return this.loginForm.get(campo)?.touched && this.loginForm.get(campo)?.hasError(typeError)
   }
 
-  async login() {
+  login() {
     this.cargando = true
     //validar campos
     if (!this.validarCampos()) {
@@ -67,22 +66,23 @@ export class LoginComponent {
       password: this.loginForm.get('password')?.value
     }
 
-    try {
-      
-      const response = await lastValueFrom(this.authService.login(valores))
-      if (response.tipo_usuario_id === 1) {
-        this.router.navigate(['alumno']);
-      } else {
-        this.router.navigate(['admin']);
+    this.authService.login(valores).subscribe({
+      next:(response)=>{
+        if (response.tipo_usuario_id === 1) {
+          this.router.navigate(['alumno']);
+        } else {
+          this.router.navigate(['admin']);
+        }
+      },
+      error:(err:any)=>{
+        this.mensajeriaService.mostrarMensajeError('No se ha podido iniciar sesión, verifica tus credenciales o intenta más tarde.');
+        this.cargando = false;
+      },
+      complete:()=>{
+        this.cargando = false;
+        this.loginForm.reset();
       }
-
-    } catch (error: any) {
-      this.mensajeriaService.mostrarMensajeError(error.error.message)
-
-    } finally {
-      this.cargando = false
-    }
-
+    })
 
   }
 
@@ -93,8 +93,16 @@ export class LoginComponent {
     if (this.loginForm.get('email')?.hasError('email') || this.loginForm.get('email')?.hasError('required')) {
       return false
     }
-
     if (this.loginForm.get('password')?.hasError('required')) {
+      return false
+    }
+    if(this.loginForm.get('password')?.hasError('minlength') || this.loginForm.get('password')?.hasError('maxlength')) {
+      return false
+    }
+    if(this.loginForm.get('email')?.hasError('minlength') || this.loginForm.get('email')?.hasError('maxlength')) {
+      return false
+    }
+    if(this.loginForm.get('email')?.hasError('pattern')) {
       return false
     }
 

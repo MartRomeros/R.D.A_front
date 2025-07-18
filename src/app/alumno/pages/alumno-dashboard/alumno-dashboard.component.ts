@@ -48,21 +48,15 @@ export class AlumnoDashboardComponent implements OnInit {
     this.socketService.registerAsStudent()
     this.notificationSub = this.socketService.listenNotification('student')
       .subscribe((msg) => {
-        this.notificaciones.push(msg);
+        alert('llego una notificación')
+        console.log(msg)
         this.openSnackBar(msg)
-
+        this.notificaciones.push(msg);      
         this.alumnoService.traerResumenMes().subscribe({
           next: (response) => {
             this.actividadService.setResumenMes(response)
           }
         })
-        this.alumnoService.traerHorasAreasMes().subscribe({
-          next: (response) => {
-            this.alumnoService.setHorasAreaMes(response.horasArea)
-            this.registroForm.actualizarGrafico()
-          }
-        })
-
       });
   }
 

@@ -24,8 +24,8 @@ export class PerfilComponent implements OnInit {
     nombre: [''],
     fono: [''],
     email: [''],
-    newPassword: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)], Validators.minLength(8), Validators.maxLength(50)],
-    newPassword2: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/)], , Validators.minLength(8), Validators.maxLength(50)]
+    newPassword: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/),Validators.minLength(8), Validators.maxLength(50)]],
+    newPassword2: ['', [Validators.required, Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/),Validators.minLength(8), Validators.maxLength(50)]]
   })
   changePassword: boolean = false
   buttonText: string = 'Cambiar contraseña'

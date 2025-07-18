@@ -50,8 +50,8 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
     this.socketService.registerAsAdmin()
     this.notificationSub = this.socketService.listenNotification('admin')
       .subscribe((msg) => {
-        this.notificaciones.push(msg)
         this.openSnackBar(msg)
+        this.notificaciones.push(msg)
         this.solicitudService.traerSolicitudesMes()
           .subscribe({
             next: (response) => {
@@ -59,12 +59,6 @@ export class AdminDashboardComponent implements OnInit, OnDestroy {
               this.solicitudService.setAllSolicitudes(response.solicitudes)
             }
           })
-
-        this.adminService.traerResumenMes().subscribe({
-          next: (response: { resumen: Resumen }) => {
-            this.adminService.setResumenMes(response.resumen)
-          }
-        })
 
       });
   }

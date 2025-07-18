@@ -23,7 +23,7 @@ export class LoginComponent {
   //variables publicas
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email, Validators.minLength(5), Validators.maxLength(50), Validators.pattern(/^[a-zA-Z0-9._%+-]+@(duocuc\.cl|duoc\.cl)$/)]],
-    password: ['', Validators.required, Validators.minLength(5), Validators.maxLength(50),]
+    password: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)],]
   })
 
   cargando: boolean = false
@@ -56,10 +56,10 @@ export class LoginComponent {
       return
     }
 
-    const email = this.loginForm.get('email')?.value.toLowerCase();
+    const email:string = this.loginForm.get('email')?.value;
 
     const valores = {
-      email: email,
+      email: email.toLocaleLowerCase(),
       password: this.loginForm.get('password')?.value
     }
 
